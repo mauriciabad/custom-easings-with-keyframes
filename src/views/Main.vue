@@ -1,8 +1,9 @@
 <script lang="ts">
+import KeyframesCanvas from '@/components/KeyframesCanvas.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'Main',
+  components: { KeyframesCanvas },
   props: {
     msg: String
   }
