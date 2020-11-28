@@ -1,9 +1,3 @@
-<template>
-  <main class="main-layout">
-    <keyframes-canvas />
-  </main>
-</template>
-
 <script lang="ts">
 import { defineComponent } from 'vue'
 
@@ -14,6 +8,12 @@ export default defineComponent({
   }
 })
 </script>
+
+<template>
+  <main class="main-layout">
+    <keyframes-canvas />
+  </main>
+</template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
