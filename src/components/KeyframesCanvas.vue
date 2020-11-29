@@ -2,7 +2,7 @@
 import KeyframesCanvasPoint from '@/components/KeyframesCanvasPoint.vue'
 import KeyframesCanvasLine from '@/components/KeyframesCanvasLine.vue'
 import { Point } from '@/components/Canvas.d.ts'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watchEffect } from 'vue'
 
 export const CANVAS_WIDTH = 1000
 export const CANVAS_HEIGHT = 500
@@ -11,7 +11,7 @@ export default defineComponent({
   components: { KeyframesCanvasPoint, KeyframesCanvasLine },
   props: {},
 
-  setup() {
+  setup(props, { emit }) {
     const points = ref<Point[]>([
       {
         x: 10,
@@ -24,6 +24,13 @@ export default defineComponent({
         isSelected: false
       }
     ])
+
+    watchEffect(() => {
+      emit(
+        'update:points',
+        points.value.map(p => ({ x: p.x / 100, y: (p.y * -1) / 100 }))
+      )
+    })
 
     const selectPoint = (x: number) => {
       points.value = points.value.map(p => ({ ...p, isSelected: false }))

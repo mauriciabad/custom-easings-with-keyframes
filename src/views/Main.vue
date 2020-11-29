@@ -1,6 +1,6 @@
 <script lang="ts">
 import KeyframesCanvas from '@/components/KeyframesCanvas.vue'
-import { defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import 'simple-syntax-highlighter/dist/sshpre.css'
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 //@ts-ignore
@@ -10,27 +10,42 @@ export default defineComponent({
   components: { KeyframesCanvas, SshPre },
 
   setup() {
-    const code = `.ease-custom {
-  animation: ease-custom 200ms linear;
+    const points = ref<{ x: number; y: number }[]>([])
+
+    const property = ref<
+      'scale' | 'translateX' | 'translateY' | 'opacity' | 'rotate'
+    >('scale')
+    const fromValue = ref(1)
+    const toValue = ref(2)
+    const valueUnits = ref<'' | 'px' | 'em' | 'rem' | '%' | 'deg' | 'turn'>('')
+    const duration = ref(200)
+    const easingName = ref('ease-custom')
+
+    const code = computed(() => {
+      const keyframesLines = points.value.map(
+        p =>
+          `${(p.x * 100).toFixed()}% {transform: ${property.value}(${Math.round(
+            ((toValue.value - fromValue.value) * p.y + fromValue.value) * 100
+          ) / 100}${valueUnits.value});}`
+      )
+      return `.${easingName.value} {
+  animation: ${easingName.value} ${duration.value}ms linear;
 }
 
-@keyframes ease-custom {
-   0% {transform: translateX(0rem)}
-  25% {transform: translateX(1rem)}
-  50% {transform: translateX(7rem)}
-  75% {transform: translateX(9rem)}
-  100%{transform: translateX(10rem)}
-}`
+@keyframes ${easingName.value} {
+${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
+    })
 
-    return { code }
+    return { code, points }
   }
 })
 </script>
 
 <template>
   <main class="main-layout">
-    <keyframes-canvas />
-    <ssh-pre language="css" dark copy-button reactive class="code">
+    <keyframes-canvas @update:points="points = $event" />
+    <pre class="code"><code>{{code}}</code></pre>
+    <ssh-pre language="css" dark copy-button reactive="true" class="code">
       <template v-slot:copy-button>
         <svg viewBox="-40 0 512 512" height="2rem" width="2rem">
           <path
