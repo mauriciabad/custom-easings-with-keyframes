@@ -26,7 +26,7 @@ export default defineComponent({
       }
     ])
 
-    const handlePointClick = (x: number) => {
+    const selectPoint = (x: number) => {
       points.value = points.value.map(p => ({ ...p, isSelected: false }))
 
       const point = points.value.find(p => p.x === x)
@@ -36,19 +36,38 @@ export default defineComponent({
       }
     }
 
-    return { points, handlePointClick }
+    const createPoint = (x: number, y: number) => {
+      if (points.value.find(p => p.x === x)) return
+
+      points.value.push({
+        x,
+        y,
+        isSelected: false
+      })
+
+      points.value.sort((a, b) => a.x - b.x)
+    }
+
+    return { points, selectPoint, createPoint }
   }
 })
 </script>
 
 <template>
   <div class="canvas-container">
-    <svg viewBox="0 0 1000 800" class="canvas">
+    <svg
+      height="500"
+      width="1000"
+      class="canvas"
+      @click="
+        createPoint(Math.round($event.offsetX), Math.round($event.offsetY))
+      "
+    >
       <keyframes-canvas-point
         v-for="point in points"
         :key="point.x"
         :point="point"
-        @click="handlePointClick(point.x)"
+        @click="selectPoint(point.x)"
       />
     </svg>
   </div>

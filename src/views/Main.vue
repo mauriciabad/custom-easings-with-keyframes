@@ -20,7 +20,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .main-layout {
   display: grid;
-  grid-template: minmax(auto, 1000px) / minmax(auto, 800px);
+  grid-template: minmax(auto, 500px) / minmax(auto, 1000px);
   align-items: center;
   justify-content: center;
 }

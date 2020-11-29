@@ -19,8 +19,8 @@ export default defineComponent({
 
 <template>
   <rect
-    :x="point.x - 4"
-    :y="point.y - 4"
+    :x="point.x - 7 - 4"
+    :y="point.y - 7 - 4"
     width="22"
     height="22"
     rx="6"
@@ -31,8 +31,8 @@ export default defineComponent({
   />
 
   <rect
-    :x="point.x"
-    :y="point.y"
+    :x="point.x - 7"
+    :y="point.y - 7"
     width="14"
     height="14"
     rx="2"
