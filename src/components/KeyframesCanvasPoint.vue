@@ -1,5 +1,6 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from '@/components/KeyframesCanvas.vue'
 
 interface Point {
   x: number
@@ -8,19 +9,22 @@ interface Point {
 }
 
 export default defineComponent({
-  props: { point: Object as () => Point },
+  props: { point: { type: Object as () => Point, required: true } },
   emits: ['click'],
 
-  setup() {
-    return {}
+  setup(props) {
+    const canvasX = computed(() => (props.point.x / 100) * CANVAS_WIDTH)
+    const canvasY = computed(() => (props.point.y / 100) * CANVAS_HEIGHT)
+
+    return { canvasX, canvasY }
   }
 })
 </script>
 
 <template>
   <rect
-    :x="point.x - 7 - 4"
-    :y="point.y - 7 - 4"
+    :x="canvasX - 7 - 4"
+    :y="canvasY - 7 - 4"
     width="22"
     height="22"
     rx="6"
@@ -31,8 +35,8 @@ export default defineComponent({
   />
 
   <rect
-    :x="point.x - 7"
-    :y="point.y - 7"
+    :x="canvasX - 7"
+    :y="canvasY - 7"
     width="14"
     height="14"
     rx="2"

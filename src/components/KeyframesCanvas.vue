@@ -8,6 +8,9 @@ interface Point {
   isSelected: boolean
 }
 
+export const CANVAS_WIDTH = 1000
+export const CANVAS_HEIGHT = 500
+
 export default defineComponent({
   components: { KeyframesCanvasPoint },
   props: {},
@@ -15,13 +18,13 @@ export default defineComponent({
   setup() {
     const points = ref<Point[]>([
       {
-        x: 100,
-        y: 100,
+        x: 10,
+        y: 10,
         isSelected: false
       },
       {
-        x: 200,
-        y: 100,
+        x: 20,
+        y: 10,
         isSelected: false
       }
     ])
@@ -48,7 +51,7 @@ export default defineComponent({
       points.value.sort((a, b) => a.x - b.x)
     }
 
-    return { points, selectPoint, createPoint }
+    return { points, selectPoint, createPoint, CANVAS_WIDTH, CANVAS_HEIGHT }
   }
 })
 </script>
@@ -56,11 +59,14 @@ export default defineComponent({
 <template>
   <div class="canvas-container">
     <svg
-      height="500"
-      width="1000"
+      :height="CANVAS_HEIGHT"
+      :width="CANVAS_WIDTH"
       class="canvas"
       @click="
-        createPoint(Math.round($event.offsetX), Math.round($event.offsetY))
+        createPoint(
+          Math.round(($event.offsetX / CANVAS_WIDTH) * 100),
+          Math.round(($event.offsetY / CANVAS_HEIGHT) * 100)
+        )
       "
     >
       <keyframes-canvas-point
