@@ -1,18 +1,14 @@
 <script lang="ts">
 import KeyframesCanvasPoint from '@/components/KeyframesCanvasPoint.vue'
+import KeyframesCanvasLine from '@/components/KeyframesCanvasLine.vue'
+import { Point } from '@/components/Canvas.d.ts'
 import { defineComponent, ref } from 'vue'
-
-interface Point {
-  x: number
-  y: number
-  isSelected: boolean
-}
 
 export const CANVAS_WIDTH = 1000
 export const CANVAS_HEIGHT = 500
 
 export default defineComponent({
-  components: { KeyframesCanvasPoint },
+  components: { KeyframesCanvasPoint, KeyframesCanvasLine },
   props: {},
 
   setup() {
@@ -69,6 +65,8 @@ export default defineComponent({
         )
       "
     >
+      <keyframes-canvas-line :points="points" />
+
       <keyframes-canvas-point
         v-for="point in points"
         :key="point.x"

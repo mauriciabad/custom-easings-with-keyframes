@@ -1,12 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '@/components/KeyframesCanvas.vue'
-
-interface Point {
-  x: number
-  y: number
-  isSelected: boolean
-}
+import { Point } from '@/components/Canvas.d.ts'
 
 export default defineComponent({
   props: { point: { type: Object as () => Point, required: true } },
