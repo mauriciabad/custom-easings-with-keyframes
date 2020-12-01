@@ -57,7 +57,14 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
 
     <pre class="code"><code>{{code}}</code></pre>
 
-    <ssh-pre language="css" dark copy-button reactive="true" class="code">
+    <ssh-pre
+      language="css"
+      dark
+      copy-button
+      reactive="true"
+      class="code"
+      v-if="false"
+    >
       <template v-slot:copy-button>
         <svg viewBox="-40 0 512 512" height="2rem" width="2rem">
           <path
@@ -80,6 +87,10 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
 }
 .code {
   text-align: left;
+  background: #222;
+  border-radius: 1rem;
+  color: #fff;
+  padding: 1.75rem 2rem;
 }
 ::v-deep .ssh-pre__copy {
   background: none;
