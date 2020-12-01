@@ -1,5 +1,6 @@
 <script lang="ts">
 import KeyframesCanvas from '@/components/KeyframesCanvas.vue'
+import Preview from '@/components/Preview.vue'
 import { computed, defineComponent, ref } from 'vue'
 import 'simple-syntax-highlighter/dist/sshpre.css'
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -7,7 +8,7 @@ import 'simple-syntax-highlighter/dist/sshpre.css'
 import SshPre from 'simple-syntax-highlighter'
 
 export default defineComponent({
-  components: { KeyframesCanvas, SshPre },
+  components: { KeyframesCanvas, SshPre, Preview },
 
   setup() {
     const points = ref<{ x: number; y: number }[]>([])
@@ -18,7 +19,7 @@ export default defineComponent({
     const fromValue = ref(1)
     const toValue = ref(2)
     const valueUnits = ref<'' | 'px' | 'em' | 'rem' | '%' | 'deg' | 'turn'>('')
-    const duration = ref(200)
+    const duration = ref(1000)
     const easingName = ref('ease-custom')
 
     const code = computed(() => {
@@ -36,7 +37,7 @@ export default defineComponent({
 ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
     })
 
-    return { code, points }
+    return { code, points, property, toValue, fromValue, valueUnits, duration }
   }
 })
 </script>
@@ -44,7 +45,18 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
 <template>
   <main class="main-layout">
     <keyframes-canvas @update:points="points = $event" />
+
+    <preview
+      :points="points"
+      :property="property"
+      :toValue="toValue"
+      :fromValue="fromValue"
+      :valueUnits="valueUnits"
+      :duration="duration"
+    />
+
     <pre class="code"><code>{{code}}</code></pre>
+
     <ssh-pre language="css" dark copy-button reactive="true" class="code">
       <template v-slot:copy-button>
         <svg viewBox="-40 0 512 512" height="2rem" width="2rem">
@@ -59,7 +71,6 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
   </main>
 </template>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .main-layout {
   display: grid;
