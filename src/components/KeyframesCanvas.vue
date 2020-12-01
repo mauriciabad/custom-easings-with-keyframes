@@ -54,7 +54,27 @@ export default defineComponent({
       points.value.sort((a, b) => a.x - b.x)
     }
 
-    return { points, selectPoint, createPoint, CANVAS_WIDTH, CANVAS_HEIGHT }
+    function handleMouseDown({
+      offsetX,
+      offsetY
+    }: {
+      offsetX: number
+      offsetY: number
+    }) {
+      const x = Math.round((offsetX / CANVAS_WIDTH) * 100)
+      const y = Math.round((offsetY / CANVAS_HEIGHT) * 100)
+      createPoint(x, y)
+      selectPoint(x)
+    }
+
+    return {
+      points,
+      selectPoint,
+      createPoint,
+      CANVAS_WIDTH,
+      CANVAS_HEIGHT,
+      handleMouseDown
+    }
   }
 })
 </script>
@@ -65,12 +85,7 @@ export default defineComponent({
       :height="CANVAS_HEIGHT"
       :width="CANVAS_WIDTH"
       class="canvas"
-      @click="
-        createPoint(
-          Math.round(($event.offsetX / CANVAS_WIDTH) * 100),
-          Math.round(($event.offsetY / CANVAS_HEIGHT) * 100)
-        )
-      "
+      @mousedown="handleMouseDown($event)"
     >
       <keyframes-canvas-line :points="points" />
 
@@ -78,7 +93,8 @@ export default defineComponent({
         v-for="point in points"
         :key="point.x"
         :point="point"
-        @click="selectPoint(point.x)"
+        @select="selectPoint(point.x)"
+        @move="movePoint(point.x, $event)"
       />
     </svg>
   </div>

@@ -5,13 +5,17 @@ import { Point } from '@/components/Canvas.d.ts'
 
 export default defineComponent({
   props: { point: { type: Object as () => Point, required: true } },
-  emits: ['click'],
+  emits: ['select', 'move'],
 
-  setup(props) {
+  setup(props, { emit }) {
     const canvasX = computed(() => (props.point.x / 100) * CANVAS_WIDTH)
     const canvasY = computed(() => (props.point.y / 100) * CANVAS_HEIGHT)
 
-    return { canvasX, canvasY }
+    function handleMouseDown() {
+      emit('select')
+    }
+
+    return { canvasX, canvasY, handleMouseDown }
   }
 })
 </script>
@@ -41,7 +45,7 @@ export default defineComponent({
     tabindex="0"
     class="point"
     :class="{ 'point--selected': point.isSelected }"
-    @click="$emit('click', $event)"
+    @mousedown="handleMouseDown"
   />
 </template>
 
