@@ -98,6 +98,9 @@ export default defineComponent({
 <style scoped lang="scss">
 .preview {
   padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &__element {
     pointer-events: none;
     z-index: 1000;

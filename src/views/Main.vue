@@ -44,7 +44,10 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
 
 <template>
   <main class="main-layout">
-    <keyframes-canvas @update:points="points = $event" />
+    <keyframes-canvas
+      @update:points="points = $event"
+      class="keyframes-canvas"
+    />
 
     <preview
       :points="points"
@@ -53,6 +56,7 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
       :fromValue="fromValue"
       :valueUnits="valueUnits"
       :duration="duration"
+      class="preview"
     />
 
     <pre class="code"><code>{{code}}</code></pre>
@@ -81,9 +85,20 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
 <style scoped lang="scss">
 .main-layout {
   display: grid;
-  grid-template: minmax(auto, 500px) / minmax(auto, 1000px);
+  grid-template: min-content auto / min-content auto;
+  grid-template-areas: 'a b' 'c b';
   align-items: center;
   justify-content: center;
+  padding: 2rem;
+  gap: 1rem;
+  height: 100%;
+  box-sizing: border-box;
+}
+.keyframes-canvas {
+  grid-area: a;
+}
+.preview {
+  grid-area: c;
 }
 .code {
   text-align: left;
@@ -91,6 +106,11 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
   border-radius: 1rem;
   color: #fff;
   padding: 1.75rem 2rem;
+  grid-area: b;
+  align-self: stretch;
+  justify-self: stretch;
+  margin: 0;
+  overflow: auto;
 }
 ::v-deep .ssh-pre__copy {
   background: none;
