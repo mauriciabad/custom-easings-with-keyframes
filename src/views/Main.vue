@@ -85,7 +85,7 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
 <style scoped lang="scss">
 .main-layout {
   display: grid;
-  grid-template: min-content auto / min-content auto;
+  grid-template: min-content 1fr / min-content auto;
   grid-template-areas: 'a b' 'c b';
   align-items: center;
   justify-content: center;
