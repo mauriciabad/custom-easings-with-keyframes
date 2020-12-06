@@ -3,6 +3,7 @@ import KeyframesCanvasPoint from '@/components/KeyframesCanvasPoint.vue'
 import KeyframesCanvasLine from '@/components/KeyframesCanvasLine.vue'
 import { Point } from '@/components/Canvas.d.ts'
 import { defineComponent, ref, watchEffect } from 'vue'
+import { invertCoordenates } from '@/components/KeyframesCanvasHelper'
 
 export const CANVAS_WIDTH = 1000
 export const CANVAS_HEIGHT = 500
@@ -14,13 +15,13 @@ export default defineComponent({
   setup(props, { emit }) {
     const points = ref<Point[]>([
       {
-        x: 10,
-        y: 10,
+        x: 0,
+        y: 0,
         isSelected: false
       },
       {
-        x: 20,
-        y: 10,
+        x: 100,
+        y: 100,
         isSelected: false
       }
     ])
@@ -28,7 +29,7 @@ export default defineComponent({
     watchEffect(() => {
       emit(
         'update:points',
-        points.value.map(p => ({ x: p.x / 100, y: (p.y * -1) / 100 }))
+        points.value.map(p => ({ x: p.x / 100, y: p.y / 100 }))
       )
     })
 
@@ -62,7 +63,7 @@ export default defineComponent({
       offsetY: number
     }) {
       const x = Math.round((offsetX / CANVAS_WIDTH) * 100)
-      const y = Math.round((offsetY / CANVAS_HEIGHT) * 100)
+      const y = Math.round(invertCoordenates(offsetY / CANVAS_HEIGHT) * 100)
       createPoint(x, y)
       selectPoint(x)
     }

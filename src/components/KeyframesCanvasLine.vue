@@ -2,6 +2,7 @@
 import { computed, defineComponent } from 'vue'
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '@/components/KeyframesCanvas.vue'
 import { Point } from '@/components/Canvas.d.ts'
+import { invertCoordenates } from '@/components/KeyframesCanvasHelper'
 
 export default defineComponent({
   props: { points: { type: Object as () => Point[], required: true } },
@@ -10,7 +11,7 @@ export default defineComponent({
     const path = computed(() =>
       props.points.reduce((total, p) => {
         const x = (p.x / 100) * CANVAS_WIDTH
-        const y = (p.y / 100) * CANVAS_HEIGHT
+        const y = invertCoordenates(p.y / 100) * CANVAS_HEIGHT
 
         if (!total) return `M${x} ${y}`
         else return `${total}L${x} ${y}`

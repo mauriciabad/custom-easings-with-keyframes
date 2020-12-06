@@ -2,6 +2,7 @@
 import { computed, defineComponent } from 'vue'
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '@/components/KeyframesCanvas.vue'
 import { Point } from '@/components/Canvas.d.ts'
+import { invertCoordenates } from '@/components/KeyframesCanvasHelper'
 
 export default defineComponent({
   props: { point: { type: Object as () => Point, required: true } },
@@ -9,7 +10,9 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const canvasX = computed(() => (props.point.x / 100) * CANVAS_WIDTH)
-    const canvasY = computed(() => (props.point.y / 100) * CANVAS_HEIGHT)
+    const canvasY = computed(
+      () => invertCoordenates(props.point.y / 100) * CANVAS_HEIGHT
+    )
 
     function handleMouseDown() {
       emit('select')
