@@ -57,14 +57,24 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
         <option value="opacity">opacity</option>
         <option value="rotate">rotate</option>
       </select>
-      <input type="number" name="duration" id="duration" v-model="duration" />
+      <input
+        type="number"
+        name="duration"
+        id="duration"
+        v-model.number="duration"
+      />
       <input
         type="number"
         name="fromValue"
         id="fromValue"
-        v-model="fromValue"
+        v-model.number="fromValue"
       />
-      <input type="number" name="toValue" id="toValue" v-model="toValue" />
+      <input
+        type="number"
+        name="toValue"
+        id="toValue"
+        v-model.number="toValue"
+      />
       <select name="valueUnits" id="valueUnits" v-model="valueUnits">
         <option value="">none</option>
         <option value="px">px</option>
