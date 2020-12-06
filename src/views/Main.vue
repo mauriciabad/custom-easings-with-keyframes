@@ -16,8 +16,8 @@ export default defineComponent({
     const property = ref<
       'scale' | 'translateX' | 'translateY' | 'opacity' | 'rotate'
     >('scale')
-    const fromValue = ref(1)
-    const toValue = ref(2)
+    const fromValue = ref(0)
+    const toValue = ref(1)
     const valueUnits = ref<'' | 'px' | 'em' | 'rem' | '%' | 'deg' | 'turn'>('')
     const duration = ref(1000)
     const easingName = ref('ease-custom')
@@ -48,6 +48,33 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
       @update:points="points = $event"
       class="keyframes-canvas"
     />
+
+    <div class="options">
+      <select name="property" id="property" v-model="property">
+        <option value="scale">scale</option>
+        <option value="translateX">translateX</option>
+        <option value="translateY">translateY</option>
+        <option value="opacity">opacity</option>
+        <option value="rotate">rotate</option>
+      </select>
+      <input type="number" name="duration" id="duration" v-model="duration" />
+      <input
+        type="number"
+        name="fromValue"
+        id="fromValue"
+        v-model="fromValue"
+      />
+      <input type="number" name="toValue" id="toValue" v-model="toValue" />
+      <select name="valueUnits" id="valueUnits" v-model="valueUnits">
+        <option value="">none</option>
+        <option value="px">px</option>
+        <option value="em">em</option>
+        <option value="rem">rem</option>
+        <option value="%">%</option>
+        <option value="deg">deg</option>
+        <option value="turn">turn</option>
+      </select>
+    </div>
 
     <preview
       :points="points"
@@ -85,8 +112,8 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
 <style scoped lang="scss">
 .main-layout {
   display: grid;
-  grid-template: min-content 1fr / min-content auto;
-  grid-template-areas: 'a b' 'c b';
+  grid-template: min-content min-content 1fr / min-content auto;
+  grid-template-areas: 'canvas code' 'options code' 'preview code';
   align-items: center;
   justify-content: center;
   padding: 2rem;
@@ -95,10 +122,13 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
   box-sizing: border-box;
 }
 .keyframes-canvas {
-  grid-area: a;
+  grid-area: canvas;
 }
 .preview {
-  grid-area: c;
+  grid-area: preview;
+}
+.options {
+  grid-area: options;
 }
 .code {
   text-align: left;
@@ -106,11 +136,11 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
   border-radius: 1rem;
   color: #fff;
   padding: 1.75rem 2rem;
-  grid-area: b;
   align-self: stretch;
   justify-self: stretch;
   margin: 0;
   overflow: auto;
+  grid-area: code;
 }
 ::v-deep .ssh-pre__copy {
   background: none;
