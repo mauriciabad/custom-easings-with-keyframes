@@ -1,32 +1,31 @@
 <script lang="ts">
-import { defineComponent, ref, watchEffect } from 'vue'
-import { Point } from '@/components/Canvas.d.ts'
+import { computed, defineComponent, ref, watchEffect } from 'vue'
+import { useStore } from 'vuex'
+import { key } from '@/store'
 
 export default defineComponent({
-  props: {
-    points: { type: Object as () => Point[], required: true },
-    property: { type: String, required: true },
-    toValue: { type: Number, required: true },
-    fromValue: { type: Number, required: true },
-    valueUnits: { type: String, required: true },
-    duration: { type: Number, required: true }
-  },
+  props: {},
   components: {},
 
-  setup(props) {
+  setup() {
+    const store = useStore(key)
+    const points = computed(() => store.state.points)
+    const options = computed(() => store.state.options)
     const previewElement = ref<HTMLDivElement>()
 
     watchEffect(() => {
       if (previewElement.value) {
-        const keyframes = props.points.map(p => ({
-          offset: p.x,
-          transform: `${props.property}(${Math.round(
-            ((props.toValue - props.fromValue) * p.y + props.fromValue) * 100
-          ) / 100}${props.valueUnits})`
+        const keyframes = points.value.map(p => ({
+          offset: p.x / 100,
+          transform: `${options.value.property}(${Math.round(
+            ((options.value.toValue - options.value.fromValue) * (p.y / 100) +
+              options.value.fromValue) *
+              100
+          ) / 100}${options.value.valueUnits})`
         }))
 
         previewElement.value.animate(keyframes, {
-          duration: props.duration,
+          duration: options.value.duration,
           iterations: Infinity
         })
       }
