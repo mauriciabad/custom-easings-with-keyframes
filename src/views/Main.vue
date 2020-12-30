@@ -3,10 +3,11 @@ import KeyframesCanvas from '@/components/KeyframesCanvas.vue'
 import Preview from '@/components/Preview.vue'
 import CodeBlock from '@/components/CodeBlock.vue'
 import Options from '@/components/Options.vue'
+import Instructions from '@/components/Instructions.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  components: { KeyframesCanvas, CodeBlock, Preview, Options },
+  components: { KeyframesCanvas, CodeBlock, Preview, Options, Instructions },
 
   setup() {
     return {}
@@ -19,6 +20,7 @@ export default defineComponent({
     <keyframes-canvas class="keyframes-canvas" />
     <options class="options" />
     <preview class="preview" />
+    <instructions class="instructions" />
     <code-block />
   </main>
 </template>
@@ -26,8 +28,12 @@ export default defineComponent({
 <style scoped lang="scss">
 .main-layout {
   display: grid;
-  grid-template: min-content min-content 1fr / min-content auto;
-  grid-template-areas: 'canvas code' 'options code' 'preview code';
+  grid-template: min-content min-content min-content 1fr / min-content auto;
+  grid-template-areas:
+    'canvas instructions'
+    'canvas code'
+    'options code'
+    'preview code';
   align-items: center;
   justify-content: center;
   padding: 2rem;
@@ -43,5 +49,8 @@ export default defineComponent({
 }
 .options {
   grid-area: options;
+}
+.instructions {
+  grid-area: instructions;
 }
 </style>
