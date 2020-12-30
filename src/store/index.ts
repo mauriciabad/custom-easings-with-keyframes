@@ -4,15 +4,27 @@ import { createStore, Store } from 'vuex'
 
 export const key: InjectionKey<Store<State>> = Symbol()
 
+export type Property =
+  | 'scale'
+  | 'translateX'
+  | 'translateY'
+  | 'translateZ'
+  | 'opacity'
+  | 'rotate'
+
+export type ValueUnits = '' | 'px' | 'em' | 'rem' | '%' | 'deg' | 'turn'
+
+export type Options = {
+  property: Property
+  fromValue: number
+  toValue: number
+  valueUnits: ValueUnits
+  duration: number
+  easingName: string
+}
+
 export type State = {
-  options: {
-    property: 'scale' | 'translateX' | 'translateY' | 'opacity' | 'rotate'
-    fromValue: number
-    toValue: number
-    valueUnits: '' | 'px' | 'em' | 'rem' | '%' | 'deg' | 'turn'
-    duration: number
-    easingName: string
-  }
+  options: Options
   points: Point[]
 }
 

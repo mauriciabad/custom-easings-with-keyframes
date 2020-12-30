@@ -1,7 +1,17 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
-import { key } from '@/store'
+import { key, Options } from '@/store'
+import { isTransformProperty } from './KeyframesCanvasHelper'
+import { Point } from './Canvas'
+
+function propertyValue(point: Point, options: Options) {
+  return `${Math.round(
+    ((options.toValue - options.fromValue) * (point.y / 100) +
+      options.fromValue) *
+      100
+  ) / 100}${options.valueUnits}`
+}
 
 export default defineComponent({
   props: {},
@@ -12,19 +22,32 @@ export default defineComponent({
     const points = computed(() => store.state.points)
     const options = computed(() => store.state.options)
     const previewElement = ref<HTMLDivElement>()
+    const animation = ref<Animation>()
 
     watchEffect(() => {
       if (previewElement.value) {
-        const keyframes = points.value.map(p => ({
-          offset: p.x / 100,
-          transform: `${options.value.property}(${Math.round(
-            ((options.value.toValue - options.value.fromValue) * (p.y / 100) +
-              options.value.fromValue) *
-              100
-          ) / 100}${options.value.valueUnits})`
-        }))
+        const keyframes = points.value.map(point => {
+          const keyframe: Keyframe = {
+            offset: point.x / 100
+          }
 
-        previewElement.value.animate(keyframes, {
+          if (isTransformProperty(options.value.property)) {
+            keyframe.transform = `${options.value.property}(${propertyValue(
+              point,
+              options.value
+            )})`
+          } else {
+            keyframe[options.value.property] = propertyValue(
+              point,
+              options.value
+            )
+          }
+
+          return keyframe
+        })
+
+        if (animation.value) animation.value.cancel()
+        animation.value = previewElement.value.animate(keyframes, {
           duration: options.value.duration,
           iterations: Infinity
         })
