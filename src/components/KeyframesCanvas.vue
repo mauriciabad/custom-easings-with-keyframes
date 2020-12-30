@@ -34,6 +34,18 @@ export default defineComponent({
     const isMoving = ref(false)
     const wasMovingPointSelected = ref(false)
 
+    document.body.addEventListener('keydown', function(event: KeyboardEvent) {
+      switch (event.key) {
+        case 'Backspace':
+        case 'Delete':
+          store.commit('deleteFocusedPoints')
+          break
+        case 'Escape':
+          store.commit('blurAllPoints')
+          break
+      }
+    })
+
     function handleLeftClick(event: MouseEvent) {
       moveOrigin = extractCoordenates(event)
 
