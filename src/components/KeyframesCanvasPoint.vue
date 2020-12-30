@@ -3,25 +3,17 @@ import { computed, defineComponent } from 'vue'
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '@/components/KeyframesCanvas.vue'
 import { Point } from '@/components/Canvas.d.ts'
 import { invertCoordenates } from '@/components/KeyframesCanvasHelper'
-import { useStore } from 'vuex'
-import { key } from '@/store'
 
 export default defineComponent({
   props: { point: { type: Object as () => Point, required: true } },
 
   setup(props) {
-    const store = useStore(key)
-
     const canvasX = computed(() => (props.point.x / 100) * CANVAS_WIDTH)
     const canvasY = computed(
       () => invertCoordenates(props.point.y / 100) * CANVAS_HEIGHT
     )
 
-    function handleMouseDown() {
-      store.commit('selectPoint', props.point)
-    }
-
-    return { canvasX, canvasY, handleMouseDown }
+    return { canvasX, canvasY }
   }
 })
 </script>
@@ -51,7 +43,6 @@ export default defineComponent({
     tabindex="0"
     class="point"
     :class="{ 'point--selected': point.isSelected }"
-    @mousedown="handleMouseDown"
   />
 </template>
 

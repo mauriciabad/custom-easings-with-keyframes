@@ -32,12 +32,20 @@ export default defineComponent({
 
     const originalPoints = ref(points.value)
     const isMoving = ref(false)
+    const wasMovingPointSelected = ref(false)
 
     function handleMouseDown(event: MouseEvent) {
       moveOrigin = extractCoordenates(event)
 
+      const point = points.value.find(p => p.x === moveOrigin.x)
+      wasMovingPointSelected.value = point ? point.isSelected : false
+
       store.commit('createPoint', moveOrigin)
-      store.commit('selectPoint', moveOrigin)
+
+      if (!wasMovingPointSelected.value && !event.shiftKey) {
+        store.commit('blurAllPoints', moveOrigin)
+      }
+      store.commit('focusPoint', moveOrigin)
 
       originalPoints.value = deepClone(points.value)
       isMoving.value = true
@@ -61,6 +69,17 @@ export default defineComponent({
     function handleMouseUp(event: MouseEvent) {
       handleMouseMove(event)
 
+      const moveEnd = extractCoordenates(event)
+      if (moveOrigin.x === moveEnd.x && moveOrigin.y === moveEnd.y) {
+        if (wasMovingPointSelected.value) {
+          store.commit('blurPoint', moveOrigin)
+        } else {
+          if (!event.shiftKey) {
+            store.commit('blurAllPoints', moveOrigin)
+          }
+          store.commit('focusPoint', moveOrigin)
+        }
+      }
       isMoving.value = false
     }
 

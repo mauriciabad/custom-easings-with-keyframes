@@ -64,10 +64,28 @@ export const store = createStore<State>({
 
       state.points.sort((a, b) => a.x - b.x)
     },
-    selectPoint: (state, { x }: { x: number }) => {
+    focusPoint: (state, { x }: { x: number }) => {
       state.points = state.points.map(p => ({
         ...p,
-        isSelected: p.x === x
+        isSelected: p.x === x ? true : p.isSelected
+      }))
+    },
+    blurPoint: (state, { x }: { x: number }) => {
+      state.points = state.points.map(p => ({
+        ...p,
+        isSelected: p.x === x ? false : p.isSelected
+      }))
+    },
+    blurAllPoints: state => {
+      state.points = state.points.map(p => ({
+        ...p,
+        isSelected: false
+      }))
+    },
+    togglePoint: (state, { x }: { x: number }) => {
+      state.points = state.points.map(p => ({
+        ...p,
+        isSelected: p.x === x ? !p.isSelected : p.isSelected
       }))
     },
     moveSelectedPoints: (
@@ -75,7 +93,10 @@ export const store = createStore<State>({
       {
         moveOffset,
         originalPoints
-      }: { moveOffset: { x: number; y: number }; originalPoints: Point[] }
+      }: {
+        moveOffset: { x: number; y: number }
+        originalPoints: Point[]
+      }
     ) => {
       const pointsToOverride: Set<number> = new Set()
 
