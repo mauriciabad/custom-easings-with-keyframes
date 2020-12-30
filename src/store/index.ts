@@ -1,4 +1,5 @@
 import { Point } from '@/components/Canvas'
+import { clamp } from '@/components/KeyframesCanvasHelper'
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
 
@@ -64,7 +65,40 @@ export const store = createStore<State>({
       state.points.sort((a, b) => a.x - b.x)
     },
     selectPoint: (state, { x }: { x: number }) => {
-      state.points = state.points.map(p => ({ ...p, isSelected: p.x === x }))
+      state.points = state.points.map(p => ({
+        ...p,
+        isSelected: p.x === x
+      }))
+    },
+    moveSelectedPoints: (
+      state,
+      {
+        moveOffset,
+        originalPoints
+      }: { moveOffset: { x: number; y: number }; originalPoints: Point[] }
+    ) => {
+      const pointsToOverride: Set<number> = new Set()
+
+      state.points = originalPoints.map(point => {
+        if (!point.isSelected) return point
+
+        const newPos = {
+          x: clamp(point.x + moveOffset.x, 0, 100),
+          y: clamp(point.y + moveOffset.y, 0, 100)
+        }
+
+        if (originalPoints.find(p => p.x === newPos.x)) {
+          pointsToOverride.add(newPos.x)
+        }
+
+        return { ...point, ...newPos }
+      })
+
+      state.points = state.points.filter(
+        point => point.isSelected || !pointsToOverride.has(point.x)
+      )
+
+      state.points.sort((a, b) => a.x - b.x)
     }
   },
   actions: {}
