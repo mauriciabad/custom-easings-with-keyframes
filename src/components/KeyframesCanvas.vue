@@ -84,7 +84,6 @@ export default defineComponent({
     }
 
     function handleRightClick(event: MouseEvent) {
-      event.preventDefault()
       const position = extractCoordenates(event)
       const point = points.value.find(p => p.x === position.x)
       if (point) store.commit('focusPoint', position)
@@ -93,6 +92,7 @@ export default defineComponent({
     }
 
     function handleMouseUp(event: MouseEvent) {
+      event.preventDefault()
       switch (event.which) {
         case 1:
           handleLeftClickUp(event)
@@ -101,6 +101,7 @@ export default defineComponent({
     }
 
     function handleMouseDown(event: MouseEvent) {
+      event.preventDefault()
       switch (event.which) {
         case 1:
           handleLeftClick(event)
