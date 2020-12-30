@@ -34,7 +34,7 @@ export default defineComponent({
     const isMoving = ref(false)
     const wasMovingPointSelected = ref(false)
 
-    function handleMouseDown(event: MouseEvent) {
+    function handleLeftClick(event: MouseEvent) {
       moveOrigin = extractCoordenates(event)
 
       const point = points.value.find(p => p.x === moveOrigin.x)
@@ -66,7 +66,7 @@ export default defineComponent({
       }
     }
 
-    function handleMouseUp(event: MouseEvent) {
+    function handleLeftClickUp(event: MouseEvent) {
       handleMouseMove(event)
 
       const moveEnd = extractCoordenates(event)
@@ -83,13 +83,42 @@ export default defineComponent({
       isMoving.value = false
     }
 
+    function handleRightClick(event: MouseEvent) {
+      event.preventDefault()
+      const position = extractCoordenates(event)
+      const point = points.value.find(p => p.x === position.x)
+      if (point) store.commit('focusPoint', position)
+
+      store.commit('deleteFocusedPoints')
+    }
+
+    function handleMouseUp(event: MouseEvent) {
+      switch (event.which) {
+        case 1:
+          handleLeftClickUp(event)
+          break
+      }
+    }
+
+    function handleMouseDown(event: MouseEvent) {
+      switch (event.which) {
+        case 1:
+          handleLeftClick(event)
+          break
+        case 3:
+          handleRightClick(event)
+          break
+      }
+    }
+
     return {
       points,
       CANVAS_WIDTH,
       CANVAS_HEIGHT,
       handleMouseDown,
       handleMouseMove,
-      handleMouseUp
+      handleMouseUp,
+      handleRightClick
     }
   }
 })
@@ -104,6 +133,7 @@ export default defineComponent({
       @mousedown="handleMouseDown($event)"
       @mousemove="handleMouseMove($event)"
       @mouseup="handleMouseUp($event)"
+      @contextmenu="$event.preventDefault()"
     >
       <keyframes-canvas-line :points="points" />
 
