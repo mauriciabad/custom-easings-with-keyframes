@@ -61,6 +61,8 @@ export default defineComponent({
       <option value="%">%</option>
       <option value="deg">deg</option>
       <option value="turn">turn</option>
+      <option value="vh">vh</option>
+      <option value="vw">vw</option>
     </select>
   </div>
 </template>

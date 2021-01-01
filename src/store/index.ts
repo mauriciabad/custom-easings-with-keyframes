@@ -13,7 +13,16 @@ export type Property =
   | 'opacity'
   | 'rotate'
 
-export type ValueUnits = '' | 'px' | 'em' | 'rem' | '%' | 'deg' | 'turn'
+export type ValueUnits =
+  | ''
+  | 'px'
+  | 'em'
+  | 'rem'
+  | '%'
+  | 'deg'
+  | 'turn'
+  | 'vh'
+  | 'vw'
 
 export type Options = {
   property: Property
