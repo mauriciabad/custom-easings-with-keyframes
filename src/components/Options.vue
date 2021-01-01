@@ -22,6 +22,7 @@ export default defineComponent({
       <option value="scale">scale</option>
       <option value="translateX">translateX</option>
       <option value="translateY">translateY</option>
+      <option value="translateZ">translateZ</option>
       <option value="opacity">opacity</option>
       <option value="rotate">rotate</option>
     </select>
