@@ -108,7 +108,7 @@ export const store = createStore<State>({
 
         const newPos = {
           x: clamp(point.x + moveOffset.x, 0, 100),
-          y: clamp(point.y + moveOffset.y, 0, 100)
+          y: point.y + moveOffset.y
         }
 
         if (originalPoints.find(p => p.x === newPos.x)) {

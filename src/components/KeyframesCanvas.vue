@@ -9,11 +9,19 @@ import deepClone from 'deep-clone'
 
 export const CANVAS_WIDTH = 1000
 export const CANVAS_HEIGHT = 500
+export const CANVAS_OFFSET_X = 50
+export const CANVAS_OFFSET_Y = 175
 
 function extractCoordenates(event: MouseEvent) {
   return {
-    x: clamp(Math.round((event.offsetX / CANVAS_WIDTH) * 100), 0, 100),
-    y: Math.round(invertCoordenates(event.offsetY / CANVAS_HEIGHT) * 100)
+    x: clamp(
+      Math.round(((event.offsetX - CANVAS_OFFSET_X) / CANVAS_WIDTH) * 100),
+      0,
+      100
+    ),
+    y: Math.round(
+      invertCoordenates((event.offsetY - CANVAS_OFFSET_Y) / CANVAS_HEIGHT) * 100
+    )
   }
 }
 
@@ -128,6 +136,8 @@ export default defineComponent({
       points,
       CANVAS_WIDTH,
       CANVAS_HEIGHT,
+      CANVAS_OFFSET_X,
+      CANVAS_OFFSET_Y,
       handleMouseDown,
       handleMouseMove,
       handleMouseUp,
@@ -140,21 +150,42 @@ export default defineComponent({
 <template>
   <div class="canvas-container">
     <svg
-      :height="CANVAS_HEIGHT"
-      :width="CANVAS_WIDTH"
-      class="canvas"
+      height="850"
+      width="1100"
       @mousedown="handleMouseDown($event)"
       @mousemove="handleMouseMove($event)"
       @mouseup="handleMouseUp($event)"
       @contextmenu="$event.preventDefault()"
+      style="overflow: visible"
     >
-      <keyframes-canvas-line :points="points" />
-
-      <keyframes-canvas-point
-        v-for="point in points"
-        :key="point.x"
-        :point="point"
+      <rect
+        :x="CANVAS_OFFSET_X"
+        :y="CANVAS_OFFSET_Y"
+        :width="CANVAS_WIDTH"
+        :height="CANVAS_HEIGHT"
+        rx="4"
+        ry="4"
+        class="rectangle"
       />
+
+      <svg
+        :x="CANVAS_OFFSET_X"
+        :y="CANVAS_OFFSET_Y"
+        :width="CANVAS_WIDTH"
+        :height="CANVAS_HEIGHT"
+        style="overflow: visible"
+      >
+        <g>
+          <keyframes-canvas-line :points="points" />
+        </g>
+        <g>
+          <keyframes-canvas-point
+            v-for="point in points"
+            :key="point.x"
+            :point="point"
+          />
+        </g>
+      </svg>
     </svg>
   </div>
 </template>
@@ -163,8 +194,9 @@ export default defineComponent({
 .canvas-container {
   width: 100%;
 }
-.canvas {
-  border: solid 4px #333;
-  border-radius: 4px;
+.rectangle {
+  stroke-width: 4px;
+  stroke: #333;
+  fill: none;
 }
 </style>
