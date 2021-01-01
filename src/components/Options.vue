@@ -50,6 +50,7 @@ export default defineComponent({
       name="toValue"
       id="toValue"
       v-model.number="options.toValue"
+      width="6ch"
     />
 
     <label for="valueUnits">Units</label>
@@ -66,3 +67,9 @@ export default defineComponent({
     </select>
   </div>
 </template>
+
+<style lang="scss" scoped>
+input[type='number'] {
+  width: 8ch;
+}
+</style>
