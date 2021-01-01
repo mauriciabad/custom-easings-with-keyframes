@@ -5,7 +5,7 @@ import { key, Options } from '@/store'
 import { isTransformProperty } from './KeyframesCanvasHelper'
 import { Point } from './Canvas'
 
-function propertyValue(point: Point, options: Options) {
+export function propertyValue(point: Point, options: Options) {
   return `${Math.round(
     ((options.toValue - options.fromValue) * (point.y / 100) +
       options.fromValue) *

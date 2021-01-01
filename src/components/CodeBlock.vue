@@ -6,6 +6,8 @@ import 'simple-syntax-highlighter/dist/sshpre.css'
 import SshPre from 'simple-syntax-highlighter'
 import { useStore } from 'vuex'
 import { key } from '@/store'
+import { isTransformProperty } from './KeyframesCanvasHelper'
+import { propertyValue } from './Preview.vue'
 
 export default defineComponent({
   components: { SshPre },
@@ -16,14 +18,23 @@ export default defineComponent({
     const options = computed(() => store.state.options)
 
     const code = computed(() => {
-      const keyframesLines = points.value.map(
-        p =>
-          `${p.x.toFixed()}% {transform: ${options.value.property}(${Math.round(
-            ((options.value.toValue - options.value.fromValue) * (p.y / 100) +
-              options.value.fromValue) *
-              100
-          ) / 100}${options.value.valueUnits});}`
-      )
+      const keyframesLines = points.value.map(point => {
+        let properties: string
+
+        if (isTransformProperty(options.value.property)) {
+          properties = `transform: ${options.value.property}(${propertyValue(
+            point,
+            options.value
+          )})`
+        } else {
+          properties = `${options.value.property}: ${propertyValue(
+            point,
+            options.value
+          )}`
+        }
+
+        return `${point.x.toFixed()}% {${properties}}`
+      })
 
       return `.${options.value.easingName} {
   animation: ${options.value.easingName} ${options.value.duration}ms linear;
