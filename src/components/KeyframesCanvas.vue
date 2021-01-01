@@ -1,6 +1,7 @@
 <script lang="ts">
 import KeyframesCanvasPoint from '@/components/KeyframesCanvasPoint.vue'
 import KeyframesCanvasLine from '@/components/KeyframesCanvasLine.vue'
+import KeyframesCanvasGuideVertical from '@/components/KeyframesCanvasGuideVertical.vue'
 import { computed, defineComponent, ref } from 'vue'
 import { invertCoordenates, clamp } from '@/components/KeyframesCanvasHelper'
 import { useStore } from 'vuex'
@@ -26,7 +27,11 @@ function extractCoordenates(event: MouseEvent) {
 }
 
 export default defineComponent({
-  components: { KeyframesCanvasPoint, KeyframesCanvasLine },
+  components: {
+    KeyframesCanvasPoint,
+    KeyframesCanvasLine,
+    KeyframesCanvasGuideVertical
+  },
   props: {},
 
   setup() {
@@ -156,8 +161,16 @@ export default defineComponent({
       @mousemove="handleMouseMove($event)"
       @mouseup="handleMouseUp($event)"
       @contextmenu="$event.preventDefault()"
-      style="overflow: visible"
+      style="overflow: visible; user-select: none"
     >
+      <g>
+        <keyframes-canvas-guide-vertical
+          v-for="n in 11"
+          :key="n"
+          :position="(n - 1) / 10"
+        />
+      </g>
+
       <rect
         :x="CANVAS_OFFSET_X"
         :y="CANVAS_OFFSET_Y"
