@@ -28,12 +28,12 @@ export default defineComponent({
 <style scoped lang="scss">
 .main-layout {
   display: grid;
-  grid-template: min-content min-content min-content 1fr / min-content auto;
+  grid-template: min-content 1fr min-content min-content / min-content auto;
   grid-template-areas:
     'canvas instructions'
     'canvas code'
-    'options code'
-    'preview code';
+    'canvas options'
+    'canvas preview';
   align-items: center;
   justify-content: center;
   padding: 2rem;
