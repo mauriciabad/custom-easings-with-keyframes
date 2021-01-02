@@ -2,6 +2,7 @@
 import KeyframesCanvasPoint from '@/components/KeyframesCanvas/KeyframesCanvasPoint.vue'
 import KeyframesCanvasLine from '@/components/KeyframesCanvas/KeyframesCanvasLine.vue'
 import KeyframesCanvasGuides from '@/components/KeyframesCanvas/KeyframesCanvasGuides.vue'
+import Instructions from '@/components/Instructions.vue'
 import { computed, defineComponent, ref } from 'vue'
 import { invertCoordenates, clamp } from '@/helpers'
 import { useStore } from 'vuex'
@@ -13,24 +14,12 @@ export const CANVAS_HEIGHT = 500
 export const CANVAS_OFFSET_X = 50
 export const CANVAS_OFFSET_Y = 175
 
-function extractCoordenates(event: MouseEvent) {
-  return {
-    x: clamp(
-      Math.round(((event.offsetX - CANVAS_OFFSET_X) / CANVAS_WIDTH) * 100),
-      0,
-      100
-    ),
-    y: Math.round(
-      invertCoordenates((event.offsetY - CANVAS_OFFSET_Y) / CANVAS_HEIGHT) * 100
-    )
-  }
-}
-
 export default defineComponent({
   components: {
     KeyframesCanvasPoint,
     KeyframesCanvasLine,
-    KeyframesCanvasGuides
+    KeyframesCanvasGuides,
+    Instructions
   },
   props: {},
 
@@ -46,6 +35,29 @@ export default defineComponent({
     const originalPoints = ref(points.value)
     const isMoving = ref(false)
     const wasMovingPointSelected = ref(false)
+
+    const canvas = ref<SVGElement>()
+
+    function extractCoordenates(event: MouseEvent) {
+      if (!canvas.value) return { x: 0, y: 0 }
+
+      const canvasRects = canvas.value.getClientRects()[0]
+      const offset = {
+        x: event.clientX - canvasRects.left,
+        y: event.clientY - canvasRects.top
+      }
+
+      return {
+        x: clamp(
+          Math.round(((offset.x - CANVAS_OFFSET_X) / CANVAS_WIDTH) * 100),
+          0,
+          100
+        ),
+        y: Math.round(
+          invertCoordenates((offset.y - CANVAS_OFFSET_Y) / CANVAS_HEIGHT) * 100
+        )
+      }
+    }
 
     document.body.addEventListener('keydown', function(event: KeyboardEvent) {
       switch (event.key) {
@@ -146,7 +158,8 @@ export default defineComponent({
       handleMouseDown,
       handleMouseMove,
       handleMouseUp,
-      handleRightClick
+      handleRightClick,
+      canvas
     }
   }
 })
@@ -157,6 +170,7 @@ export default defineComponent({
     <svg
       height="850"
       width="1100"
+      ref="canvas"
       @mousedown="handleMouseDown($event)"
       @mousemove="handleMouseMove($event)"
       @mouseup="handleMouseUp($event)"
@@ -198,6 +212,14 @@ export default defineComponent({
         class="rectangle"
       />
 
+      <foreignObject
+        :x="CANVAS_OFFSET_X + 16"
+        :y="CANVAS_OFFSET_Y + 16"
+        :width="CANVAS_WIDTH - 32"
+        :height="CANVAS_HEIGHT - 32"
+      >
+        <instructions class="instructions" />
+      </foreignObject>
       <svg
         :x="CANVAS_OFFSET_X"
         :y="CANVAS_OFFSET_Y"

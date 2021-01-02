@@ -14,7 +14,7 @@ export default defineComponent({
 
 <template>
   <div class="instructions">
-    <h2>Instructions</h2>
+    <div class="background"></div>
     <ul>
       <li>
         <icon name="left-click" /><icon name="right-arrow" /> Add point / Select
@@ -41,18 +41,38 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .instructions {
-  border: solid 1px #ddd;
-  padding: 1.75rem 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  color: #222;
+  opacity: 0.33;
+  transition: opacity 200ms ease-out;
+  display: inline-block;
+  position: relative;
+  will-change: opacity;
 
-  h2 {
-    margin: 0 0 1.5rem;
-    line-height: 0.8;
-    text-transform: uppercase;
+  .background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: solid 1px #dfddd5;
+    border-radius: inherit;
+    opacity: 0;
+    transition: inherit;
+  }
+
+  &:hover {
+    opacity: 1;
+
+    .background {
+      opacity: 1;
+    }
   }
 
   ul {
+    will-change: opacity;
     margin: 0;
     padding: 0;
     list-style: none;
