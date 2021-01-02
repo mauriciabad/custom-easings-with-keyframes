@@ -1,17 +1,17 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '@/components/KeyframesCanvas.vue'
 import { Point } from '@/components/Canvas.d.ts'
-import { invertCoordenates } from '@/components/KeyframesCanvasHelper'
+import {
+  toCanvasPointX,
+  toCanvasPointY
+} from '@/components/KeyframesCanvasHelper'
 
 export default defineComponent({
   props: { point: { type: Object as () => Point, required: true } },
 
   setup(props) {
-    const canvasX = computed(() => (props.point.x / 100) * CANVAS_WIDTH)
-    const canvasY = computed(
-      () => invertCoordenates(props.point.y / 100) * CANVAS_HEIGHT
-    )
+    const canvasX = computed(() => toCanvasPointX(props.point.x))
+    const canvasY = computed(() => toCanvasPointY(props.point.y))
 
     return { canvasX, canvasY }
   }
@@ -19,43 +19,40 @@ export default defineComponent({
 </script>
 
 <template>
-  <rect
-    :x="canvasX - 7 - 4"
-    :y="canvasY - 7 - 4"
-    width="22"
-    height="22"
-    rx="6"
-    fill="#FF00A8"
-    opacity="0.5"
-    class="point-outline"
-    :class="{ 'point-outline--selected': point.isSelected }"
-  />
-
-  <rect
-    :x="canvasX - 7"
-    :y="canvasY - 7"
-    width="14"
-    height="14"
-    rx="2"
-    fill="#FFED48"
-    stroke="black"
-    stroke-width="2"
-    tabindex="0"
+  <circle
+    r="7"
+    :cx="canvasX"
+    :cy="canvasY"
     class="point"
     :class="{ 'point--selected': point.isSelected }"
+  />
+
+  <circle
+    r="2.5"
+    :cx="canvasX"
+    :cy="canvasY"
+    class="point-outline"
+    :class="{ 'point-outline--selected': point.isSelected }"
   />
 </template>
 
 <style scoped lang="scss">
 .point-outline {
+  fill: #000;
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+
   pointer-events: none;
-  display: none;
 
   &--selected {
-    display: block;
+    opacity: 0.75;
   }
 }
 .point {
+  fill: transparent;
+  stroke: url(#line-gradient);
+  stroke-width: 5;
+
   cursor: pointer;
   outline: none;
 

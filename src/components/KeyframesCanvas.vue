@@ -1,8 +1,7 @@
 <script lang="ts">
 import KeyframesCanvasPoint from '@/components/KeyframesCanvasPoint.vue'
 import KeyframesCanvasLine from '@/components/KeyframesCanvasLine.vue'
-import KeyframesCanvasGuideVertical from '@/components/KeyframesCanvasGuideVertical.vue'
-import KeyframesCanvasGuideHorizontal from '@/components/KeyframesCanvasGuideHorizontal.vue'
+import KeyframesCanvasGuides from '@/components/KeyframesCanvasGuides.vue'
 import { computed, defineComponent, ref } from 'vue'
 import { invertCoordenates, clamp } from '@/components/KeyframesCanvasHelper'
 import { useStore } from 'vuex'
@@ -31,8 +30,7 @@ export default defineComponent({
   components: {
     KeyframesCanvasPoint,
     KeyframesCanvasLine,
-    KeyframesCanvasGuideVertical,
-    KeyframesCanvasGuideHorizontal
+    KeyframesCanvasGuides
   },
   props: {},
 
@@ -167,64 +165,36 @@ export default defineComponent({
     >
       <g>
         <defs>
-          <linearGradient
-            id="fade-out-to-bottom"
-            x1="0%"
-            y1="0%"
-            x2="0%"
-            y2="100%"
-          >
-            <stop offset="0%" stop-color="#fff" stop-opacity="0" />
-            <stop offset="100%" stop-color="#fff" />
-          </linearGradient>
-          <linearGradient
-            id="fade-out-to-top"
-            x1="0%"
-            y1="100%"
-            x2="0%"
-            y2="0%"
-          >
-            <stop offset="0%" stop-color="#fff" stop-opacity="0" />
-            <stop offset="100%" stop-color="#fff" />
-          </linearGradient>
+          <filter id="shadow">
+            <feDropShadow
+              dx="0"
+              dy="1.25"
+              stdDeviation="5"
+              flood-opacity="0.2"
+            />
+          </filter>
         </defs>
-        <g>
-          <keyframes-canvas-guide-horizontal
-            v-for="n in 17"
-            :key="n"
-            :position="(n - 4) / 10"
-          />
-        </g>
-        <g>
-          <keyframes-canvas-guide-vertical
-            v-for="n in 11"
-            :key="n"
-            :position="(n - 1) / 10"
-          />
-        </g>
         <rect
-          fill="url(#fade-out-to-top)"
-          :x="CANVAS_OFFSET_X - 0.5"
-          :y="0"
-          :width="CANVAS_WIDTH + 1"
-          :height="CANVAS_HEIGHT * 0.05 - 0.5"
-        />
-        <rect
-          fill="url(#fade-out-to-bottom)"
-          :x="CANVAS_OFFSET_X - 0.5"
-          :y="850 - CANVAS_HEIGHT * 0.05 + 0.5"
-          :width="CANVAS_WIDTH + 1"
-          :height="CANVAS_HEIGHT * 0.05"
+          :x="CANVAS_OFFSET_X"
+          :y="CANVAS_OFFSET_Y"
+          :width="CANVAS_WIDTH"
+          :height="CANVAS_HEIGHT"
+          rx="2"
+          ry="2"
+          filter="url(#shadow)"
+          fill="white"
         />
       </g>
+
+      <keyframes-canvas-guides />
 
       <rect
         :x="CANVAS_OFFSET_X"
         :y="CANVAS_OFFSET_Y"
         :width="CANVAS_WIDTH"
         :height="CANVAS_HEIGHT"
-        rx="4"
-        ry="4"
+        rx="2"
+        ry="2"
         class="rectangle"
       />
 
@@ -235,13 +205,42 @@ export default defineComponent({
         :height="CANVAS_HEIGHT"
         style="overflow: visible"
       >
-        <keyframes-canvas-line :points="points" />
-        <g>
-          <keyframes-canvas-point
-            v-for="point in points"
-            :key="point.x"
-            :point="point"
-          />
+        <defs>
+          <filter
+            id="line-blur"
+            filterUnits="userSpaceOnUse"
+            x="-100%"
+            y="-100%"
+            width="300%"
+            height="300%"
+          >
+            <feOffset result="offOut" in="SourceGraphic" dy="11" />
+            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="16" />
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+          </filter>
+
+          <linearGradient
+            id="line-gradient"
+            gradientUnits="userSpaceOnUse"
+            x1="0%"
+            y1="100%"
+            x2="100%"
+            y2="0%"
+          >
+            <stop offset="0%" stop-color="#b721ff" />
+            <stop offset="100%" stop-color="#21d4fd" />
+          </linearGradient>
+        </defs>
+
+        <g filter="url(#line-blur)">
+          <keyframes-canvas-line :points="points" />
+          <g>
+            <keyframes-canvas-point
+              v-for="point in points"
+              :key="point.x"
+              :point="point"
+            />
+          </g>
         </g>
       </svg>
     </svg>
@@ -253,8 +252,8 @@ export default defineComponent({
   width: 100%;
 }
 .rectangle {
-  stroke-width: 4px;
-  stroke: #333;
+  stroke-width: 2px;
+  stroke: #b1ada1;
   fill: none;
 }
 </style>

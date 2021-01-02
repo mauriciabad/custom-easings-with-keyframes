@@ -1,37 +1,51 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '@/components/KeyframesCanvas.vue'
 import { Point } from '@/components/Canvas.d.ts'
-import { invertCoordenates } from '@/components/KeyframesCanvasHelper'
+import { toCanvasPoint } from '@/components/KeyframesCanvasHelper'
 
 export default defineComponent({
   props: { points: { type: Object as () => Point[], required: true } },
 
   setup(props) {
-    const path = computed(() =>
-      props.points.reduce((total, p) => {
-        const x = (p.x / 100) * CANVAS_WIDTH
-        const y = invertCoordenates(p.y / 100) * CANVAS_HEIGHT
+    const pointsInCanvas = computed(() => props.points.map(toCanvasPoint))
 
-        if (!total) return `M${x} ${y}`
-        else return `${total}L${x} ${y}`
+    const path = computed(() =>
+      pointsInCanvas.value.reduce((total, { x, y }) => {
+        return total ? `${total}L${x} ${y}` : `M${x} ${y}`
       }, '')
     )
 
-    return { path }
+    return { path, pointsInCanvas }
   }
 })
 </script>
 
 <template>
-  <path
-    :d="path"
-    stroke="#B796FF"
-    stroke-width="8"
-    fill="none"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
+  <g>
+    <defs>
+      <mask id="line-mask">
+        <rect x="-100%" y="-100%" width="300%" height="300%" fill="white" />
+        <circle
+          v-for="point in pointsInCanvas"
+          :key="point.x"
+          r="8"
+          :cx="point.x"
+          :cy="point.y"
+          fill="black"
+        />
+      </mask>
+    </defs>
+
+    <path :d="path" mask="url(#line-mask)" class="path" />
+  </g>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.path {
+  stroke: url(#line-gradient);
+  stroke-width: 5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+</style>
