@@ -1,12 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import KeyframesCanvasGuideHorizontal from '@/components/KeyframesCanvasGuideHorizontal.vue'
-import KeyframesCanvasGuideVertical from '@/components/KeyframesCanvasGuideVertical.vue'
+import KeyframesCanvasGuideHorizontal from '@/components/KeyframesCanvas/KeyframesCanvasGuideHorizontal.vue'
+import KeyframesCanvasGuideVertical from '@/components/KeyframesCanvas/KeyframesCanvasGuideVertical.vue'
 import {
   CANVAS_WIDTH,
   CANVAS_HEIGHT,
   CANVAS_OFFSET_X
-} from '@/components/KeyframesCanvas.vue'
+} from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
 
 export default defineComponent({
   components: {

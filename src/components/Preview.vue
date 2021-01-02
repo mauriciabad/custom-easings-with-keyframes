@@ -2,8 +2,8 @@
 import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { key, Options } from '@/store'
-import { isTransformProperty } from './KeyframesCanvasHelper'
-import { Point } from './Canvas'
+import { isTransformProperty } from '@/helpers'
+import { Point } from '@/types'
 
 export function propertyValue(point: Point, options: Options) {
   return `${Math.round(

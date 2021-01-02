@@ -5,7 +5,7 @@ import {
   CANVAS_HEIGHT,
   CANVAS_OFFSET_X,
   CANVAS_OFFSET_Y
-} from '@/components/KeyframesCanvas.vue'
+} from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
 
 export default defineComponent({
   props: { position: { type: Number, required: true } },

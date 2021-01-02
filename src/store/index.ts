@@ -1,5 +1,5 @@
-import { Point } from '@/components/Canvas'
-import { clamp } from '@/components/KeyframesCanvasHelper'
+import { Point } from '@/types'
+import { clamp } from '@/helpers'
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
 

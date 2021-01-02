@@ -1,5 +1,5 @@
 <script lang="ts">
-import KeyframesCanvas from '@/components/KeyframesCanvas.vue'
+import KeyframesCanvas from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
 import Preview from '@/components/Preview.vue'
 import CodeBlock from '@/components/CodeBlock.vue'
 import Options from '@/components/Options.vue'

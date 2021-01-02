@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { Point } from '@/components/Canvas.d.ts'
-import { toCanvasPoint } from '@/components/KeyframesCanvasHelper'
+import { Point } from '@/types'
+import { toCanvasPoint } from '@/helpers'
 
 export default defineComponent({
   props: { points: { type: Object as () => Point[], required: true } },

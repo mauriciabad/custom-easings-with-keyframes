@@ -6,8 +6,8 @@ import 'simple-syntax-highlighter/dist/sshpre.css'
 import SshPre from 'simple-syntax-highlighter'
 import { useStore } from 'vuex'
 import { key } from '@/store'
-import { isTransformProperty } from './KeyframesCanvasHelper'
-import { propertyValue } from './Preview.vue'
+import { isTransformProperty } from '@/helpers'
+import { propertyValue } from '@/components/Preview.vue'
 
 export default defineComponent({
   components: { SshPre },

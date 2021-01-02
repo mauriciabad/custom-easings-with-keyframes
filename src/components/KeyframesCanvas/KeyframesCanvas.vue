@@ -1,9 +1,9 @@
 <script lang="ts">
-import KeyframesCanvasPoint from '@/components/KeyframesCanvasPoint.vue'
-import KeyframesCanvasLine from '@/components/KeyframesCanvasLine.vue'
-import KeyframesCanvasGuides from '@/components/KeyframesCanvasGuides.vue'
+import KeyframesCanvasPoint from '@/components/KeyframesCanvas/KeyframesCanvasPoint.vue'
+import KeyframesCanvasLine from '@/components/KeyframesCanvas/KeyframesCanvasLine.vue'
+import KeyframesCanvasGuides from '@/components/KeyframesCanvas/KeyframesCanvasGuides.vue'
 import { computed, defineComponent, ref } from 'vue'
-import { invertCoordenates, clamp } from '@/components/KeyframesCanvasHelper'
+import { invertCoordenates, clamp } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
 import deepClone from 'deep-clone'

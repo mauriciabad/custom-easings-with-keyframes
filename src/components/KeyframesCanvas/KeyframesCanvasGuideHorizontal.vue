@@ -5,8 +5,8 @@ import {
   CANVAS_HEIGHT,
   CANVAS_OFFSET_X,
   CANVAS_OFFSET_Y
-} from '@/components/KeyframesCanvas.vue'
-import { invertCoordenates } from './KeyframesCanvasHelper'
+} from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
+import { invertCoordenates } from '@/helpers'
 
 export default defineComponent({
   props: { position: { type: Number, required: true } },

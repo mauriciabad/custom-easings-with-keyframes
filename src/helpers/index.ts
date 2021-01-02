@@ -1,5 +1,8 @@
-import { Property } from './../store/index'
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '@/components/KeyframesCanvas.vue'
+import { Property } from '../store/index'
+import {
+  CANVAS_WIDTH,
+  CANVAS_HEIGHT
+} from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
 
 export function invertCoordenates(x: number) {
   return (x - 1) * -1
