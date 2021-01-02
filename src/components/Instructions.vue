@@ -58,7 +58,7 @@ export default defineComponent({
     list-style: none;
 
     li {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
 
       svg:first-child {
         margin-left: -0.5rem;
