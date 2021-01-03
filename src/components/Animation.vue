@@ -16,25 +16,25 @@ export default defineComponent({
 
     const previewElement = ref<HTMLDivElement>()
     const animation = ref<Animation>()
-    const options: Options = {
-      property: 'translateY',
-      fromValue: 0,
-      toValue: -1 * canvasDimensions.value.height,
-      valueUnits: 'px',
-      duration: 6000,
-      easingName: 'animation-easing'
-    }
-
-    const offset = 0.15
-    const disabledStyle = {
-      backgroundColor: '#bbb',
-      boxShadow: '0px 8px 16px #bbba'
-    }
 
     const fadedDotsCount = 20
 
     watchEffect(() => {
       if (previewElement.value) {
+        const options: Options = {
+          property: 'translateY',
+          fromValue: 0,
+          toValue: -1 * canvasDimensions.value.height,
+          valueUnits: 'px',
+          duration: 6000,
+          easingName: 'animation-easing'
+        }
+        const offset = 0.15
+        const disabledStyle = {
+          backgroundColor: '#bbb',
+          boxShadow: '0px 8px 16px #bbba'
+        }
+
         const keyframes: Keyframe[] = points.value.map(point => ({
           offset: (point.x / 100) * (1 - 2 * offset) + offset,
           transform: `${options.property}(${propertyValue(point, options)})`

@@ -24,6 +24,7 @@
 - responsive
   - small screens
   - mobile (show not compatible)
+- change maxY and maxX from the UI
 
 ## Mid-term
 

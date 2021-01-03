@@ -49,7 +49,7 @@ function heigthToCanvasHeigth(heigth: number) {
   return heigth * 0.5
 }
 function heigthToCanvasWidth(width: number) {
-  return width * 0.6
+  return width * 0.5
 }
 
 export const store = createStore<State>({
@@ -153,8 +153,8 @@ export const store = createStore<State>({
       state.points.sort((a, b) => a.x - b.x)
     },
     resize: (state, { width, height }: { width: number; height: number }) => {
-      state.canvasDimensions.width = heigthToCanvasHeigth(width)
-      state.canvasDimensions.height = heigthToCanvasWidth(height)
+      state.canvasDimensions.width = heigthToCanvasWidth(width)
+      state.canvasDimensions.height = heigthToCanvasHeigth(height)
     }
   },
   actions: {}
