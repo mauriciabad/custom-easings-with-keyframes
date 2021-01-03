@@ -213,12 +213,14 @@ export default defineComponent({
       />
 
       <foreignObject
-        :x="CANVAS_OFFSET_X + 16"
-        :y="CANVAS_OFFSET_Y + 16"
-        :width="CANVAS_WIDTH - 32"
-        :height="CANVAS_HEIGHT - 32"
+        :x="CANVAS_OFFSET_X"
+        :y="CANVAS_OFFSET_Y"
+        :width="CANVAS_WIDTH"
+        :height="CANVAS_HEIGHT"
       >
-        <instructions class="instructions" />
+        <div class="instructions-container">
+          <instructions />
+        </div>
       </foreignObject>
       <svg
         :x="CANVAS_OFFSET_X"
@@ -277,5 +279,15 @@ export default defineComponent({
   stroke-width: 2px;
   stroke: #b1ada1;
   fill: none;
+}
+.instructions-container {
+  position: relative;
+  height: 100%;
+
+  .instructions {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+  }
 }
 </style>
