@@ -21,6 +21,9 @@
     - design tool
     - code generator
     - online app
+- responsive
+  - small screens
+  - mobile (show not compatible)
 
 ## Mid-term
 
