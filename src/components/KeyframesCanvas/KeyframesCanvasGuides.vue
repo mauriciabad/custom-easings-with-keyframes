@@ -5,8 +5,17 @@ import KeyframesCanvasGuideVertical from '@/components/KeyframesCanvas/Keyframes
 import {
   CANVAS_WIDTH,
   CANVAS_HEIGHT,
-  CANVAS_OFFSET_X
+  CANVAS_OFFSET_X,
+  CANVAS_OFFSET_Y
 } from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
+
+const maxY = 1.3
+const minY = -0.3
+const stepY = 0.1
+
+const maxX = 1
+const minX = 0
+const stepX = 0.1
 
 export default defineComponent({
   components: {
@@ -16,7 +25,18 @@ export default defineComponent({
   props: {},
 
   setup() {
-    return { CANVAS_HEIGHT, CANVAS_WIDTH, CANVAS_OFFSET_X }
+    return {
+      CANVAS_HEIGHT,
+      CANVAS_WIDTH,
+      CANVAS_OFFSET_X,
+      CANVAS_OFFSET_Y,
+      maxY,
+      minY,
+      stepY,
+      maxX,
+      minX,
+      stepX
+    }
   }
 })
 </script>
@@ -35,29 +55,33 @@ export default defineComponent({
     </defs>
     <g>
       <keyframes-canvas-guide-horizontal
-        v-for="n in 17"
+        v-for="n in Math.floor((maxY - minY) / stepY) + 1"
         :key="n"
-        :position="(n - 4) / 10"
+        :position="minY + (n - 1) * stepY"
       />
     </g>
     <g>
       <keyframes-canvas-guide-vertical
-        v-for="n in 11"
+        v-for="n in Math.floor((maxX - minX) / stepX) + 1"
         :key="n"
-        :position="(n - 1) / 10"
+        :position="minX + (n - 1) * stepX"
+        :maxY="maxY"
+        :minY="minY"
       />
     </g>
     <rect
       fill="url(#fade-out-to-top)"
       :x="CANVAS_OFFSET_X - 0.5"
-      :y="0"
+      :y="CANVAS_OFFSET_Y + CANVAS_HEIGHT * (minY - 0.05)"
       :width="CANVAS_WIDTH + 1"
       :height="CANVAS_HEIGHT * 0.05 - 0.5"
     />
     <rect
       fill="url(#fade-out-to-bottom)"
       :x="CANVAS_OFFSET_X - 0.5"
-      :y="850 - CANVAS_HEIGHT * 0.05 + 0.5"
+      :y="
+        CANVAS_OFFSET_Y + CANVAS_HEIGHT * (maxY + 0.05) - CANVAS_HEIGHT * 0.05
+      "
       :width="CANVAS_WIDTH + 1"
       :height="CANVAS_HEIGHT * 0.05"
     />
