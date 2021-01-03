@@ -9,11 +9,6 @@ import { useStore } from 'vuex'
 import { key } from '@/store'
 import deepClone from 'deep-clone'
 
-export const CANVAS_WIDTH = 1000
-export const CANVAS_HEIGHT = 500
-export const CANVAS_OFFSET_X = 40
-export const CANVAS_OFFSET_Y = 175
-
 export default defineComponent({
   components: {
     KeyframesCanvasPoint,
@@ -26,6 +21,7 @@ export default defineComponent({
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)
+    const canvasDimensions = computed(() => store.state.canvasDimensions)
 
     let moveOrigin = {
       x: 0,
@@ -49,15 +45,29 @@ export default defineComponent({
 
       return {
         x: clamp(
-          Math.round(((offset.x - CANVAS_OFFSET_X) / CANVAS_WIDTH) * 100),
+          Math.round(
+            ((offset.x - canvasDimensions.value.offset.x) /
+              canvasDimensions.value.width) *
+              100
+          ),
           0,
           100
         ),
         y: Math.round(
-          invertCoordenates((offset.y - CANVAS_OFFSET_Y) / CANVAS_HEIGHT) * 100
+          invertCoordenates(
+            (offset.y - canvasDimensions.value.offset.y) /
+              canvasDimensions.value.height
+          ) * 100
         )
       }
     }
+
+    window.addEventListener('resize', function() {
+      store.commit('resize', {
+        height: window.innerHeight,
+        width: window.innerWidth
+      })
+    })
 
     document.body.addEventListener('keydown', function(event: KeyboardEvent) {
       switch (event.key) {
@@ -130,10 +140,8 @@ export default defineComponent({
 
     function handleMouseUp(event: MouseEvent) {
       event.preventDefault()
-      switch (event.which) {
-        case 1:
-          handleLeftClickUp(event)
-          break
+      if (event.which === 1) {
+        handleLeftClickUp(event)
       }
     }
 
@@ -151,10 +159,7 @@ export default defineComponent({
 
     return {
       points,
-      CANVAS_WIDTH,
-      CANVAS_HEIGHT,
-      CANVAS_OFFSET_X,
-      CANVAS_OFFSET_Y,
+      canvasDimensions,
       handleMouseDown,
       handleMouseMove,
       handleMouseUp,
@@ -168,8 +173,8 @@ export default defineComponent({
 <template>
   <div class="canvas-container">
     <svg
-      :height="CANVAS_HEIGHT + CANVAS_OFFSET_Y * 2"
-      :width="CANVAS_WIDTH + CANVAS_OFFSET_X + 32"
+      :height="canvasDimensions.height + canvasDimensions.offset.y * 2"
+      :width="canvasDimensions.width + canvasDimensions.offset.x + 32"
       ref="canvas"
       @mousedown="handleMouseDown($event)"
       @mousemove="handleMouseMove($event)"
@@ -189,10 +194,10 @@ export default defineComponent({
           </filter>
         </defs>
         <rect
-          :x="CANVAS_OFFSET_X"
-          :y="CANVAS_OFFSET_Y"
-          :width="CANVAS_WIDTH"
-          :height="CANVAS_HEIGHT"
+          :x="canvasDimensions.offset.x"
+          :y="canvasDimensions.offset.y"
+          :width="canvasDimensions.width"
+          :height="canvasDimensions.height"
           rx="2"
           ry="2"
           filter="url(#shadow)"
@@ -203,30 +208,30 @@ export default defineComponent({
       <keyframes-canvas-guides />
 
       <rect
-        :x="CANVAS_OFFSET_X"
-        :y="CANVAS_OFFSET_Y"
-        :width="CANVAS_WIDTH"
-        :height="CANVAS_HEIGHT"
+        :x="canvasDimensions.offset.x"
+        :y="canvasDimensions.offset.y"
+        :width="canvasDimensions.width"
+        :height="canvasDimensions.height"
         rx="2"
         ry="2"
         class="rectangle"
       />
 
       <foreignObject
-        :x="CANVAS_OFFSET_X"
-        :y="CANVAS_OFFSET_Y"
-        :width="CANVAS_WIDTH"
-        :height="CANVAS_HEIGHT"
+        :x="canvasDimensions.offset.x"
+        :y="canvasDimensions.offset.y"
+        :width="canvasDimensions.width"
+        :height="canvasDimensions.height"
       >
         <div class="instructions-container">
           <instructions />
         </div>
       </foreignObject>
       <svg
-        :x="CANVAS_OFFSET_X"
-        :y="CANVAS_OFFSET_Y"
-        :width="CANVAS_WIDTH"
-        :height="CANVAS_HEIGHT"
+        :x="canvasDimensions.offset.x"
+        :y="canvasDimensions.offset.y"
+        :width="canvasDimensions.width"
+        :height="canvasDimensions.height"
         style="overflow: visible"
       >
         <defs>

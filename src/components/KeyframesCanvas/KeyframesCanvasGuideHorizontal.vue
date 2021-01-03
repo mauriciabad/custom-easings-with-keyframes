@@ -1,25 +1,22 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import {
-  CANVAS_WIDTH,
-  CANVAS_HEIGHT,
-  CANVAS_OFFSET_X,
-  CANVAS_OFFSET_Y
-} from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
+
 import { invertCoordenates } from '@/helpers'
+import { useStore } from 'vuex'
+import { key } from '@/store'
 
 export default defineComponent({
   props: { position: { type: Number, required: true } },
 
   setup(props) {
+    const store = useStore(key)
+    const canvasDimensions = computed(() => store.state.canvasDimensions)
+
     const positionInverted = computed(() => invertCoordenates(props.position))
 
     return {
       positionInverted,
-      CANVAS_HEIGHT,
-      CANVAS_WIDTH,
-      CANVAS_OFFSET_X,
-      CANVAS_OFFSET_Y
+      canvasDimensions
     }
   }
 })
@@ -28,15 +25,15 @@ export default defineComponent({
 <template>
   <g aria-hidden="true">
     <line
-      :x1="CANVAS_OFFSET_X"
-      :x2="CANVAS_OFFSET_X + CANVAS_WIDTH"
-      :y1="CANVAS_OFFSET_Y + position * CANVAS_HEIGHT"
-      :y2="CANVAS_OFFSET_Y + position * CANVAS_HEIGHT"
+      :x1="canvasDimensions.offset.x"
+      :x2="canvasDimensions.offset.x + canvasDimensions.width"
+      :y1="canvasDimensions.offset.y + position * canvasDimensions.height"
+      :y2="canvasDimensions.offset.y + position * canvasDimensions.height"
       stroke="#E0DED5"
     />
     <text
-      :x="CANVAS_OFFSET_X - 8"
-      :y="CANVAS_OFFSET_Y + position * CANVAS_HEIGHT + 4"
+      :x="canvasDimensions.offset.x - 8"
+      :y="canvasDimensions.offset.y + position * canvasDimensions.height + 4"
       text-anchor="end"
       class="text"
       >{{ (positionInverted * 100).toFixed() }}%</text

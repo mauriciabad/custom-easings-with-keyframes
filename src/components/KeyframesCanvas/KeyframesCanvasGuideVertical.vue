@@ -1,11 +1,7 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
-import {
-  CANVAS_WIDTH,
-  CANVAS_HEIGHT,
-  CANVAS_OFFSET_X,
-  CANVAS_OFFSET_Y
-} from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
+import { key } from '@/store'
+import { computed, defineComponent } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   props: {
@@ -15,11 +11,11 @@ export default defineComponent({
   },
 
   setup() {
+    const store = useStore(key)
+    const canvasDimensions = computed(() => store.state.canvasDimensions)
+
     return {
-      CANVAS_HEIGHT,
-      CANVAS_WIDTH,
-      CANVAS_OFFSET_X,
-      CANVAS_OFFSET_Y
+      canvasDimensions
     }
   }
 })
@@ -28,25 +24,25 @@ export default defineComponent({
 <template>
   <g aria-hidden="true">
     <line
-      :x1="CANVAS_OFFSET_X + position * CANVAS_WIDTH"
-      :x2="CANVAS_OFFSET_X + position * CANVAS_WIDTH"
-      :y1="CANVAS_OFFSET_Y + CANVAS_HEIGHT * (minY - 0.05)"
-      :y2="CANVAS_OFFSET_Y + CANVAS_HEIGHT"
+      :x1="canvasDimensions.offset.x + position * canvasDimensions.width"
+      :x2="canvasDimensions.offset.x + position * canvasDimensions.width"
+      :y1="canvasDimensions.offset.y + canvasDimensions.height * (minY - 0.05)"
+      :y2="canvasDimensions.offset.y + canvasDimensions.height"
       stroke="#E0DED5"
     />
     <text
-      :x="CANVAS_OFFSET_X + position * CANVAS_WIDTH"
-      :y="CANVAS_OFFSET_Y + CANVAS_HEIGHT + 20"
+      :x="canvasDimensions.offset.x + position * canvasDimensions.width"
+      :y="canvasDimensions.offset.y + canvasDimensions.height + 20"
       text-anchor="middle"
       class="text"
     >
       {{ (position * 100).toFixed() }}%
     </text>
     <line
-      :x1="CANVAS_OFFSET_X + position * CANVAS_WIDTH"
-      :x2="CANVAS_OFFSET_X + position * CANVAS_WIDTH"
-      :y1="CANVAS_OFFSET_Y + CANVAS_HEIGHT + 30"
-      :y2="CANVAS_OFFSET_Y + CANVAS_HEIGHT * (maxY + 0.05)"
+      :x1="canvasDimensions.offset.x + position * canvasDimensions.width"
+      :x2="canvasDimensions.offset.x + position * canvasDimensions.width"
+      :y1="canvasDimensions.offset.y + canvasDimensions.height + 30"
+      :y2="canvasDimensions.offset.y + canvasDimensions.height * (maxY + 0.05)"
       stroke="#E0DED5"
     />
   </g>

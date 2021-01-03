@@ -33,9 +33,23 @@ export type Options = {
   easingName: string
 }
 
+export type CanvasDimensions = {
+  height: number
+  width: number
+  offset: { x: number; y: number }
+}
+
 export type State = {
   options: Options
   points: Point[]
+  canvasDimensions: CanvasDimensions
+}
+
+function heigthToCanvasHeigth(heigth: number) {
+  return heigth * 0.5
+}
+function heigthToCanvasWidth(width: number) {
+  return width * 0.6
 }
 
 export const store = createStore<State>({
@@ -59,7 +73,12 @@ export const store = createStore<State>({
         y: 100,
         isSelected: false
       }
-    ]
+    ],
+    canvasDimensions: {
+      height: heigthToCanvasHeigth(window.innerHeight) ?? 500,
+      width: heigthToCanvasWidth(window.innerWidth) ?? 1100,
+      offset: { x: 40, y: 175 }
+    }
   }),
   mutations: {
     createPoint: (state, { x, y }: { x: number; y: number }) => {
@@ -132,6 +151,10 @@ export const store = createStore<State>({
       )
 
       state.points.sort((a, b) => a.x - b.x)
+    },
+    resize: (state, { width, height }: { width: number; height: number }) => {
+      state.canvasDimensions.width = heigthToCanvasHeigth(width)
+      state.canvasDimensions.height = heigthToCanvasWidth(height)
     }
   },
   actions: {}

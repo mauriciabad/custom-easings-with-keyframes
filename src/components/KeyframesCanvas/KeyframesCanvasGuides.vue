@@ -1,13 +1,9 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import KeyframesCanvasGuideHorizontal from '@/components/KeyframesCanvas/KeyframesCanvasGuideHorizontal.vue'
 import KeyframesCanvasGuideVertical from '@/components/KeyframesCanvas/KeyframesCanvasGuideVertical.vue'
-import {
-  CANVAS_WIDTH,
-  CANVAS_HEIGHT,
-  CANVAS_OFFSET_X,
-  CANVAS_OFFSET_Y
-} from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
+import { useStore } from 'vuex'
+import { key } from '@/store'
 
 const maxY = 1.3
 const minY = -0.3
@@ -25,11 +21,11 @@ export default defineComponent({
   props: {},
 
   setup() {
+    const store = useStore(key)
+    const canvasDimensions = computed(() => store.state.canvasDimensions)
+
     return {
-      CANVAS_HEIGHT,
-      CANVAS_WIDTH,
-      CANVAS_OFFSET_X,
-      CANVAS_OFFSET_Y,
+      canvasDimensions,
       maxY,
       minY,
       stepY,
@@ -71,19 +67,21 @@ export default defineComponent({
     </g>
     <rect
       fill="url(#fade-out-to-top)"
-      :x="CANVAS_OFFSET_X - 0.5"
-      :y="CANVAS_OFFSET_Y + CANVAS_HEIGHT * (minY - 0.05)"
-      :width="CANVAS_WIDTH + 1"
-      :height="CANVAS_HEIGHT * 0.05 - 0.5"
+      :x="canvasDimensions.offset.x - 0.5"
+      :y="canvasDimensions.offset.y + canvasDimensions.height * (minY - 0.05)"
+      :width="canvasDimensions.width + 1"
+      :height="canvasDimensions.height * 0.05 - 0.5"
     />
     <rect
       fill="url(#fade-out-to-bottom)"
-      :x="CANVAS_OFFSET_X - 0.5"
+      :x="canvasDimensions.offset.x - 0.5"
       :y="
-        CANVAS_OFFSET_Y + CANVAS_HEIGHT * (maxY + 0.05) - CANVAS_HEIGHT * 0.05
+        canvasDimensions.offset.y +
+          canvasDimensions.height * (maxY + 0.05) -
+          canvasDimensions.height * 0.05
       "
-      :width="CANVAS_WIDTH + 1"
-      :height="CANVAS_HEIGHT * 0.05"
+      :width="canvasDimensions.width + 1"
+      :height="canvasDimensions.height * 0.05"
     />
   </g>
 </template>

@@ -3,7 +3,6 @@ import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { key, Options } from '@/store'
 import { propertyValue } from '@/components/Preview.vue'
-import { CANVAS_HEIGHT } from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
 import interpolate from 'color-interpolate'
 
 export default defineComponent({
@@ -13,13 +12,14 @@ export default defineComponent({
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)
+    const canvasDimensions = computed(() => store.state.canvasDimensions)
 
     const previewElement = ref<HTMLDivElement>()
     const animation = ref<Animation>()
     const options: Options = {
       property: 'translateY',
       fromValue: 0,
-      toValue: -1 * CANVAS_HEIGHT,
+      toValue: -1 * canvasDimensions.value.height,
       valueUnits: 'px',
       duration: 6000,
       easingName: 'animation-easing'
@@ -119,7 +119,7 @@ export default defineComponent({
 
     return {
       previewElement,
-      CANVAS_HEIGHT,
+      canvasDimensions,
       pointInPath,
       fadedDotsCount,
       colorMap
@@ -129,7 +129,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="animation" :style="`height: ${CANVAS_HEIGHT}px`">
+  <div class="animation" :style="`height: ${canvasDimensions.height}px`">
     <div
       class="object object--faded"
       v-for="n in fadedDotsCount + 1"
@@ -140,7 +140,7 @@ export default defineComponent({
         ) /
           100) *
           -1 *
-          CANVAS_HEIGHT}px); background-color: ${colorMap(
+          canvasDimensions.height}px); background-color: ${colorMap(
           (n - 1) / fadedDotsCount
         )}`
       "

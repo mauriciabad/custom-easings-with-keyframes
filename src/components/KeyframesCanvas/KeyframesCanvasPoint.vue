@@ -1,16 +1,22 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { Point } from '@/types'
-import { toCanvasPointX, toCanvasPointY } from '@/helpers'
+import { toCanvasPoint } from '@/helpers'
+import { useStore } from 'vuex'
+import { key } from '@/store'
 
 export default defineComponent({
   props: { point: { type: Object as () => Point, required: true } },
 
   setup(props) {
-    const canvasX = computed(() => toCanvasPointX(props.point.x))
-    const canvasY = computed(() => toCanvasPointY(props.point.y))
+    const store = useStore(key)
+    const canvasDimensions = computed(() => store.state.canvasDimensions)
 
-    return { canvasX, canvasY }
+    const pointInCanvas = computed(() =>
+      toCanvasPoint(props.point, canvasDimensions.value)
+    )
+
+    return { pointInCanvas }
   }
 })
 </script>
@@ -18,16 +24,16 @@ export default defineComponent({
 <template>
   <circle
     r="7"
-    :cx="canvasX"
-    :cy="canvasY"
+    :cx="pointInCanvas.x"
+    :cy="pointInCanvas.y"
     class="point"
     :class="{ 'point--selected': point.isSelected }"
   />
 
   <circle
     r="2.5"
-    :cx="canvasX"
-    :cy="canvasY"
+    :cx="pointInCanvas.x"
+    :cy="pointInCanvas.y"
     class="point-outline"
     :class="{ 'point-outline--selected': point.isSelected }"
   />

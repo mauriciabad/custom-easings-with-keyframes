@@ -2,12 +2,19 @@
 import { computed, defineComponent } from 'vue'
 import { Point } from '@/types'
 import { toCanvasPoint } from '@/helpers'
+import { useStore } from 'vuex'
+import { key } from '@/store'
 
 export default defineComponent({
   props: { points: { type: Object as () => Point[], required: true } },
 
   setup(props) {
-    const pointsInCanvas = computed(() => props.points.map(toCanvasPoint))
+    const store = useStore(key)
+    const canvasDimensions = computed(() => store.state.canvasDimensions)
+
+    const pointsInCanvas = computed(() =>
+      props.points.map(point => toCanvasPoint(point, canvasDimensions.value))
+    )
 
     const path = computed(() =>
       pointsInCanvas.value.reduce((total, { x, y }) => {
