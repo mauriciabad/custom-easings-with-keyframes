@@ -11,7 +11,7 @@ import deepClone from 'deep-clone'
 
 export const CANVAS_WIDTH = 1000
 export const CANVAS_HEIGHT = 500
-export const CANVAS_OFFSET_X = 50
+export const CANVAS_OFFSET_X = 40
 export const CANVAS_OFFSET_Y = 175
 
 export default defineComponent({
@@ -168,8 +168,8 @@ export default defineComponent({
 <template>
   <div class="canvas-container">
     <svg
-      height="850"
-      width="1100"
+      :height="CANVAS_HEIGHT + CANVAS_OFFSET_Y * 2"
+      :width="CANVAS_WIDTH + CANVAS_OFFSET_X + 32"
       ref="canvas"
       @mousedown="handleMouseDown($event)"
       @mousemove="handleMouseMove($event)"
