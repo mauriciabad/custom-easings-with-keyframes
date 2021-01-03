@@ -28,7 +28,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .main-layout {
   display: grid;
-  grid-template: 1fr min-content min-content / min-content auto;
+  grid-template: 20rem min-content 1fr / min-content min-content min-content;
   grid-template-areas:
     'canvas animation code'
     'canvas animation options'

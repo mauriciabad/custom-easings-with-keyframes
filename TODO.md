@@ -31,3 +31,4 @@
 
 - Vector based curve and then calculate most optimal points
 - Allow to use the site keyboard-only
+- add sounds
