@@ -8,8 +8,8 @@
   $inter-font-path: '~inter-ui/Inter (web)'
 );
 @include variable.all;
-@import '~@fontsource/roboto-mono/500.css';
-@import '~@fontsource/poppins/700.css';
+@import '~@fontsource/roboto-mono/latin-500.css';
+@import '~@fontsource/poppins/latin-700.css';
 
 $defaultFonts: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
   'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
