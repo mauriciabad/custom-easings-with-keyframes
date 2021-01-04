@@ -44,7 +44,7 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
     const { event } = useGtag()
     let lastCopiedCode: string
     function trackCopyCode() {
-      event('Copy code', {
+      event('copy_code', {
         // eslint-disable-next-line @typescript-eslint/camelcase
         event_category: 'engagement',
         // eslint-disable-next-line @typescript-eslint/camelcase
