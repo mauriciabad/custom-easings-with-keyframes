@@ -22,7 +22,7 @@ export default defineComponent({
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)
-    const canvasDimensions = computed(() => store.state.canvasDimensions)
+    const cd = computed(() => store.state.canvasDimensions)
 
     let moveOrigin = {
       x: 0,
@@ -47,18 +47,15 @@ export default defineComponent({
 
       return {
         x: clamp(
-          Math.round(
-            ((offset.x - canvasDimensions.value.offset.x) /
-              canvasDimensions.value.width) *
-              100
-          ),
+          Math.round(((offset.x - cd.value.offset.x) / cd.value.width) * 100),
           0,
           100
         ),
         y: Math.round(
           invertCoordenates(
-            (offset.y - canvasDimensions.value.offset.y) /
-              canvasDimensions.value.height
+            (offset.y -
+              cd.value.height * (cd.value.maxY - 1 + cd.value.stepY / 2)) /
+              cd.value.height
           ) * 100
         )
       }
@@ -173,7 +170,7 @@ export default defineComponent({
 
     return {
       points,
-      canvasDimensions,
+      cd,
       handleMouseDown,
       handleMouseMove,
       handleMouseUp,
@@ -188,8 +185,8 @@ export default defineComponent({
 <template>
   <div class="canvas-container" ref="canvasContainer">
     <svg
-      :height="canvasDimensions.height + canvasDimensions.offset.y * 2"
-      :width="canvasDimensions.width + canvasDimensions.offset.x + 32"
+      :height="cd.height * (cd.maxY - cd.minY + cd.stepY)"
+      :width="cd.width + cd.offset.x + 32"
       ref="canvas"
       @mousedown="handleMouseDown($event)"
       @mousemove="handleMouseMove($event)"
@@ -209,10 +206,10 @@ export default defineComponent({
           </filter>
         </defs>
         <rect
-          :x="canvasDimensions.offset.x"
-          :y="canvasDimensions.offset.y"
-          :width="canvasDimensions.width"
-          :height="canvasDimensions.height"
+          :x="cd.offset.x"
+          :y="cd.height * (cd.maxY - 1 + cd.stepY / 2)"
+          :width="cd.width"
+          :height="cd.height"
           rx="2"
           ry="2"
           filter="url(#shadow)"
@@ -223,30 +220,30 @@ export default defineComponent({
       <keyframes-canvas-guides />
 
       <rect
-        :x="canvasDimensions.offset.x"
-        :y="canvasDimensions.offset.y"
-        :width="canvasDimensions.width"
-        :height="canvasDimensions.height"
+        :x="cd.offset.x"
+        :y="cd.height * (cd.maxY - 1 + cd.stepY / 2)"
+        :width="cd.width"
+        :height="cd.height"
         rx="2"
         ry="2"
         class="rectangle"
       />
 
       <foreignObject
-        :x="canvasDimensions.offset.x"
-        :y="canvasDimensions.offset.y"
-        :width="canvasDimensions.width"
-        :height="canvasDimensions.height"
+        :x="cd.offset.x"
+        :y="cd.height * (cd.maxY - 1 + cd.stepY / 2)"
+        :width="cd.width"
+        :height="cd.height"
       >
         <div class="instructions-container">
           <instructions />
         </div>
       </foreignObject>
       <svg
-        :x="canvasDimensions.offset.x"
-        :y="canvasDimensions.offset.y"
-        :width="canvasDimensions.width"
-        :height="canvasDimensions.height"
+        :x="cd.offset.x"
+        :y="cd.height * (cd.maxY - 1 + cd.stepY / 2)"
+        :width="cd.width"
+        :height="cd.height"
         style="overflow: visible"
       >
         <defs>

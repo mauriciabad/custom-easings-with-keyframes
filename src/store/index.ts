@@ -36,7 +36,13 @@ export type Options = {
 export type CanvasDimensions = {
   height: number
   width: number
-  offset: { x: number; y: number }
+  offset: { x: number }
+  maxY: number
+  minY: number
+  stepY: number
+  maxX: number
+  minX: number
+  stepX: number
 }
 
 export type State = {
@@ -70,7 +76,13 @@ export const store = createStore<State>({
     canvasDimensions: {
       height: 800,
       width: 800,
-      offset: { x: 40, y: 175 }
+      offset: { x: 40, y: 0 },
+      maxY: 1.3,
+      minY: -0.3,
+      stepY: 0.1,
+      maxX: 1,
+      minX: 0,
+      stepX: 0.1
     }
   }),
   mutations: {
@@ -149,7 +161,10 @@ export const store = createStore<State>({
       state.canvasDimensions.width =
         width - state.canvasDimensions.offset.x - 32
       state.canvasDimensions.height =
-        height - state.canvasDimensions.offset.y * 2
+        height /
+        (state.canvasDimensions.maxY -
+          state.canvasDimensions.minY +
+          state.canvasDimensions.stepY)
     }
   },
   actions: {}

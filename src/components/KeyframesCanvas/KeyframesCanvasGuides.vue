@@ -5,14 +5,6 @@ import KeyframesCanvasGuideVertical from '@/components/KeyframesCanvas/Keyframes
 import { useStore } from 'vuex'
 import { key } from '@/store'
 
-const maxY = 1.3
-const minY = -0.3
-const stepY = 0.1
-
-const maxX = 1
-const minX = 0
-const stepX = 0.1
-
 export default defineComponent({
   components: {
     KeyframesCanvasGuideHorizontal,
@@ -22,16 +14,10 @@ export default defineComponent({
 
   setup() {
     const store = useStore(key)
-    const canvasDimensions = computed(() => store.state.canvasDimensions)
+    const cd = computed(() => store.state.canvasDimensions)
 
     return {
-      canvasDimensions,
-      maxY,
-      minY,
-      stepY,
-      maxX,
-      minX,
-      stepX
+      cd
     }
   }
 })
@@ -51,38 +37,31 @@ export default defineComponent({
     </defs>
     <g>
       <keyframes-canvas-guide-horizontal
-        v-for="n in Math.floor((maxY - minY) / stepY) + 1"
+        v-for="n in Math.floor((cd.maxY - cd.minY) / cd.stepY) + 1"
         :key="n"
-        :position="minY + (n - 1) * stepY"
+        :position="cd.minY + (n - 1) * cd.stepY"
       />
     </g>
     <g>
       <keyframes-canvas-guide-vertical
-        v-for="n in Math.floor((maxX - minX) / stepX) + 1"
+        v-for="n in Math.floor((cd.maxX - cd.minX) / cd.stepX) + 1"
         :key="n"
-        :position="minX + (n - 1) * stepX"
-        :maxY="maxY"
-        :minY="minY"
-        :stepY="stepY"
+        :position="cd.minX + (n - 1) * cd.stepX"
       />
     </g>
     <rect
       fill="url(#fade-out-to-top)"
-      :x="canvasDimensions.offset.x - 0.5"
-      :y="canvasDimensions.offset.y + canvasDimensions.height * (minY - 0.05)"
-      :width="canvasDimensions.width + 1"
-      :height="canvasDimensions.height * 0.05 - 0.5"
+      :x="cd.offset.x - 0.5"
+      :y="0"
+      :width="cd.width + 1"
+      :height="cd.height * (cd.stepY / 2) - 0.5"
     />
     <rect
       fill="url(#fade-out-to-bottom)"
-      :x="canvasDimensions.offset.x - 0.5"
-      :y="
-        canvasDimensions.offset.y +
-          canvasDimensions.height * (maxY + 0.05) -
-          canvasDimensions.height * 0.05
-      "
-      :width="canvasDimensions.width + 1"
-      :height="canvasDimensions.height * 0.05"
+      :x="cd.offset.x - 0.5"
+      :y="cd.height * (cd.maxY - cd.minY + cd.stepY / 2)"
+      :width="cd.width + 1"
+      :height="cd.height * (cd.stepY / 2)"
     />
   </g>
 </template>

@@ -22,10 +22,10 @@ export function clamp(num: number, min: number, max: number) {
 
 export function toCanvasPoint(
   point: { x: number; y: number },
-  canvasDimensions: CanvasDimensions
+  cd: CanvasDimensions
 ) {
   return {
-    x: (point.x / 100) * canvasDimensions.width,
-    y: invertCoordenates(point.y / 100) * canvasDimensions.height
+    x: (point.x / 100) * cd.width,
+    y: invertCoordenates(point.y / 100) * cd.height
   }
 }
