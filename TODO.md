@@ -13,7 +13,6 @@
 - animation moving up and down to the right of canvas
 - Marketing
   - buy domain
-  - Analytics
   - share on
     - reddit
     - https://webdevresources.info/
