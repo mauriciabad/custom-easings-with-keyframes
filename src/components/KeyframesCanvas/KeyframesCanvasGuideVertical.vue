@@ -7,7 +7,8 @@ export default defineComponent({
   props: {
     position: { type: Number, required: true },
     maxY: { type: Number, default: 1.3 },
-    minY: { type: Number, default: -0.3 }
+    minY: { type: Number, default: -0.3 },
+    stepY: { type: Number, default: 0.1 }
   },
 
   setup() {
@@ -26,7 +27,9 @@ export default defineComponent({
     <line
       :x1="canvasDimensions.offset.x + position * canvasDimensions.width"
       :x2="canvasDimensions.offset.x + position * canvasDimensions.width"
-      :y1="canvasDimensions.offset.y + canvasDimensions.height * (minY - 0.05)"
+      :y1="
+        canvasDimensions.offset.y + canvasDimensions.height * (minY - stepY / 2)
+      "
       :y2="canvasDimensions.offset.y + canvasDimensions.height"
       stroke="#E0DED5"
     />
@@ -42,7 +45,9 @@ export default defineComponent({
       :x1="canvasDimensions.offset.x + position * canvasDimensions.width"
       :x2="canvasDimensions.offset.x + position * canvasDimensions.width"
       :y1="canvasDimensions.offset.y + canvasDimensions.height + 30"
-      :y2="canvasDimensions.offset.y + canvasDimensions.height * (maxY + 0.05)"
+      :y2="
+        canvasDimensions.offset.y + canvasDimensions.height * (maxY + stepY / 2)
+      "
       stroke="#E0DED5"
     />
   </g>

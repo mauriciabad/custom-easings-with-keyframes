@@ -63,6 +63,7 @@ export default defineComponent({
         :position="minX + (n - 1) * stepX"
         :maxY="maxY"
         :minY="minY"
+        :stepY="stepY"
       />
     </g>
     <rect
