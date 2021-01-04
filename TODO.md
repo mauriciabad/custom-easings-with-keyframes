@@ -12,6 +12,7 @@
   - lables on axis for selected points
 - animation moving up and down to the right of canvas
 - Marketing
+  - buy domain
   - Analytics
   - share on
     - reddit

@@ -16,6 +16,7 @@
     "inter-ui": "^3.15.0",
     "register-service-worker": "^1.7.2",
     "vue": "^3.0.4",
+    "vue-gtag-next": "^1.14.0",
     "vue-router": "^4.0.2",
     "vuex": "^4.0.0-0"
   },

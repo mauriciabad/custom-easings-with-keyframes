@@ -4,6 +4,7 @@ import { useStore } from 'vuex'
 import { key } from '@/store'
 import { isTransformProperty } from '@/helpers'
 import { propertyValue } from '@/components/Preview.vue'
+import { useGtag } from 'vue-gtag-next'
 
 export default defineComponent({
   components: {},
@@ -40,8 +41,22 @@ export default defineComponent({
 ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
     })
 
+    const { event } = useGtag()
+    let lastCopiedCode: string
+    function trackCopyCode() {
+      event('Copy code', {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        event_category: 'engagement',
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        event_label: lastCopiedCode === code.value ? 'duplicate' : undefined
+      })
+
+      lastCopiedCode = code.value
+    }
+
     function copyCode() {
       navigator.clipboard.writeText(code.value)
+      trackCopyCode()
     }
 
     return {
