@@ -45,13 +45,6 @@ export type State = {
   canvasDimensions: CanvasDimensions
 }
 
-function heigthToCanvasHeigth(heigth: number) {
-  return heigth * 0.5
-}
-function heigthToCanvasWidth(width: number) {
-  return width * 0.5
-}
-
 export const store = createStore<State>({
   state: () => ({
     options: {
@@ -75,8 +68,8 @@ export const store = createStore<State>({
       }
     ],
     canvasDimensions: {
-      height: heigthToCanvasHeigth(window.innerHeight) ?? 500,
-      width: heigthToCanvasWidth(window.innerWidth) ?? 1100,
+      height: 800,
+      width: 800,
       offset: { x: 40, y: 175 }
     }
   }),
@@ -153,8 +146,10 @@ export const store = createStore<State>({
       state.points.sort((a, b) => a.x - b.x)
     },
     resize: (state, { width, height }: { width: number; height: number }) => {
-      state.canvasDimensions.width = heigthToCanvasWidth(width)
-      state.canvasDimensions.height = heigthToCanvasHeigth(height)
+      state.canvasDimensions.width =
+        width - state.canvasDimensions.offset.x - 32
+      state.canvasDimensions.height =
+        height - state.canvasDimensions.offset.y * 2
     }
   },
   actions: {}

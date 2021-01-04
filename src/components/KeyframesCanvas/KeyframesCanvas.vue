@@ -1,9 +1,10 @@
 <script lang="ts">
+/// <reference types="resize-observer-browser" />
 import KeyframesCanvasPoint from '@/components/KeyframesCanvas/KeyframesCanvasPoint.vue'
 import KeyframesCanvasLine from '@/components/KeyframesCanvas/KeyframesCanvasLine.vue'
 import KeyframesCanvasGuides from '@/components/KeyframesCanvas/KeyframesCanvasGuides.vue'
 import Instructions from '@/components/Instructions.vue'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
 import { invertCoordenates, clamp } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
@@ -33,6 +34,7 @@ export default defineComponent({
     const wasMovingPointSelected = ref(false)
 
     const canvas = ref<SVGElement>()
+    const canvasContainer = ref<HTMLDivElement>()
 
     function extractCoordenates(event: MouseEvent) {
       if (!canvas.value) return { x: 0, y: 0 }
@@ -62,11 +64,23 @@ export default defineComponent({
       }
     }
 
-    window.addEventListener('resize', function() {
+    const resizeObserver = new ResizeObserver(entries => {
       store.commit('resize', {
-        height: window.innerHeight,
-        width: window.innerWidth
+        height: entries[0].contentRect.height,
+        width: entries[0].contentRect.width
       })
+    })
+
+    onMounted(() => {
+      if (canvasContainer.value) {
+        resizeObserver.observe(canvasContainer.value)
+      }
+    })
+
+    onUnmounted(() => {
+      if (canvasContainer.value) {
+        resizeObserver.unobserve(canvasContainer.value)
+      }
     })
 
     document.body.addEventListener('keydown', function(event: KeyboardEvent) {
@@ -164,14 +178,15 @@ export default defineComponent({
       handleMouseMove,
       handleMouseUp,
       handleRightClick,
-      canvas
+      canvas,
+      canvasContainer
     }
   }
 })
 </script>
 
 <template>
-  <div class="canvas-container">
+  <div class="canvas-container" ref="canvasContainer">
     <svg
       :height="canvasDimensions.height + canvasDimensions.offset.y * 2"
       :width="canvasDimensions.width + canvasDimensions.offset.x + 32"
@@ -180,7 +195,7 @@ export default defineComponent({
       @mousemove="handleMouseMove($event)"
       @mouseup="handleMouseUp($event)"
       @contextmenu="$event.preventDefault()"
-      style="overflow: visible; user-select: none"
+      class="canvas"
     >
       <g>
         <defs>
@@ -279,6 +294,16 @@ export default defineComponent({
 <style scoped lang="scss">
 .canvas-container {
   width: 100%;
+  height: 100%;
+  position: relative;
+
+  .canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    user-select: none;
+  }
 }
 .rectangle {
   stroke-width: 2px;
