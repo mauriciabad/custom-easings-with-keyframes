@@ -10,10 +10,10 @@ export default defineComponent({
 
   setup(props) {
     const store = useStore(key)
-    const canvasDimensions = computed(() => store.state.canvasDimensions)
+    const cd = computed(() => store.state.canvasDimensions)
 
     const pointsInCanvas = computed(() =>
-      props.points.map(point => toCanvasPoint(point, canvasDimensions.value))
+      props.points.map(point => toCanvasPoint(point, cd.value))
     )
 
     const path = computed(() =>
@@ -22,7 +22,7 @@ export default defineComponent({
       }, '')
     )
 
-    return { path, pointsInCanvas }
+    return { path, pointsInCanvas, cd }
   }
 })
 </script>
@@ -31,7 +31,13 @@ export default defineComponent({
   <g>
     <defs>
       <mask id="line-mask">
-        <rect x="-100%" y="-100%" width="300%" height="300%" fill="white" />
+        <rect
+          :x="`${(cd.offset.x / cd.width) * -1 * 100}%`"
+          :y="`${(cd.maxY - 1 + cd.stepY / 2 + 32 / cd.height) * -1 * 100}%`"
+          :width="`${100 + ((32 + cd.offset.x) / cd.width) * 100}%`"
+          :height="`${(cd.maxY - cd.minY + cd.stepY + 64 / cd.height) * 100}%`"
+          fill="white"
+        />
         <circle
           v-for="point in pointsInCanvas"
           :key="point.x"

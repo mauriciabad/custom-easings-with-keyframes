@@ -39,6 +39,7 @@ export default defineComponent({
   gap: 2rem;
   height: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 .keyframes-canvas {
   grid-area: canvas;

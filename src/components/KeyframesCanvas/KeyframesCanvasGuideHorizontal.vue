@@ -29,16 +29,16 @@ export default defineComponent({
     <line
       :x1="cd.offset.x"
       :x2="cd.offset.x + cd.width"
-      :y1="cd.height * (cd.stepY / 2 + position + cd.maxY - 1)"
-      :y2="cd.height * (cd.stepY / 2 + position + cd.maxY - 1)"
+      :y1="cd.height * (cd.stepY / 2 + positionInverted + cd.maxY - 1)"
+      :y2="cd.height * (cd.stepY / 2 + positionInverted + cd.maxY - 1)"
       stroke="#E0DED5"
     />
     <text
       :x="cd.offset.x - 8"
-      :y="cd.height * (cd.stepY / 2 + position + cd.maxY - 1) + 4"
+      :y="cd.height * (cd.stepY / 2 + positionInverted + cd.maxY - 1) + 4"
       text-anchor="end"
       class="text"
-      >{{ (positionInverted * 100).toFixed() }}%</text
+      >{{ (position * 100).toFixed() }}%</text
     >
   </g>
 </template>

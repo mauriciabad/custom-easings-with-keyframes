@@ -12,7 +12,7 @@ export default defineComponent({
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)
-    const canvasDimensions = computed(() => store.state.canvasDimensions)
+    const cd = computed(() => store.state.canvasDimensions)
 
     const previewElement = ref<HTMLDivElement>()
     const animation = ref<Animation>()
@@ -24,7 +24,7 @@ export default defineComponent({
         const options: Options = {
           property: 'translateY',
           fromValue: 0,
-          toValue: -1 * canvasDimensions.value.height,
+          toValue: -1 * cd.value.height,
           valueUnits: 'px',
           duration: 6000,
           easingName: 'animation-easing'
@@ -119,7 +119,7 @@ export default defineComponent({
 
     return {
       previewElement,
-      canvasDimensions,
+      cd,
       pointInPath,
       fadedDotsCount,
       colorMap
@@ -129,7 +129,13 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="animation" :style="`height: ${canvasDimensions.height}px`">
+  <div
+    class="animation"
+    :style="
+      `height: ${cd.height}px; transform: translateY(${cd.height *
+        (cd.maxY - 1 + cd.stepY / 2)}px)`
+    "
+  >
     <div
       class="object object--faded"
       v-for="n in fadedDotsCount + 1"
@@ -140,7 +146,7 @@ export default defineComponent({
         ) /
           100) *
           -1 *
-          canvasDimensions.height}px); background-color: ${colorMap(
+          cd.height}px); background-color: ${colorMap(
           (n - 1) / fadedDotsCount
         )}`
       "
@@ -154,6 +160,7 @@ export default defineComponent({
   $height: 24px;
   width: $height;
   position: relative;
+  align-self: start;
 
   .object {
     height: $height;

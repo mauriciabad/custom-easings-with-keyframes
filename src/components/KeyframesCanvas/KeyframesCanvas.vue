@@ -194,17 +194,37 @@ export default defineComponent({
       @contextmenu="$event.preventDefault()"
       class="canvas"
     >
+      <defs>
+        <filter
+          id="line-blur"
+          filterUnits="userSpaceOnUse"
+          x="-100%"
+          y="-100%"
+          width="300%"
+          height="300%"
+        >
+          <feOffset result="offOut" in="SourceGraphic" dy="11" />
+          <feGaussianBlur result="blurOut" in="offOut" stdDeviation="16" />
+          <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+        </filter>
+
+        <linearGradient
+          id="line-gradient"
+          gradientUnits="userSpaceOnUse"
+          x1="0%"
+          y1="100%"
+          x2="100%"
+          y2="0%"
+        >
+          <stop offset="0%" stop-color="#b721ff" />
+          <stop offset="100%" stop-color="#21d4fd" />
+        </linearGradient>
+        <filter id="shadow">
+          <feDropShadow dx="0" dy="1.25" stdDeviation="5" flood-opacity="0.2" />
+        </filter>
+      </defs>
+
       <g>
-        <defs>
-          <filter id="shadow">
-            <feDropShadow
-              dx="0"
-              dy="1.25"
-              stdDeviation="5"
-              flood-opacity="0.2"
-            />
-          </filter>
-        </defs>
         <rect
           :x="cd.offset.x"
           :y="cd.height * (cd.maxY - 1 + cd.stepY / 2)"
@@ -246,33 +266,6 @@ export default defineComponent({
         :height="cd.height"
         style="overflow: visible"
       >
-        <defs>
-          <filter
-            id="line-blur"
-            filterUnits="userSpaceOnUse"
-            x="-100%"
-            y="-100%"
-            width="300%"
-            height="300%"
-          >
-            <feOffset result="offOut" in="SourceGraphic" dy="11" />
-            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="16" />
-            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-          </filter>
-
-          <linearGradient
-            id="line-gradient"
-            gradientUnits="userSpaceOnUse"
-            x1="0%"
-            y1="100%"
-            x2="100%"
-            y2="0%"
-          >
-            <stop offset="0%" stop-color="#b721ff" />
-            <stop offset="100%" stop-color="#21d4fd" />
-          </linearGradient>
-        </defs>
-
         <g filter="url(#line-blur)">
           <keyframes-canvas-line :points="points" />
           <g>
