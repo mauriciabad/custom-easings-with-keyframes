@@ -854,16 +854,6 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@fontsource/poppins@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-4.1.0.tgz#dc250fd1865f92bc2406d38c8cdbc0018e9c0df1"
-  integrity sha512-SMvh6J28hegBXFc+oC4dBiFcwnT3NiNo+3s+rzEfHUDewk33TpnqWnf+Phg+bYCdIu77sMQJk2pGN2Q8iiUVjw==
-
-"@fontsource/roboto-mono@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/roboto-mono/-/roboto-mono-4.1.0.tgz#83aac6cce6849d0d943861e21c1b31d7b6dfd724"
-  integrity sha512-KVq0xzjoNLd1EQHNPcL+j8EbPaZoYmXvwZt/0GzZPH578f8CcLvSNm8Yl0IVf6Clvhl3/Svb6sslkbkt+SCmtA==
-
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"

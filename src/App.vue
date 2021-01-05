@@ -8,12 +8,16 @@
   $inter-font-path: '~inter-ui/Inter (web)'
 );
 @include variable.all;
-@import '~@fontsource/roboto-mono/latin-500.css';
-@import '~@fontsource/poppins/latin-700.css';
+
+$defaultEmojiFonts: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+  'Noto Color Emoji';
 
 $defaultFonts: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
   'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
-  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  $defaultEmojiFonts;
+
+$defaultMonoFonts: ui-monospace, SFMono-Regular, Monaco, Consolas,
+  Liberation Mono, Roboto Mono, Courier New, monospace, $defaultEmojiFonts;
 
 html,
 body,
@@ -22,7 +26,6 @@ textarea,
 button {
   font-family: 'Inter var', $defaultFonts;
 }
-
 #app {
   height: 100%;
 }
@@ -31,17 +34,7 @@ body {
   height: 100vh;
   min-height: 100vh;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 700;
-  font-family: Poppins, $defaultFonts;
-}
 code {
-  font-weight: 500;
-  font-family: 'Roboto Mono', ui-monospace, monospace;
+  font-family: Menlo, $defaultMonoFonts;
 }
 </style>

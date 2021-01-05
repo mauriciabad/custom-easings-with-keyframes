@@ -9,8 +9,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@fontsource/poppins": "^4.1.0",
-    "@fontsource/roboto-mono": "^4.1.0",
     "color-interpolate": "^1.0.5",
     "core-js": "^3.8.1",
     "inter-ui": "^3.15.0",

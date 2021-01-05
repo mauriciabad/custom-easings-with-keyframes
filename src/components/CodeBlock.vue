@@ -83,7 +83,10 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
 >
 <span class="gray">}</span
     ></code></div>
-    <button class="copy-button" @click="copyCode">Copy</button>
+    <button class="copy-button" @click="copyCode"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+  <path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z" />
+  <path d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z" />
+</svg></span>Copy code</button>
   </pre>
 </template>
 
@@ -92,15 +95,18 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
   display: flex;
   flex-direction: column;
   background: #222;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   color: #fff;
   padding: 0 1.5rem 1.5rem;
   margin: 0;
   align-self: stretch;
   justify-self: stretch;
   grid-area: code;
-  width: 50ch;
+  font-size: 14px;
+  line-height: 1.375;
+  width: 40ch;
   user-select: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
   ::selection {
     background-color: rgba(255, 255, 255, 0.1);
@@ -181,22 +187,40 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
   .copy-button {
     display: block;
     width: 100%;
-    padding: 1rem 0;
+    padding: 0.5rem 1rem;
     text-align: center;
     border: none;
     border-radius: 0.5rem;
-    background-color: #8a7eff;
+    background-color: #13b981;
     color: #fff;
-    font-weight: bold;
-    text-transform: uppercase;
     font-size: 1rem;
-    letter-spacing: 0.25rem;
-    line-height: 0.85;
-    box-shadow: 0px 3px 12px #8a7effa0;
+    font-weight: 500;
+    line-height: 1.25rem;
+    box-shadow: 0px 2px 8px #13b98180;
     cursor: pointer;
     z-index: 1;
     outline: none;
     transition: box-shadow 100ms ease-out;
+    appearance: none;
+    position: relative;
+
+    span {
+      position: absolute;
+      left: 0.75rem;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    svg {
+      height: 1.25rem;
+      opacity: 0.6667;
+      transition: opacity 100ms ease-out;
+    }
+    &:hover svg {
+      opacity: 1;
+    }
 
     &:focus-visible {
       box-shadow: 0px 3px 12px 0.25rem #fff5, 0 0 0 0.25rem #fff;
