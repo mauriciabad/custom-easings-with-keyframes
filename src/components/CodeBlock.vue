@@ -191,7 +191,6 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
     text-align: center;
     border: none;
     border-radius: 0.5rem;
-    background-color: #13b981;
     color: #fff;
     font-size: 1rem;
     font-weight: 500;
@@ -203,6 +202,7 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
     transition: box-shadow 100ms ease-out;
     appearance: none;
     position: relative;
+    background: #13b981 linear-gradient(45deg, #26ada2, #2bc364);
 
     span {
       position: absolute;
