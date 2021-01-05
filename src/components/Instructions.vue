@@ -17,23 +17,24 @@ export default defineComponent({
     <div class="background"></div>
     <ul>
       <li>
-        <icon name="left-click" /><icon name="right-arrow" /> Add point / Select
-        point
+        <icon name="left-click" />
+        <icon name="right-arrow" />Add point / Select point
       </li>
       <li>
-        <icon name="move" /><icon name="right-arrow" /> Move selected points
+        <icon name="move" />
+        <icon name="right-arrow" />Move selected points
       </li>
       <li>
-        <icon name="right-click" />/<icon name="key-backspace" /><icon
-          name="right-arrow"
-        />
-        Delete selected points
+        <icon name="key-backspace" />
+        <icon name="slash" style="margin: 0 -2px;" />
+        <icon name="right-click" style="margin: 0 -2px;" />
+        <icon name="right-arrow" />Delete selected points
       </li>
       <li>
-        <icon name="key-shift" />+<icon name="left-click" /><icon
-          name="right-arrow"
-        />
-        Select many points
+        <icon name="key-shift" />
+        <icon name="plus" style="margin: 0 -2px;" />
+        <icon name="left-click" style="margin: 0 -2px;" />
+        <icon name="right-arrow" />Select many points
       </li>
     </ul>
   </div>
@@ -49,6 +50,9 @@ export default defineComponent({
   display: inline-block;
   position: relative;
   will-change: opacity;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 
   .background {
     position: absolute;
@@ -79,10 +83,6 @@ export default defineComponent({
 
     li {
       margin-bottom: 0.5rem;
-
-      svg:first-child {
-        margin-left: -0.5rem;
-      }
 
       &:last-child {
         margin-bottom: 0;

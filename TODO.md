@@ -25,6 +25,7 @@
   - small screens
   - mobile (show not compatible)
 - change maxY and maxX from the UI
+- add more properties to options (skew) and filter units
 
 ## Mid-term
 
