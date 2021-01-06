@@ -25,7 +25,7 @@ function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
       ...styledKeyframes[1],
       ...disabledStyle
     }
-    styledKeyframes[3].backgroundColor = beginColor
+    styledKeyframes[2].backgroundColor = beginColor
   }
 
   if (options.endDelay) {
