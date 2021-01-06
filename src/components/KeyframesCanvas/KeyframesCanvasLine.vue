@@ -4,8 +4,10 @@ import { Point } from '@/types'
 import { toCanvasPoint } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
+import KeyframesCanvasPointsMask from './KeyframesCanvasPointsMask.vue'
 
 export default defineComponent({
+  components: { KeyframesCanvasPointsMask },
   props: { points: { type: Object as () => Point[], required: true } },
 
   setup(props) {
@@ -30,23 +32,7 @@ export default defineComponent({
 <template>
   <g>
     <defs>
-      <mask id="line-mask">
-        <rect
-          :x="`${(cd.offset.x / cd.width) * -1 * 100}%`"
-          :y="`${(cd.maxY - 1 + cd.stepY / 2 + 32 / cd.height) * -1 * 100}%`"
-          :width="`${100 + ((32 + cd.offset.x) / cd.width) * 100}%`"
-          :height="`${(cd.maxY - cd.minY + cd.stepY + 64 / cd.height) * 100}%`"
-          fill="white"
-        />
-        <circle
-          v-for="point in pointsInCanvas"
-          :key="point.x"
-          r="8"
-          :cx="point.x"
-          :cy="point.y"
-          fill="black"
-        />
-      </mask>
+      <keyframes-canvas-points-mask id="line-mask" :points="points" />
     </defs>
 
     <path :d="path" mask="url(#line-mask)" class="path" />

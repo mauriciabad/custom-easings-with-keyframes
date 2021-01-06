@@ -9,13 +9,15 @@ import { invertCoordenates, clamp } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
 import deepClone from 'deep-clone'
+import KeyframesCanvasNewPoint from './KeyframesCanvasNewPoint.vue'
 
 export default defineComponent({
   components: {
     KeyframesCanvasPoint,
     KeyframesCanvasLine,
     KeyframesCanvasGuides,
-    Instructions
+    Instructions,
+    KeyframesCanvasNewPoint
   },
   props: {},
 
@@ -23,6 +25,14 @@ export default defineComponent({
     const store = useStore(key)
     const points = computed(() => store.state.points)
     const cd = computed(() => store.state.canvasDimensions)
+
+    const newPoint = ref<
+      | {
+          x: number
+          y: number
+        }
+      | undefined
+    >()
 
     let moveOrigin = {
       x: 0,
@@ -110,6 +120,8 @@ export default defineComponent({
     }
 
     function handleMouseMove(event: MouseEvent) {
+      newPoint.value = extractCoordenates(event)
+
       if (isMoving.value) {
         const moveEnd = extractCoordenates(event)
 
@@ -176,7 +188,8 @@ export default defineComponent({
       handleMouseUp,
       handleRightClick,
       canvas,
-      canvasContainer
+      canvasContainer,
+      newPoint
     }
   }
 })
@@ -267,6 +280,7 @@ export default defineComponent({
         style="overflow: visible"
       >
         <g filter="url(#line-blur)">
+          <keyframes-canvas-new-point v-if="newPoint" :point="newPoint" />
           <keyframes-canvas-line :points="points" />
           <g>
             <keyframes-canvas-point
@@ -293,6 +307,7 @@ export default defineComponent({
     left: 0;
     overflow: visible;
     user-select: none;
+    cursor: pointer;
   }
 }
 .rectangle {

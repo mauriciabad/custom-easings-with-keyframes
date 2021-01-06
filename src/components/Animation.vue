@@ -3,7 +3,7 @@ import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { key, Options } from '@/store'
 import interpolate from 'color-interpolate'
-import { computeKeyframes } from '@/helpers'
+import { computeKeyframes, getSorroundingPoints } from '@/helpers'
 
 const beginColor = '#b721ff'
 const endColor = '#21d4fd'
@@ -84,24 +84,23 @@ export default defineComponent({
     })
 
     function pointInPath(x: number): number {
-      if (x <= points.value[0].x) {
+      const sorroundingPoints = getSorroundingPoints(x, points.value)
+
+      if (!sorroundingPoints[0]) {
         return points.value[0].y
       }
-      if (x >= points.value[points.value.length - 1].x) {
+      if (!sorroundingPoints[1]) {
         return points.value[points.value.length - 1].y
       }
 
-      for (let i = 0; i < points.value.length - 1; i++) {
-        const leftPoint = points.value[i]
-        const rightPoint = points.value[i + 1] || leftPoint
+      const p =
+        (x - sorroundingPoints[1].x) /
+        (sorroundingPoints[0].x - sorroundingPoints[1].x)
 
-        if (leftPoint.x <= x && rightPoint.x >= x) {
-          const p = (x - rightPoint.x) / (leftPoint.x - rightPoint.x)
-          return rightPoint.y + p * (leftPoint.y - rightPoint.y)
-        }
-      }
-
-      return 0
+      return (
+        sorroundingPoints[1].y +
+        p * (sorroundingPoints[0].y - sorroundingPoints[1].y)
+      )
     }
 
     const colorMap = interpolate([beginColor, endColor])

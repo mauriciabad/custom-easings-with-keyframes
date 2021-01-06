@@ -139,3 +139,23 @@ export function computeKeyframes(
     pointToKeyframe(point, options)
   )
 }
+
+export function getSorroundingPoints(x: number, points: Point[]) {
+  if (x <= points[0].x) {
+    return [points[0], undefined]
+  }
+  if (x >= points[points.length - 1].x) {
+    return [undefined, points[points.length - 1]]
+  }
+
+  for (let i = 0; i < points.length - 1; i++) {
+    const leftPoint = points[i]
+    const rightPoint = points[i + 1] || leftPoint
+
+    if (leftPoint.x <= x && rightPoint.x >= x) {
+      return [leftPoint, rightPoint]
+    }
+  }
+
+  return [undefined, undefined]
+}
