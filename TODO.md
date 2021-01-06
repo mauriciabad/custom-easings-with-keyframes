@@ -6,15 +6,13 @@
   - Carbon adds
   - Bitcoin donations
   - Fiat donations (buy me a cofee)
-  - montly donations
+  - montly donations (open collective)
 - Undo/redo feature
 - UX improvements
-  - phantom new point on hover
   - lables on axis for selected points
 - animation moving up and down to the right of canvas
 - Marketing
   - buy domain
-  - add star button
   - share on
     - reddit
     - https://webdevresources.info/
@@ -25,13 +23,13 @@
     - online app
 - responsive
   - small screens
-  - mobile (show not compatible)
 - change maxY and maxX from the UI
 - add more properties to options (skew) and filter units
+- bug fixing
+  - animation color
 
 ## Mid-term
 
-- y-axis from (100% <-> 0% <-> -100%)
 - Dark theme
 
 ## Future considerations
