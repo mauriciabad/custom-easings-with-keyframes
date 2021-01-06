@@ -4,10 +4,18 @@ import Preview from '@/components/Preview.vue'
 import Animation from '@/components/Animation.vue'
 import CodeBlock from '@/components/CodeBlock.vue'
 import Options from '@/components/Options.vue'
+import Buttons from '@/components/Buttons.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  components: { KeyframesCanvas, CodeBlock, Preview, Options, Animation },
+  components: {
+    KeyframesCanvas,
+    CodeBlock,
+    Preview,
+    Options,
+    Animation,
+    Buttons
+  },
 
   setup() {
     return {}
@@ -22,6 +30,7 @@ export default defineComponent({
     <options class="options" />
     <preview class="preview" />
     <code-block />
+    <buttons class="buttons" />
   </main>
 </template>
 
@@ -32,7 +41,8 @@ export default defineComponent({
   grid-template-areas:
     'canvas animation code'
     'canvas animation options'
-    'canvas animation preview';
+    'canvas animation preview'
+    'canvas animation buttons';
   align-items: center;
   justify-content: center;
   padding: 2rem;
@@ -53,5 +63,8 @@ export default defineComponent({
 .animation {
   grid-area: animation;
   margin-left: -28px;
+}
+.buttons {
+  grid-area: buttons;
 }
 </style>
