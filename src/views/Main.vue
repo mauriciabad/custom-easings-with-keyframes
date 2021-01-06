@@ -5,6 +5,7 @@ import Animation from '@/components/Animation.vue'
 import CodeBlock from '@/components/CodeBlock.vue'
 import Options from '@/components/Options.vue'
 import Buttons from '@/components/Buttons.vue'
+import Popup from '@/components/Popup.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -14,7 +15,8 @@ export default defineComponent({
     Preview,
     Options,
     Animation,
-    Buttons
+    Buttons,
+    Popup
   },
 
   setup() {
@@ -32,6 +34,7 @@ export default defineComponent({
     <code-block />
     <buttons class="buttons" />
   </main>
+  <popup />
 </template>
 
 <style scoped lang="scss">
