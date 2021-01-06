@@ -161,6 +161,10 @@ export default defineComponent({
       store.commit('deleteFocusedPoints')
     }
 
+    function handleMouseLeave(event: MouseEvent) {
+      newPoint.value = undefined
+    }
+
     function handleMouseUp(event: MouseEvent) {
       event.preventDefault()
       if (event.which === 1) {
@@ -187,6 +191,7 @@ export default defineComponent({
       handleMouseMove,
       handleMouseUp,
       handleRightClick,
+      handleMouseLeave,
       canvas,
       canvasContainer,
       newPoint
@@ -205,6 +210,7 @@ export default defineComponent({
       @mousemove="handleMouseMove($event)"
       @mouseup="handleMouseUp($event)"
       @contextmenu="$event.preventDefault()"
+      @mouseleave="handleMouseLeave($event)"
       class="canvas"
     >
       <defs>
