@@ -84,6 +84,14 @@ export default defineComponent({
     })
 
     function pointInPath(x: number): number {
+      if (x <= points.value[0].x) {
+        return points.value[0].y
+      }
+
+      if (x >= points.value[points.value.length - 1].x) {
+        return points.value[points.value.length - 1].y
+      }
+
       const sorroundingPoints = getSorroundingPoints(x, points.value)
 
       if (!sorroundingPoints[0]) {

@@ -26,7 +26,6 @@
 - change maxY and maxX from the UI
 - add more properties to options (skew) and filter units
 - bug fixing
-  - animation color
 
 ## Mid-term
 
