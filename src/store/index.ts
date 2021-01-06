@@ -31,6 +31,8 @@ export type Options = {
   valueUnits: ValueUnits
   duration: number
   easingName: string
+  beginingDelay: number
+  endDelay: number
 }
 
 export type CanvasDimensions = {
@@ -54,12 +56,14 @@ export type State = {
 export const store = createStore<State>({
   state: () => ({
     options: {
-      property: 'scale',
+      property: 'rotate',
       fromValue: 0,
-      toValue: 1,
-      valueUnits: '',
-      duration: 1000,
-      easingName: 'ease-custom'
+      toValue: 360,
+      valueUnits: 'deg',
+      duration: 3000,
+      easingName: 'ease-custom',
+      beginingDelay: 0,
+      endDelay: 0
     },
     points: [
       {
@@ -99,6 +103,15 @@ export const store = createStore<State>({
     },
     deleteFocusedPoints: state => {
       state.points = state.points.filter(p => !p.isSelected)
+    },
+    updateOptions: (state, options: Partial<Options>) => {
+      if ((options?.fromValue as unknown) === '') options.fromValue = 0
+      if ((options?.toValue as unknown) === '') options.toValue = 1
+      if ((options?.duration as unknown) === '') options.duration = 1
+      if ((options?.beginingDelay as unknown) === '') options.beginingDelay = 0
+      if ((options?.endDelay as unknown) === '') options.endDelay = 0
+
+      state.options = { ...state.options, ...options }
     },
     focusPoint: (state, { x }: { x: number }) => {
       state.points = state.points.map(p => ({

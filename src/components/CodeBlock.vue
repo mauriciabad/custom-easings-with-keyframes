@@ -2,8 +2,12 @@
 import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
 import { key } from '@/store'
-import { isTransformProperty } from '@/helpers'
-import { propertyValue } from '@/components/Preview.vue'
+import {
+  computeKeyframes,
+  computePointsWithDelay,
+  isTransformProperty,
+  round
+} from '@/helpers'
 import { useGtag } from 'vue-gtag-next'
 
 export default defineComponent({
@@ -13,24 +17,22 @@ export default defineComponent({
     const store = useStore(key)
     const points = computed(() => store.state.points)
     const options = computed(() => store.state.options)
+    const pointsWithDelay = computed(() =>
+      computePointsWithDelay(points.value, options.value)
+    )
 
     const code = computed(() => {
-      const keyframesLines = points.value.map(point => {
-        let properties: string
+      const keyframes = computeKeyframes(points.value, options.value)
 
-        if (isTransformProperty(options.value.property)) {
-          properties = `transform: ${options.value.property}(${propertyValue(
-            point,
-            options.value
-          )})`
-        } else {
-          properties = `${options.value.property}: ${propertyValue(
-            point,
-            options.value
-          )}`
-        }
+      const keyframesLines = keyframes.map(keyframe => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { composite, easing, offset, ...keyframeProperties } = keyframe
 
-        return `${point.x.toFixed()}% {${properties}}`
+        const propertyLine = Object.entries(keyframeProperties)
+          .map(([property, propertyValue]) => `${property}: ${propertyValue}`)
+          .join('; ')
+
+        return `${offset || 0 * 100}% {${propertyLine}}`
       })
 
       return `.${options.value.easingName} {
@@ -63,23 +65,27 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
       options,
       points,
       isTransformProperty,
-      copyCode
+      copyCode,
+      pointsWithDelay,
+      round
     }
   }
 })
 </script>
 
 <template>
-  <pre class="container"><div class="code-wrapper"><code class="code"
+  <pre
+    class="container"
+  ><div class="code-wrapper"><div class="fade fade--top"></div><div class="fade fade--right"></div><div class="fade fade--bottom"></div><div class="fade fade--left"></div><code class="code"
 ><span class="gray">.</span><span class="orange">{{options.easingName}}</span><span class="gray"> {</span>
   <span class="white">animation</span><span class="gray">: </span><span class="orange">{{options.easingName}}</span> <span class="violet">{{options.duration}}</span><span class="red">ms</span> <span class="cyan">linear</span><span class="gray">;</span>
 <span class="gray">}</span>
 
 <span class="light-gray">@</span><span class="red">keyframes</span> <span class="orange">{{options.easingName}}</span> <span class="gray">{</span
-><template v-for="point in points" :key="point.x">
-  <span class="cyan">{{point.x.toFixed()}}%</span><span class="gray"> {</span><template v-if="isTransformProperty(options.property)"><span class="white">transform</span><span class="gray">: </span><span class="green">{{options.property}}</span><span class="gray">(</span><span class="violet">{{Math.round(((options.toValue - options.fromValue) * (point.y / 100) + options.fromValue) * 100) / 100}}</span><span class="red">{{options.valueUnits}}</span><span class="gray">)</span></template>
+><template v-for="point in pointsWithDelay" :key="point.x">
+  <span class="cyan">{{point.x}}%</span><span class="gray"> {</span><template v-if="isTransformProperty(options.property)"><span class="white">transform</span><span class="gray">: </span><span class="green">{{options.property}}</span><span class="gray">(</span><span class="violet">{{round(((options.toValue - options.fromValue) * (point.y / 100) + options.fromValue), 6)}}</span><span class="red">{{options.valueUnits}}</span><span class="gray">)</span></template>
 <template v-else>
-  <span class="white">{{options.property}}</span><span class="gray">: </span><span class="violet">{{Math.round(((options.toValue - options.fromValue) * (point.y / 100) + options.fromValue) * 100) / 100}}</span><span class="red">{{options.valueUnits}}</span></template><span class="gray">}</span></template
+  <span class="white">{{options.property}}</span><span class="gray">: </span><span class="violet">{{round(((options.toValue - options.fromValue) * (point.y / 100) + options.fromValue), 6)}}</span><span class="red">{{options.valueUnits}}</span></template><span class="gray">}</span></template
 >
 <span class="gray">}</span
     ></code></div>
@@ -113,65 +119,119 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
   }
 
   .code-wrapper {
-    width: 100%;
     flex: 1 1 0;
     display: flex;
     flex-direction: column;
     position: relative;
+    margin: 0 -1.5rem;
+    border-top-right-radius: inherit;
+    border-top-left-radius: inherit;
+    overflow: hidden;
 
-    &::before,
-    &:after {
-      content: '';
+    .fade {
       position: absolute;
-      left: 0;
-      right: 0;
       pointer-events: none;
-    }
-    &::before {
-      bottom: 0;
-      height: 2.5rem;
-      background: linear-gradient(
-        to bottom,
-        hsla(0, 0%, 13%, 0) 0%,
-        hsla(0, 0%, 13%, 0.013) 4.4%,
-        hsla(0, 0%, 13%, 0.049) 7.7%,
-        hsla(0, 0%, 13%, 0.104) 10.4%,
-        hsla(0, 0%, 13%, 0.175) 12.7%,
-        hsla(0, 0%, 13%, 0.259) 14.8%,
-        hsla(0, 0%, 13%, 0.352) 17.2%,
-        hsla(0, 0%, 13%, 0.45) 20.1%,
-        hsla(0, 0%, 13%, 0.55) 23.9%,
-        hsla(0, 0%, 13%, 0.648) 28.8%,
-        hsla(0, 0%, 13%, 0.741) 35.2%,
-        hsla(0, 0%, 13%, 0.825) 43.3%,
-        hsla(0, 0%, 13%, 0.896) 53.6%,
-        hsla(0, 0%, 13%, 0.951) 66.3%,
-        hsla(0, 0%, 13%, 0.987) 81.6%,
-        hsl(0, 0%, 13%) 100%
-      );
-    }
-    &:after {
-      top: 0;
-      height: 2rem;
-      background: linear-gradient(
-        to top,
-        rgba(34, 34, 34, 0) 0%,
-        rgba(34, 34, 34, 0.013) 8.1%,
-        rgba(34, 34, 34, 0.049) 15.5%,
-        rgba(34, 34, 34, 0.104) 22.5%,
-        rgba(34, 34, 34, 0.175) 29%,
-        rgba(34, 34, 34, 0.259) 35.3%,
-        rgba(34, 34, 34, 0.352) 41.2%,
-        rgba(34, 34, 34, 0.45) 47.1%,
-        rgba(34, 34, 34, 0.55) 52.9%,
-        rgba(34, 34, 34, 0.648) 58.8%,
-        rgba(34, 34, 34, 0.741) 64.7%,
-        rgba(34, 34, 34, 0.825) 71%,
-        rgba(34, 34, 34, 0.896) 77.5%,
-        rgba(34, 34, 34, 0.951) 84.5%,
-        rgba(34, 34, 34, 0.987) 91.9%,
-        rgba(34, 34, 34, 1) 100%
-      );
+
+      &--bottom {
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 2.5rem;
+        background: linear-gradient(
+          to bottom,
+          hsla(0, 0%, 13%, 0) 0%,
+          hsla(0, 0%, 13%, 0.013) 4.4%,
+          hsla(0, 0%, 13%, 0.049) 7.7%,
+          hsla(0, 0%, 13%, 0.104) 10.4%,
+          hsla(0, 0%, 13%, 0.175) 12.7%,
+          hsla(0, 0%, 13%, 0.259) 14.8%,
+          hsla(0, 0%, 13%, 0.352) 17.2%,
+          hsla(0, 0%, 13%, 0.45) 20.1%,
+          hsla(0, 0%, 13%, 0.55) 23.9%,
+          hsla(0, 0%, 13%, 0.648) 28.8%,
+          hsla(0, 0%, 13%, 0.741) 35.2%,
+          hsla(0, 0%, 13%, 0.825) 43.3%,
+          hsla(0, 0%, 13%, 0.896) 53.6%,
+          hsla(0, 0%, 13%, 0.951) 66.3%,
+          hsla(0, 0%, 13%, 0.987) 81.6%,
+          hsl(0, 0%, 13%) 100%
+        );
+      }
+      &--right {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 2.5rem;
+        background: linear-gradient(
+          to right,
+          hsla(0, 0%, 13%, 0) 0%,
+          hsla(0, 0%, 13%, 0.013) 4.4%,
+          hsla(0, 0%, 13%, 0.049) 7.7%,
+          hsla(0, 0%, 13%, 0.104) 10.4%,
+          hsla(0, 0%, 13%, 0.175) 12.7%,
+          hsla(0, 0%, 13%, 0.259) 14.8%,
+          hsla(0, 0%, 13%, 0.352) 17.2%,
+          hsla(0, 0%, 13%, 0.45) 20.1%,
+          hsla(0, 0%, 13%, 0.55) 23.9%,
+          hsla(0, 0%, 13%, 0.648) 28.8%,
+          hsla(0, 0%, 13%, 0.741) 35.2%,
+          hsla(0, 0%, 13%, 0.825) 43.3%,
+          hsla(0, 0%, 13%, 0.896) 53.6%,
+          hsla(0, 0%, 13%, 0.951) 66.3%,
+          hsla(0, 0%, 13%, 0.987) 81.6%,
+          hsl(0, 0%, 13%) 100%
+        );
+      }
+      &--top {
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 2rem;
+        background: linear-gradient(
+          to top,
+          rgba(34, 34, 34, 0) 0%,
+          rgba(34, 34, 34, 0.013) 8.1%,
+          rgba(34, 34, 34, 0.049) 15.5%,
+          rgba(34, 34, 34, 0.104) 22.5%,
+          rgba(34, 34, 34, 0.175) 29%,
+          rgba(34, 34, 34, 0.259) 35.3%,
+          rgba(34, 34, 34, 0.352) 41.2%,
+          rgba(34, 34, 34, 0.45) 47.1%,
+          rgba(34, 34, 34, 0.55) 52.9%,
+          rgba(34, 34, 34, 0.648) 58.8%,
+          rgba(34, 34, 34, 0.741) 64.7%,
+          rgba(34, 34, 34, 0.825) 71%,
+          rgba(34, 34, 34, 0.896) 77.5%,
+          rgba(34, 34, 34, 0.951) 84.5%,
+          rgba(34, 34, 34, 0.987) 91.9%,
+          rgba(34, 34, 34, 1) 100%
+        );
+      }
+      &--left {
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 2rem;
+        background: linear-gradient(
+          to left,
+          rgba(34, 34, 34, 0) 0%,
+          rgba(34, 34, 34, 0.013) 8.1%,
+          rgba(34, 34, 34, 0.049) 15.5%,
+          rgba(34, 34, 34, 0.104) 22.5%,
+          rgba(34, 34, 34, 0.175) 29%,
+          rgba(34, 34, 34, 0.259) 35.3%,
+          rgba(34, 34, 34, 0.352) 41.2%,
+          rgba(34, 34, 34, 0.45) 47.1%,
+          rgba(34, 34, 34, 0.55) 52.9%,
+          rgba(34, 34, 34, 0.648) 58.8%,
+          rgba(34, 34, 34, 0.741) 64.7%,
+          rgba(34, 34, 34, 0.825) 71%,
+          rgba(34, 34, 34, 0.896) 77.5%,
+          rgba(34, 34, 34, 0.951) 84.5%,
+          rgba(34, 34, 34, 0.987) 91.9%,
+          rgba(34, 34, 34, 1) 100%
+        );
+      }
     }
   }
 
@@ -179,7 +239,7 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
     flex: 1 1 0;
     overflow: auto;
     text-align: left;
-    padding: 1.5rem 0 2rem;
+    padding: 1.5rem 2rem 2rem 1.5rem;
     display: block;
     cursor: text;
   }

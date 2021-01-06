@@ -6,6 +6,7 @@
   - Carbon adds
   - Bitcoin donations
   - Fiat donations (buy me a cofee)
+  - montly donations
 - Undo/redo feature
 - UX improvements
   - phantom new point on hover
@@ -13,6 +14,7 @@
 - animation moving up and down to the right of canvas
 - Marketing
   - buy domain
+  - add star button
   - share on
     - reddit
     - https://webdevresources.info/

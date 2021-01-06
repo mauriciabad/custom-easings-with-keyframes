@@ -10,7 +10,38 @@ export default defineComponent({
     const store = useStore(key)
     const options = computed(() => store.state.options)
 
-    return { options }
+    const property = computed({
+      get: () => options.value.property,
+      set: value => {
+        store.commit('updateOptions', { property: value })
+      }
+    })
+    const fromValue = computed({
+      get: () => options.value.fromValue,
+      set: value => {
+        store.commit('updateOptions', { fromValue: value })
+      }
+    })
+    const toValue = computed({
+      get: () => options.value.toValue,
+      set: value => {
+        store.commit('updateOptions', { toValue: value })
+      }
+    })
+    const duration = computed({
+      get: () => options.value.duration,
+      set: value => {
+        store.commit('updateOptions', { duration: value })
+      }
+    })
+    const valueUnits = computed({
+      get: () => options.value.valueUnits,
+      set: value => {
+        store.commit('updateOptions', { valueUnits: value })
+      }
+    })
+
+    return { options, property, fromValue, toValue, duration, valueUnits }
   }
 })
 </script>
@@ -35,7 +66,7 @@ export default defineComponent({
           class="field field--select"
           name="property"
           id="property"
-          v-model="options.property"
+          v-model="property"
         >
           <option value="scale">scale</option>
           <option value="translateX">translateX</option>
@@ -69,7 +100,8 @@ export default defineComponent({
           type="number"
           name="fromValue"
           id="fromValue"
-          v-model.number="options.fromValue"
+          v-model.number="fromValue"
+          placeholder="0"
         />
       </div>
     </div>
@@ -96,8 +128,9 @@ export default defineComponent({
           type="number"
           name="toValue"
           id="toValue"
-          v-model.number="options.toValue"
+          v-model.number="toValue"
           width="6ch"
+          placeholder="1"
         />
       </div>
     </div>
@@ -125,8 +158,9 @@ export default defineComponent({
           type="number"
           name="duration"
           id="duration"
-          v-model.number="options.duration"
+          v-model.number="duration"
           min="0"
+          placeholder="0"
         />
       </div>
     </div>
@@ -151,7 +185,7 @@ export default defineComponent({
           class="field field--select"
           name="valueUnits"
           id="valueUnits"
-          v-model="options.valueUnits"
+          v-model="valueUnits"
         >
           <option value="">none</option>
           <option value="px">px</option>
@@ -165,6 +199,66 @@ export default defineComponent({
         </select>
       </div>
     </div>
+
+    <div class="option option--beginingDelay">
+      <label class="label" for="beginingDelay"
+        >Begining delay <span class="small">(ms)</span></label
+      >
+      <div class="field-wrapper">
+        <span class="icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </span>
+        <input
+          class="field"
+          type="number"
+          name="beginingDelay"
+          id="beginingDelay"
+          v-model.number="options.beginingDelay"
+          min="0"
+          placeholder="0"
+        />
+      </div>
+    </div>
+
+    <div class="option option--endDelay">
+      <label class="label" for="endDelay"
+        >End delay <span class="small">(ms)</span></label
+      >
+      <div class="field-wrapper">
+        <span class="icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </span>
+        <input
+          class="field"
+          type="number"
+          name="endDelay"
+          id="endDelay"
+          v-model.number="options.endDelay"
+          min="0"
+          placeholder="0"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -175,11 +269,12 @@ input[type='number'] {
 .options {
   display: grid;
   gap: 1.25rem 1.5rem;
-  grid-template: auto auto auto / 1fr 1fr 1fr 1fr;
+  grid-template: auto auto auto / 1fr 1fr;
   grid-template-areas:
-    'p p p p'
-    'i i f f'
-    'd d u u';
+    'p p'
+    'i f'
+    'd u'
+    'b e';
 }
 
 .option {
@@ -200,6 +295,12 @@ input[type='number'] {
   }
   &--valueUnits {
     grid-area: u;
+  }
+  &--beginingDelay {
+    grid-area: b;
+  }
+  &--endDelay {
+    grid-area: e;
   }
   .label {
     display: block;

@@ -1,17 +1,8 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
-import { key, Options } from '@/store'
-import { isTransformProperty } from '@/helpers'
-import { Point } from '@/types'
-
-export function propertyValue(point: Point, options: Options) {
-  return `${Math.round(
-    ((options.toValue - options.fromValue) * (point.y / 100) +
-      options.fromValue) *
-      100
-  ) / 100}${options.valueUnits}`
-}
+import { key } from '@/store'
+import { computeKeyframes } from '@/helpers'
 
 export default defineComponent({
   props: {},
@@ -26,25 +17,7 @@ export default defineComponent({
 
     watchEffect(() => {
       if (previewElement.value) {
-        const keyframes = points.value.map(point => {
-          const keyframe: Keyframe = {
-            offset: point.x / 100
-          }
-
-          if (isTransformProperty(options.value.property)) {
-            keyframe.transform = `${options.value.property}(${propertyValue(
-              point,
-              options.value
-            )})`
-          } else {
-            keyframe[options.value.property] = propertyValue(
-              point,
-              options.value
-            )
-          }
-
-          return keyframe
-        })
+        const keyframes = computeKeyframes(points.value, options.value)
 
         if (animation.value) animation.value.cancel()
         animation.value = previewElement.value.animate(keyframes, {

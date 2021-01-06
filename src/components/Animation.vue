@@ -2,8 +2,46 @@
 import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { key, Options } from '@/store'
-import { propertyValue } from '@/components/Preview.vue'
 import interpolate from 'color-interpolate'
+import { computeKeyframes } from '@/helpers'
+
+const beginColor = '#b721ff'
+const endColor = '#21d4fd'
+
+function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
+  const styledKeyframes = [...keyframes]
+
+  const disabledStyle = {
+    backgroundColor: '#bbb',
+    boxShadow: '0px 8px 16px #bbba'
+  }
+
+  if (options.beginingDelay) {
+    styledKeyframes[0] = {
+      ...styledKeyframes[0],
+      ...disabledStyle
+    }
+    styledKeyframes[1] = {
+      ...styledKeyframes[1],
+      ...disabledStyle
+    }
+    styledKeyframes[3].backgroundColor = beginColor
+  }
+
+  if (options.endDelay) {
+    styledKeyframes[styledKeyframes.length - 3].backgroundColor = endColor
+    styledKeyframes[styledKeyframes.length - 2] = {
+      ...styledKeyframes[styledKeyframes.length - 2],
+      ...disabledStyle
+    }
+    styledKeyframes[styledKeyframes.length - 1] = {
+      ...styledKeyframes[styledKeyframes.length - 1],
+      ...disabledStyle
+    }
+  }
+
+  return styledKeyframes
+}
 
 export default defineComponent({
   props: {},
@@ -26,64 +64,15 @@ export default defineComponent({
           fromValue: 0,
           toValue: -1 * cd.value.height,
           valueUnits: 'px',
-          duration: 6000,
-          easingName: 'animation-easing'
-        }
-        const offset = 0.15
-        const disabledStyle = {
-          backgroundColor: '#bbb',
-          boxShadow: '0px 8px 16px #bbba'
+          duration: 5000,
+          easingName: 'animation-easing',
+          beginingDelay: 750,
+          endDelay: 750
         }
 
-        const keyframes: Keyframe[] = points.value.map(point => ({
-          offset: (point.x / 100) * (1 - 2 * offset) + offset,
-          transform: `${options.property}(${propertyValue(point, options)})`
-        }))
-
-        keyframes[0].backgroundColor = '#b721ff'
-        keyframes[keyframes.length - 1].backgroundColor = '#21d4fd'
-
-        keyframes.unshift(
-          {
-            offset: 0,
-            ...disabledStyle,
-            transform: `${options.property}(${propertyValue(
-              points.value[0],
-              options
-            )})`
-          },
-          {
-            offset:
-              (points.value[0].x / 100) * (1 - 2 * offset) + offset - 0.0001,
-            ...disabledStyle,
-            transform: `${options.property}(${propertyValue(
-              points.value[0],
-              options
-            )})`
-          }
-        )
-
-        keyframes.push(
-          {
-            offset:
-              (points.value[points.value.length - 1].x / 100) *
-                (1 - 2 * offset) +
-              offset +
-              0.0001,
-            ...disabledStyle,
-            transform: `${options.property}(${propertyValue(
-              points.value[points.value.length - 1],
-              options
-            )})`
-          },
-          {
-            offset: 1,
-            ...disabledStyle,
-            transform: `${options.property}(${propertyValue(
-              points.value[points.value.length - 1],
-              options
-            )})`
-          }
+        const keyframes = styleKeyframes(
+          computeKeyframes(points.value, options),
+          options
         )
 
         if (animation.value) animation.value.cancel()
@@ -115,7 +104,7 @@ export default defineComponent({
       return 0
     }
 
-    const colorMap = interpolate(['#b721ff', '#21d4fd'])
+    const colorMap = interpolate([beginColor, endColor])
 
     return {
       previewElement,
