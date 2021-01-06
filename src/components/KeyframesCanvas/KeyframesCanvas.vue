@@ -313,7 +313,7 @@ export default defineComponent({
     left: 0;
     overflow: visible;
     user-select: none;
-    cursor: pointer;
+    cursor: crosshair;
   }
 }
 .rectangle {

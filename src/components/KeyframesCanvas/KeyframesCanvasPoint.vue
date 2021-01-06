@@ -56,7 +56,7 @@ export default defineComponent({
   stroke: url(#line-gradient);
   stroke-width: 5;
 
-  cursor: pointer;
+  cursor: grab;
   outline: none;
 
   &--selected {
