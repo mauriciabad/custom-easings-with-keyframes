@@ -37,8 +37,6 @@ export default defineComponent({
     <svg
       class="preview__element"
       ref="previewElement"
-      width="128"
-      height="128"
       viewBox="0 0 128 128"
       fill="none"
     >
@@ -92,13 +90,19 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .preview {
-  padding: 2rem;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+
   &__element {
     pointer-events: none;
     z-index: 1000;
+    display: block;
+    max-height: 128px;
+    height: 100%;
+    min-height: 32px;
   }
 }
 </style>

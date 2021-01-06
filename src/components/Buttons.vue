@@ -78,6 +78,8 @@ export default defineComponent({
   display: flex;
   // gap: 1rem;
   justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
 
   .button {
     color: #727477;
