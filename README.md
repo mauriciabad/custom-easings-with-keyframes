@@ -8,26 +8,15 @@ Use it here:
 https://custom-easings-with-keyframes.netlify.app/
 
 ## Project setup
-```
+Install dependencies:
+```bash
 yarn install
 ```
-
-###### Compiles and hot-reloads for development
-```
+Run the app in develop mode:
+```bash
 yarn serve
 ```
-
-###### Compiles and minifies for production
-```
-yarn build
-```
-
-###### Run your unit tests
-```
+Run the tests:
+```bash
 yarn test:unit
-```
-
-###### Lints and fixes files
-```
-yarn lint
 ```
