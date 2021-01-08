@@ -6,12 +6,22 @@ import { createStore, Store } from 'vuex'
 export const key: InjectionKey<Store<State>> = Symbol()
 
 export enum Property {
-  scale = 'scale',
+  opacity = 'opacity',
+
   translateX = 'translateX',
   translateY = 'translateY',
   translateZ = 'translateZ',
-  opacity = 'opacity',
-  rotate = 'rotate'
+
+  scale = 'scale',
+  scaleX = 'scaleX',
+  scaleY = 'scaleY',
+
+  rotate = 'rotate',
+  rotateX = 'rotateX',
+  rotateY = 'rotateY',
+
+  skewX = 'skewX',
+  skewY = 'skewY'
 }
 
 export enum ValueUnits {
@@ -56,34 +66,43 @@ export type State = {
   canvasDimensions: CanvasDimensions
 }
 
+const units = {
+  number: [ValueUnits.none],
+  length: [
+    ValueUnits.px,
+    ValueUnits.rem,
+    ValueUnits.em,
+    ValueUnits.vw,
+    ValueUnits.vh
+  ],
+  lengthPercentage: [
+    ValueUnits['%'],
+    ValueUnits.px,
+    ValueUnits.rem,
+    ValueUnits.em,
+    ValueUnits.vw,
+    ValueUnits.vh
+  ],
+  angle: [ValueUnits.deg, ValueUnits.turn, ValueUnits.rad]
+}
+
 export const allowedValueUnits: Record<keyof typeof Property, ValueUnits[]> = {
-  scale: [ValueUnits.none],
-  opacity: [ValueUnits.none, ValueUnits['%']],
-  translateX: [
-    ValueUnits.px,
-    ValueUnits.rem,
-    ValueUnits.em,
-    ValueUnits.vw,
-    ValueUnits.vh,
-    ValueUnits['%']
-  ],
-  translateY: [
-    ValueUnits.px,
-    ValueUnits.rem,
-    ValueUnits.em,
-    ValueUnits.vw,
-    ValueUnits.vh,
-    ValueUnits['%']
-  ],
-  translateZ: [
-    ValueUnits.px,
-    ValueUnits.rem,
-    ValueUnits.em,
-    ValueUnits.vw,
-    ValueUnits.vh,
-    ValueUnits['%']
-  ],
-  rotate: [ValueUnits.deg, ValueUnits.turn, ValueUnits.rad]
+  opacity: [...units.number],
+
+  translateX: [...units.lengthPercentage],
+  translateY: [...units.lengthPercentage],
+  translateZ: [...units.length],
+
+  scale: [...units.number],
+  scaleX: [...units.number],
+  scaleY: [...units.number],
+
+  rotate: [...units.angle],
+  rotateX: [...units.angle],
+  rotateY: [...units.angle],
+
+  skewX: [...units.angle],
+  skewY: [...units.angle]
 }
 
 export const valueUnitsDefaultToValue: Record<
@@ -169,7 +188,7 @@ export const store = createStore<State>({
         options.valueUnits = allowedValueUnits[options.property][0]
       }
 
-      if (options.valueUnits) {
+      if (options.valueUnits !== undefined) {
         options.toValue = valueUnitsDefaultToValue[options.valueUnits || 'none']
       }
 

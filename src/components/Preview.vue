@@ -95,6 +95,9 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  perspective: 1000px;
+  backface-visibility: visible;
+  transform-style: preserve-3d;
 
   &__element {
     pointer-events: none;

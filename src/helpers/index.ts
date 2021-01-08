@@ -11,14 +11,7 @@ export function round(value: number, decimals: number) {
 }
 
 export function isTransformProperty(property: Property) {
-  return [
-    'translate',
-    'translateX',
-    'translateY',
-    'translateZ',
-    'rotate',
-    'scale'
-  ].includes(property)
+  return property !== Property.opacity
 }
 
 export function clamp(num: number, min: number, max: number) {
