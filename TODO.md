@@ -19,6 +19,7 @@
     - online app
 - Nice readme
 - explain what the app does and the aproach
+- pwa new content popup
 
 ## Mid-term
 
