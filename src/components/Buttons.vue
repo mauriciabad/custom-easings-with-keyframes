@@ -49,7 +49,7 @@ export default defineComponent({
       >Donate</a
     >
     <a
-      href="https://www.buymeacoffee.com/mauriciabad"
+      href="bitcoin:bc1qs0srzvcamaqplqpw2gkzkrvzqzma0892xjcvyl"
       target="_blank"
       rel="noopener noreferrer"
       class="button button--cripto"
