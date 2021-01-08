@@ -24,8 +24,7 @@ export enum ValueUnits {
   vw = 'vw',
   deg = 'deg',
   turn = 'turn',
-  rad = 'rad',
-  grad = 'grad'
+  rad = 'rad'
 }
 
 export type Options = {
@@ -57,8 +56,8 @@ export type State = {
   canvasDimensions: CanvasDimensions
 }
 
-export const allowedValueUnits = {
-  scale: [ValueUnits.none, ValueUnits['%']],
+export const allowedValueUnits: Record<keyof typeof Property, ValueUnits[]> = {
+  scale: [ValueUnits.none],
   opacity: [ValueUnits.none, ValueUnits['%']],
   translateX: [
     ValueUnits.px,
@@ -84,7 +83,23 @@ export const allowedValueUnits = {
     ValueUnits.vh,
     ValueUnits['%']
   ],
-  rotate: [ValueUnits.deg, ValueUnits.turn, ValueUnits.rad, ValueUnits.grad]
+  rotate: [ValueUnits.deg, ValueUnits.turn, ValueUnits.rad]
+}
+
+export const valueUnitsDefaultToValue: Record<
+  keyof typeof ValueUnits,
+  number
+> = {
+  none: 1,
+  '%': 100,
+  px: 100,
+  rem: 10,
+  em: 10,
+  vh: 10,
+  vw: 10,
+  deg: 360,
+  turn: 1,
+  rad: 6.28319
 }
 
 export const store = createStore<State>({
@@ -152,6 +167,10 @@ export const store = createStore<State>({
         )
       ) {
         options.valueUnits = allowedValueUnits[options.property][0]
+      }
+
+      if (options.valueUnits) {
+        options.toValue = valueUnitsDefaultToValue[options.valueUnits || 'none']
       }
 
       state.options = { ...state.options, ...options }
