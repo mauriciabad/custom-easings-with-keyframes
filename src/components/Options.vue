@@ -1,20 +1,7 @@
 <script lang="ts">
-import { key, Options, State, Property, allowedValueUnits } from '@/store'
+import { key, Property, allowedValueUnits } from '@/store'
 import { computed, defineComponent } from 'vue'
-import { Store, useStore } from 'vuex'
-
-function getSetMakerFromStore(
-  commitType: string,
-  options: Options,
-  store: Store<State>
-) {
-  return (option: keyof Options) => ({
-    get: () => options[option],
-    set: (value: typeof options[typeof option]) => {
-      store.commit(commitType, { [option]: value })
-    }
-  })
-}
+import { useStore } from 'vuex'
 
 export default defineComponent({
   props: {},
@@ -23,17 +10,36 @@ export default defineComponent({
     const store = useStore(key)
     const options = computed(() => store.state.options)
 
-    const makeGetAndSet = getSetMakerFromStore(
-      'updateOptions',
-      options.value,
-      store
-    )
-
-    const property = computed(makeGetAndSet('property'))
-    const fromValue = computed(makeGetAndSet('fromValue'))
-    const toValue = computed(makeGetAndSet('toValue'))
-    const duration = computed(makeGetAndSet('duration'))
-    const valueUnits = computed(makeGetAndSet('valueUnits'))
+    const property = computed({
+      get: () => options.value.property,
+      set: value => {
+        store.commit('updateOptions', { property: value })
+      }
+    })
+    const fromValue = computed({
+      get: () => options.value.fromValue,
+      set: value => {
+        store.commit('updateOptions', { fromValue: value })
+      }
+    })
+    const toValue = computed({
+      get: () => options.value.toValue,
+      set: value => {
+        store.commit('updateOptions', { toValue: value })
+      }
+    })
+    const duration = computed({
+      get: () => options.value.duration,
+      set: value => {
+        store.commit('updateOptions', { duration: value })
+      }
+    })
+    const valueUnits = computed({
+      get: () => options.value.valueUnits,
+      set: value => {
+        store.commit('updateOptions', { valueUnits: value })
+      }
+    })
 
     const valueUnitsList = computed(
       () => allowedValueUnits[options.value.property]
