@@ -40,18 +40,31 @@ export default defineComponent({
         store.commit('updateOptions', { valueUnits: value })
       }
     })
+    const beginingDelay = computed({
+      get: () => options.value.beginingDelay,
+      set: value => {
+        store.commit('updateOptions', { beginingDelay: value })
+      }
+    })
+    const endDelay = computed({
+      get: () => options.value.endDelay,
+      set: value => {
+        store.commit('updateOptions', { endDelay: value })
+      }
+    })
 
     const valueUnitsList = computed(
       () => allowedValueUnits[options.value.property]
     )
 
     return {
-      options,
       property,
       fromValue,
       toValue,
       duration,
       valueUnits,
+      beginingDelay,
+      endDelay,
       Property,
       valueUnitsList
     }
@@ -198,7 +211,7 @@ export default defineComponent({
           type="number"
           name="beginingDelay"
           id="beginingDelay"
-          v-model.number="options.beginingDelay"
+          v-model.number="beginingDelay"
           min="0"
           placeholder="0"
         />
@@ -256,7 +269,7 @@ export default defineComponent({
           type="number"
           name="endDelay"
           id="endDelay"
-          v-model.number="options.endDelay"
+          v-model.number="endDelay"
           min="0"
           placeholder="0"
         />

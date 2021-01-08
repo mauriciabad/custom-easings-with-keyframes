@@ -179,6 +179,16 @@ export const store = createStore<State>({
       if ((options?.beginingDelay as unknown) === '') options.beginingDelay = 0
       if ((options?.endDelay as unknown) === '') options.endDelay = 0
 
+      if (options.duration !== undefined && options.duration <= 0) {
+        options.duration = 1
+      }
+      if (options.beginingDelay !== undefined && options.beginingDelay < 0) {
+        options.beginingDelay = 0
+      }
+      if (options.endDelay !== undefined && options.endDelay < 0) {
+        options.endDelay = 0
+      }
+
       if (
         options.property &&
         !allowedValueUnits[options.property].includes(
