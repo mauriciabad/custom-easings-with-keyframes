@@ -25,28 +25,27 @@ export default defineComponent({
       return getSorroundingPoints(props.point.x, points.value)
     })
 
-    const path = computed(() => {
-      const leftPoint = sorroundingPoints.value[0]
+    const leftPointInCanvas = computed(() => {
+      return sorroundingPoints.value[0]
         ? toCanvasPoint(sorroundingPoints.value[0], cd.value)
         : undefined
-      const rightPoint = sorroundingPoints.value[1]
+    })
+    const rightPointInCanvas = computed(() => {
+      return sorroundingPoints.value[1]
         ? toCanvasPoint(sorroundingPoints.value[1], cd.value)
         : undefined
-      const centerPoint = toCanvasPoint(props.point, cd.value)
-
-      if (!leftPoint && rightPoint) {
-        return `M${centerPoint.x} ${centerPoint.y}L${rightPoint.x} ${rightPoint.y}`
-      }
-      if (leftPoint && !rightPoint) {
-        return `M${leftPoint.x} ${leftPoint.y}L${centerPoint.x} ${centerPoint.y}`
-      }
-      if (leftPoint && rightPoint) {
-        return `M${leftPoint.x} ${leftPoint.y}L${centerPoint.x} ${centerPoint.y}L${rightPoint.x} ${rightPoint.y}`
-      }
-      return ''
+    })
+    const centerPointInCanvas = computed(() => {
+      return toCanvasPoint(props.point, cd.value)
     })
 
-    return { path, sorroundingPoints, pointAlreadyExists }
+    return {
+      sorroundingPoints,
+      leftPointInCanvas,
+      centerPointInCanvas,
+      rightPointInCanvas,
+      pointAlreadyExists
+    }
   }
 })
 </script>
@@ -60,7 +59,24 @@ export default defineComponent({
       />
     </defs>
 
-    <path :d="path" mask="url(#new-point-mask)" class="path" />
+    <g mask="url(#new-point-mask)">
+      <line
+        v-if="leftPointInCanvas"
+        :x1="centerPointInCanvas.x"
+        :y1="centerPointInCanvas.y"
+        :x2="leftPointInCanvas.x"
+        :y2="leftPointInCanvas.y"
+        class="path"
+      />
+      <line
+        v-if="rightPointInCanvas"
+        :x1="centerPointInCanvas.x"
+        :y1="centerPointInCanvas.y"
+        :x2="rightPointInCanvas.x"
+        :y2="rightPointInCanvas.y"
+        class="path"
+      />
+    </g>
     <keyframes-canvas-point :point="point" />
   </g>
 </template>

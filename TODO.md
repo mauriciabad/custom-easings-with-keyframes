@@ -26,6 +26,11 @@
 - change maxY and maxX from the UI
 - add more properties to options (skew) and filter units
 - bug fixing
+- Nice readme
+- explain what the app does and the aproach
+- update btc link & star link (to stargeizers list)
+- add perspective in preview
+- change to translate changes units
 
 ## Mid-term
 
