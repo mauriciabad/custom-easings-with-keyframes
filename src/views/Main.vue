@@ -50,7 +50,7 @@ export default defineComponent({
   justify-content: center;
   padding: 2rem;
   gap: 2rem;
-  height: 100%;
+  min-height: 100vh;
   box-sizing: border-box;
   overflow: hidden;
 }

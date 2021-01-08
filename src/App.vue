@@ -26,13 +26,8 @@ textarea,
 button {
   font-family: 'Inter var', $defaultFonts;
 }
-#app {
-  height: 100%;
-}
 body {
   margin: 0;
-  height: 100vh;
-  min-height: 100vh;
 }
 code {
   font-family: Menlo, $defaultMonoFonts;
