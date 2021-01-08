@@ -5,24 +5,28 @@ import { createStore, Store } from 'vuex'
 
 export const key: InjectionKey<Store<State>> = Symbol()
 
-export type Property =
-  | 'scale'
-  | 'translateX'
-  | 'translateY'
-  | 'translateZ'
-  | 'opacity'
-  | 'rotate'
+export enum Property {
+  scale = 'scale',
+  translateX = 'translateX',
+  translateY = 'translateY',
+  translateZ = 'translateZ',
+  opacity = 'opacity',
+  rotate = 'rotate'
+}
 
-export type ValueUnits =
-  | ''
-  | 'px'
-  | 'em'
-  | 'rem'
-  | '%'
-  | 'deg'
-  | 'turn'
-  | 'vh'
-  | 'vw'
+export enum ValueUnits {
+  none = '',
+  '%' = '%',
+  px = 'px',
+  rem = 'rem',
+  em = 'em',
+  vh = 'vh',
+  vw = 'vw',
+  deg = 'deg',
+  turn = 'turn',
+  rad = 'rad',
+  grad = 'grad'
+}
 
 export type Options = {
   property: Property
@@ -53,13 +57,43 @@ export type State = {
   canvasDimensions: CanvasDimensions
 }
 
+export const allowedValueUnits = {
+  scale: [ValueUnits.none, ValueUnits['%']],
+  opacity: [ValueUnits.none, ValueUnits['%']],
+  translateX: [
+    ValueUnits.px,
+    ValueUnits.rem,
+    ValueUnits.em,
+    ValueUnits.vw,
+    ValueUnits.vh,
+    ValueUnits['%']
+  ],
+  translateY: [
+    ValueUnits.px,
+    ValueUnits.rem,
+    ValueUnits.em,
+    ValueUnits.vw,
+    ValueUnits.vh,
+    ValueUnits['%']
+  ],
+  translateZ: [
+    ValueUnits.px,
+    ValueUnits.rem,
+    ValueUnits.em,
+    ValueUnits.vw,
+    ValueUnits.vh,
+    ValueUnits['%']
+  ],
+  rotate: [ValueUnits.deg, ValueUnits.turn, ValueUnits.rad, ValueUnits.grad]
+}
+
 export const store = createStore<State>({
   state: () => ({
     options: {
-      property: 'rotate',
+      property: Property.rotate,
       fromValue: 0,
       toValue: 360,
-      valueUnits: 'deg',
+      valueUnits: ValueUnits.deg,
       duration: 3000,
       easingName: 'ease-custom',
       beginingDelay: 0,
@@ -110,6 +144,15 @@ export const store = createStore<State>({
       if ((options?.duration as unknown) === '') options.duration = 1
       if ((options?.beginingDelay as unknown) === '') options.beginingDelay = 0
       if ((options?.endDelay as unknown) === '') options.endDelay = 0
+
+      if (
+        options.property &&
+        !allowedValueUnits[options.property].includes(
+          options.valueUnits ?? state.options.valueUnits
+        )
+      ) {
+        options.valueUnits = allowedValueUnits[options.property][0]
+      }
 
       state.options = { ...state.options, ...options }
     },

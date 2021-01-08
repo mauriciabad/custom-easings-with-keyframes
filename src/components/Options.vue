@@ -1,5 +1,5 @@
 <script lang="ts">
-import { key, Options, State } from '@/store'
+import { key, Options, State, Property, allowedValueUnits } from '@/store'
 import { computed, defineComponent } from 'vue'
 import { Store, useStore } from 'vuex'
 
@@ -35,7 +35,20 @@ export default defineComponent({
     const duration = computed(makeGetAndSet('duration'))
     const valueUnits = computed(makeGetAndSet('valueUnits'))
 
-    return { options, property, fromValue, toValue, duration, valueUnits }
+    const valueUnitsList = computed(
+      () => allowedValueUnits[options.value.property]
+    )
+
+    return {
+      options,
+      property,
+      fromValue,
+      toValue,
+      duration,
+      valueUnits,
+      Property,
+      valueUnitsList
+    }
   }
 })
 </script>
@@ -62,12 +75,12 @@ export default defineComponent({
           id="property"
           v-model="property"
         >
-          <option value="scale">scale</option>
-          <option value="translateX">translateX</option>
-          <option value="translateY">translateY</option>
-          <option value="translateZ">translateZ</option>
-          <option value="opacity">opacity</option>
-          <option value="rotate">rotate</option>
+          <option
+            v-for="[key, value] of Object.entries(Property)"
+            :key="key"
+            :value="value"
+            >{{ key }}</option
+          >
         </select>
       </div>
     </div>
@@ -94,15 +107,9 @@ export default defineComponent({
           id="valueUnits"
           v-model="valueUnits"
         >
-          <option value="">none</option>
-          <option value="px">px</option>
-          <option value="em">em</option>
-          <option value="rem">rem</option>
-          <option value="%">%</option>
-          <option value="deg">deg</option>
-          <option value="turn">turn</option>
-          <option value="vh">vh</option>
-          <option value="vw">vw</option>
+          <option v-for="value of valueUnitsList" :key="value" :value="value">
+            {{ value || 'none' }}
+          </option>
         </select>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
-import { key, Options } from '@/store'
+import { key, Options, Property, ValueUnits } from '@/store'
 import interpolate from 'color-interpolate'
 import { computeKeyframes, getSorroundingPoints } from '@/helpers'
 
@@ -60,10 +60,10 @@ export default defineComponent({
     watchEffect(() => {
       if (previewElement.value) {
         const options: Options = {
-          property: 'translateY',
+          property: Property.translateY,
           fromValue: 0,
           toValue: -1 * cd.value.height,
-          valueUnits: 'px',
+          valueUnits: ValueUnits.px,
           duration: 5000,
           easingName: 'animation-easing',
           beginingDelay: 750,
