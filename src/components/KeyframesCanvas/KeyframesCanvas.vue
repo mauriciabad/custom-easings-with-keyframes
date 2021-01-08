@@ -161,7 +161,7 @@ export default defineComponent({
       store.commit('deleteFocusedPoints')
     }
 
-    function handleMouseLeave(event: MouseEvent) {
+    function handleMouseLeave() {
       newPoint.value = undefined
     }
 

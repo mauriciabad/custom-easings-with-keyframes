@@ -1,6 +1,5 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { Point } from '@/types'
 import { useStore } from 'vuex'
 import { key } from '@/store'
 import { toCanvasPoint } from '@/helpers'
