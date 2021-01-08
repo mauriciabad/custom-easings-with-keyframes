@@ -14,7 +14,7 @@ export default defineComponent({
 <template>
   <div class="buttons">
     <a
-      href="https://github.com/mauriciabad/custom-easings-with-keyframes"
+      href="https://github.com/mauriciabad/custom-easings-with-keyframes/stargazers"
       target="_blank"
       rel="noopener noreferrer"
       class="button button--star"

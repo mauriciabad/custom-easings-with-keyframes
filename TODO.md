@@ -2,15 +2,11 @@
 
 ## Important
 
-- Add revenue source
-  - Carbon adds
-  - Bitcoin donations
-  - Fiat donations (buy me a cofee)
-  - montly donations (open collective)
+- Get 100 stars to use open collective
 - Undo/redo feature
 - UX improvements
   - lables on axis for selected points
-- animation moving up and down to the right of canvas
+  - change maxY and maxX from the UI
 - Marketing
   - buy domain
   - share on
@@ -21,13 +17,8 @@
     - design tool
     - code generator
     - online app
-- responsive
-  - small screens
-- change maxY and maxX from the UI
-- bug fixing
 - Nice readme
 - explain what the app does and the aproach
-- update btc link & star link (to stargeizers list)
 
 ## Mid-term
 
