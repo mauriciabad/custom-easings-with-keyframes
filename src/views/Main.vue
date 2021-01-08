@@ -29,9 +29,9 @@ export default defineComponent({
   <main class="main-layout">
     <keyframes-canvas class="keyframes-canvas" />
     <animation class=" animation" />
+    <code-block />
     <options class="options" />
     <preview class="preview" />
-    <code-block />
     <buttons class="buttons" />
   </main>
   <popup />

@@ -72,6 +72,41 @@ export default defineComponent({
       </div>
     </div>
 
+    <div class="option option--valueUnits">
+      <label class="label" for="valueUnits">Units</label>
+      <div class="field-wrapper">
+        <span class="icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 1a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm4-4a1 1 0 100 2h.01a1 1 0 100-2H13zM9 9a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zM7 8a1 1 0 000 2h.01a1 1 0 000-2H7z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </span>
+        <select
+          class="field field--select"
+          name="valueUnits"
+          id="valueUnits"
+          v-model="valueUnits"
+        >
+          <option value="">none</option>
+          <option value="px">px</option>
+          <option value="em">em</option>
+          <option value="rem">rem</option>
+          <option value="%">%</option>
+          <option value="deg">deg</option>
+          <option value="turn">turn</option>
+          <option value="vh">vh</option>
+          <option value="vw">vw</option>
+        </select>
+      </div>
+    </div>
+
     <div class="option option--fromValue">
       <label class="label" for="fromValue">Initial value</label>
       <div class="field-wrapper">
@@ -129,6 +164,34 @@ export default defineComponent({
       </div>
     </div>
 
+    <div class="option option--beginingDelay">
+      <label class="label" for="beginingDelay">Begining delay</label>
+      <div class="field-wrapper">
+        <span class="icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </span>
+        <input
+          class="field"
+          type="number"
+          name="beginingDelay"
+          id="beginingDelay"
+          v-model.number="options.beginingDelay"
+          min="0"
+          placeholder="0"
+        />
+      </div>
+    </div>
+
     <div class="option option--duration">
       <label class="label" for="duration"
         >Duration <span class="small">(ms)</span></label
@@ -159,75 +222,8 @@ export default defineComponent({
       </div>
     </div>
 
-    <div class="option option--valueUnits">
-      <label class="label" for="valueUnits">Units</label>
-      <div class="field-wrapper">
-        <span class="icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 1a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm4-4a1 1 0 100 2h.01a1 1 0 100-2H13zM9 9a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zM7 8a1 1 0 000 2h.01a1 1 0 000-2H7z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </span>
-        <select
-          class="field field--select"
-          name="valueUnits"
-          id="valueUnits"
-          v-model="valueUnits"
-        >
-          <option value="">none</option>
-          <option value="px">px</option>
-          <option value="em">em</option>
-          <option value="rem">rem</option>
-          <option value="%">%</option>
-          <option value="deg">deg</option>
-          <option value="turn">turn</option>
-          <option value="vh">vh</option>
-          <option value="vw">vw</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="option option--beginingDelay">
-      <label class="label" for="beginingDelay"
-        >Begining delay <span class="small">(ms)</span></label
-      >
-      <div class="field-wrapper">
-        <span class="icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </span>
-        <input
-          class="field"
-          type="number"
-          name="beginingDelay"
-          id="beginingDelay"
-          v-model.number="options.beginingDelay"
-          min="0"
-          placeholder="0"
-        />
-      </div>
-    </div>
-
     <div class="option option--endDelay">
-      <label class="label" for="endDelay"
-        >End delay <span class="small">(ms)</span></label
-      >
+      <label class="label" for="endDelay">End delay</label>
       <div class="field-wrapper">
         <span class="icon">
           <svg
@@ -263,12 +259,11 @@ input[type='number'] {
 .options {
   display: grid;
   gap: 1.25rem 1.5rem;
-  grid-template: auto auto auto / 1fr 1fr;
+  grid-template: auto auto auto / repeat(6, 1fr);
   grid-template-areas:
-    'p p'
-    'i f'
-    'd u'
-    'b e';
+    'p p p u u u'
+    'i i i f f f'
+    'b b d d e e';
 }
 
 .option {
@@ -314,6 +309,7 @@ input[type='number'] {
       display: block;
       padding: 0.5rem 0.75rem;
       border: solid 1px #d1d5db;
+      background-color: #fff;
       border-radius: 0.375rem;
       margin-top: 0.128rem;
       appearance: none;
