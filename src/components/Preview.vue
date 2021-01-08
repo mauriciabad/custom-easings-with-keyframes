@@ -124,6 +124,7 @@ export default defineComponent({
     min-height: 32px;
     position: relative;
     transform-style: preserve-3d;
+    will-change: transform;
 
     svg {
       display: block;
