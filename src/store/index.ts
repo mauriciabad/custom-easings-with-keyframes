@@ -200,6 +200,7 @@ export const store = createStore<State>({
 
       if (options.valueUnits !== undefined) {
         options.toValue = valueUnitsDefaultToValue[options.valueUnits || 'none']
+        options.fromValue = 0
       }
 
       state.options = { ...state.options, ...options }
