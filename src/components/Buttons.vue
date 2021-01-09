@@ -1,12 +1,37 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useGtag } from 'vue-gtag-next'
 
 export default defineComponent({
   components: {},
   props: {},
 
   setup() {
-    return {}
+    const { event } = useGtag()
+
+    function trackClickDonateFiat() {
+      event('donate', {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        event_category: 'ecommerce',
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        event_label: 'fiat'
+      })
+    }
+    function trackClickDonateCrypto() {
+      event('donate', {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        event_category: 'ecommerce',
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        event_label: 'crypto'
+      })
+    }
+    function trackClickStar() {
+      event('star_project', {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        event_category: 'engagement'
+      })
+    }
+    return { trackClickDonateFiat, trackClickDonateCrypto, trackClickStar }
   }
 })
 </script>
@@ -18,6 +43,7 @@ export default defineComponent({
       target="_blank"
       rel="noopener noreferrer"
       class="button button--star"
+      @click.passive="trackClickDonateFiat"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -35,6 +61,7 @@ export default defineComponent({
       target="_blank"
       rel="noopener noreferrer"
       class="button button--donate"
+      @click.passive="trackClickDonateCrypto"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +80,7 @@ export default defineComponent({
       target="_blank"
       rel="noopener noreferrer"
       class="button button--cripto"
+      @click.passive="trackClickStar"
     >
       <svg
         width="20"
