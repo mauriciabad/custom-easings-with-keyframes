@@ -34,6 +34,7 @@ module.exports = {
         },
         {
           src: '/img/icons/safari-pinned-tab.svg',
+          sizes: 'any',
           type: 'image/svg',
           purpose: 'monochrome'
         }
