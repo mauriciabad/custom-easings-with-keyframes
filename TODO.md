@@ -2,31 +2,32 @@
 
 ## Important
 
-- Get 100 stars to use open collective
-- Undo/redo feature
-- UX improvements
-  - lables on axis for selected points
-  - change maxY and maxX from the UI
-- Marketing
-  - buy domain
-  - share on
-    - reddit
-    - https://webdevresources.info/
-    - https://www.producthunt.com/
-  - keywords
-    - design tool
-    - code generator
-    - online app
+### Features
+
+- Explain what the app does and the aproach
+- Change maxY and maxX from the UI
+
+### Marketing
+
 - Nice readme
-- explain what the app does and the aproach
-- pwa new content popup
+- buy domain
+- share on
+  - reddit (help from friend)
+  - https://webdevresources.info/
+  - https://www.producthunt.com/
+  - http://easings.net/
 
 ## Mid-term
 
+- SEO
+- Undo/redo feature
 - Dark theme
+- Optimize app fps
+- Get 100 stars to use open collective
 
 ## Future considerations
 
+- Lables on axis for selected points
 - Vector based curve and then calculate most optimal points
-- Allow to use the site keyboard-only
-- add sounds
+- Site usable keyboard-only
+- Add sounds
