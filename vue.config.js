@@ -3,8 +3,10 @@
 module.exports = {
   pwa: {
     manifestOptions: {
-      name: 'Keyframes easing',
-      short_name: 'Keyframes easing',
+      name: 'Keyframes easings',
+      short_name: 'Keyframes easings',
+      decription:
+        'Make custom non cubic bezier easing functions using keyframes and animations with this online css code generator developer tool, like elastic and bounce easings',
       icons: [
         {
           src: '/img/icons/android-chrome-192x192.png',
@@ -38,7 +40,8 @@ module.exports = {
       ],
       theme_color: '#719dff',
       background_color: '#ffffff',
-      display: 'standalone'
+      display: 'standalone',
+      lang: 'en-GB'
     },
     iconPaths: {
       favicon32: 'img/icons/favicon-32x32.png',
