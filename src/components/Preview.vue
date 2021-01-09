@@ -129,14 +129,13 @@ export default defineComponent({
     svg {
       display: block;
       height: 100%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       backface-visibility: hidden;
       transform-origin: center;
 
       &.back {
+        position: absolute;
+        top: 50%;
+        left: 50%;
         transform: translate(-50%, -50%) rotateY(-180deg);
       }
     }
