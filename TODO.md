@@ -5,12 +5,17 @@
 ### Features
 
 - Explain what the app does and the aproach
-- Change maxY and maxX from the UI
+- Change maxY and maxX from the UI (maybe use scroll weel)
+
+## Bugs
+
+- can't leave input empty is anoying
 
 ### Marketing
 
 - Nice readme
 - buy domain
+  - easy-easings.com
 - share on
   - reddit (help from friend)
   - https://webdevresources.info/
