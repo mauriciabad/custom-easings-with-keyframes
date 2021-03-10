@@ -6,10 +6,9 @@
 
 - Explain what the app does and the aproach
 - Change maxY and maxX from the UI (maybe use scroll weel)
+- Use actual units in the axis
 
 ## Bugs
-
-- can't leave input empty is anoying
 
 ### Marketing
 
@@ -18,6 +17,7 @@
   - easy-easings.com
 - share on
   - reddit (help from friend)
+  - https://tiny-helpers.dev/
   - https://webdevresources.info/
   - https://www.producthunt.com/
   - http://easings.net/
