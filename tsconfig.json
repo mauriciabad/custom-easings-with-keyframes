@@ -14,20 +14,18 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env",
+      "webpack-env", 
       "jest"
     ],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     "lib": [
       "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+       "dom",
+       "dom.iterable",
+       "scripthost"
+      ]
   },
   "include": [
     "src/**/*.ts",
@@ -38,5 +36,6 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "$schema": "https://json.schemastore.org/tsconfig"
 }
