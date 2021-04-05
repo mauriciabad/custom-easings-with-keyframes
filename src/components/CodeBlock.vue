@@ -9,6 +9,7 @@ import {
   round
 } from '@/helpers'
 import { useGtag } from 'vue-gtag-next'
+import useOptions from '@/modules/options'
 
 export default defineComponent({
   components: {},
@@ -16,13 +17,13 @@ export default defineComponent({
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)
-    const options = computed(() => store.state.options)
+    const { options } = useOptions()
     const pointsWithDelay = computed(() =>
-      computePointsWithDelay(points.value, options.value)
+      computePointsWithDelay(points.value, options)
     )
 
     const code = computed(() => {
-      const keyframes = computeKeyframes(points.value, options.value)
+      const keyframes = computeKeyframes(points.value, options)
 
       const keyframesLines = keyframes.map(keyframe => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -35,11 +36,11 @@ export default defineComponent({
         return `${offset || 0 * 100}% {${propertyLine}}`
       })
 
-      return `.${options.value.easingName} {
-  animation: ${options.value.easingName} ${options.value.duration}ms linear;
+      return `.${options.easingName} {
+  animation: ${options.easingName} ${options.duration}ms linear;
 }
 
-@keyframes ${options.value.easingName} {
+@keyframes ${options.easingName} {
 ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
     })
 

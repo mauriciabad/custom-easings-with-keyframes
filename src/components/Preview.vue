@@ -3,6 +3,7 @@ import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { key } from '@/store'
 import { computeKeyframes } from '@/helpers'
+import useOptions from '@/modules/options'
 
 export default defineComponent({
   props: {},
@@ -11,17 +12,17 @@ export default defineComponent({
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)
-    const options = computed(() => store.state.options)
+    const { options } = useOptions()
     const previewElement = ref<HTMLDivElement>()
     const animation = ref<Animation>()
 
     watchEffect(() => {
       if (previewElement.value) {
-        const keyframes = computeKeyframes(points.value, options.value)
+        const keyframes = computeKeyframes(points.value, options)
 
         if (animation.value) animation.value.cancel()
         animation.value = previewElement.value.animate(keyframes, {
-          duration: options.value.duration,
+          duration: options.duration,
           iterations: Infinity
         })
       }

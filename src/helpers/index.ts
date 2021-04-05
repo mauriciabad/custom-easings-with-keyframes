@@ -1,6 +1,6 @@
-import { CanvasDimensions, Options } from './../store/index'
-import { Property } from '../store/index'
+import { Options, Property } from '@/helpers/options'
 import { Point } from '@/types'
+import { CanvasDimensions } from './../store/index'
 
 export function invertCoordenates(x: number) {
   return (x - 1) * -1
@@ -151,4 +151,18 @@ export function getSorroundingPoints(x: number, points: Point[]) {
   }
 
   return [undefined, undefined]
+}
+
+// Workarround to asign objects without losing vue reactivity
+export const assign = <T>(oldValue: T, newValue: Partial<T>) => {
+  for (const key in oldValue) {
+    delete oldValue[key]
+  }
+
+  for (const keyAsString in newValue) {
+    const key = keyAsString as keyof T
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(oldValue as any)[key] = newValue[key]
+  }
 }

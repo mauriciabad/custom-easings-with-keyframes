@@ -1,52 +1,9 @@
-import { Point } from '@/types'
 import { clamp } from '@/helpers'
+import { Point } from '@/types'
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
 
 export const key: InjectionKey<Store<State>> = Symbol()
-
-export enum Property {
-  opacity = 'opacity',
-
-  translateX = 'translateX',
-  translateY = 'translateY',
-  translateZ = 'translateZ',
-
-  scale = 'scale',
-  scaleX = 'scaleX',
-  scaleY = 'scaleY',
-
-  rotate = 'rotate',
-  rotateX = 'rotateX',
-  rotateY = 'rotateY',
-
-  skewX = 'skewX',
-  skewY = 'skewY'
-}
-
-export enum ValueUnits {
-  none = '',
-  '%' = '%',
-  px = 'px',
-  rem = 'rem',
-  em = 'em',
-  vh = 'vh',
-  vw = 'vw',
-  deg = 'deg',
-  turn = 'turn',
-  rad = 'rad'
-}
-
-export type Options = {
-  property: Property
-  fromValue: number
-  toValue: number
-  valueUnits: ValueUnits
-  duration: number
-  easingName: string
-  beginingDelay: number
-  endDelay: number
-}
 
 export type CanvasDimensions = {
   height: number
@@ -61,78 +18,12 @@ export type CanvasDimensions = {
 }
 
 export type State = {
-  options: Options
   points: Point[]
   canvasDimensions: CanvasDimensions
 }
 
-const units = {
-  number: [ValueUnits.none],
-  length: [
-    ValueUnits.px,
-    ValueUnits.rem,
-    ValueUnits.em,
-    ValueUnits.vw,
-    ValueUnits.vh
-  ],
-  lengthPercentage: [
-    ValueUnits['%'],
-    ValueUnits.px,
-    ValueUnits.rem,
-    ValueUnits.em,
-    ValueUnits.vw,
-    ValueUnits.vh
-  ],
-  angle: [ValueUnits.deg, ValueUnits.turn, ValueUnits.rad]
-}
-
-export const allowedValueUnits: Record<keyof typeof Property, ValueUnits[]> = {
-  opacity: [...units.number],
-
-  translateX: [...units.lengthPercentage],
-  translateY: [...units.lengthPercentage],
-  translateZ: [...units.length],
-
-  scale: [...units.number],
-  scaleX: [...units.number],
-  scaleY: [...units.number],
-
-  rotate: [...units.angle],
-  rotateX: [...units.angle],
-  rotateY: [...units.angle],
-
-  skewX: [...units.angle],
-  skewY: [...units.angle]
-}
-
-export const valueUnitsDefaultToValue: Record<
-  keyof typeof ValueUnits,
-  number
-> = {
-  none: 1,
-  '%': 100,
-  px: 100,
-  rem: 10,
-  em: 10,
-  vh: 10,
-  vw: 10,
-  deg: 360,
-  turn: 1,
-  rad: 6.28319
-}
-
 export const store = createStore<State>({
   state: () => ({
-    options: {
-      property: Property.rotate,
-      fromValue: 0,
-      toValue: 360,
-      valueUnits: ValueUnits.deg,
-      duration: 3000,
-      easingName: 'ease-custom',
-      beginingDelay: 0,
-      endDelay: 0
-    },
     points: [
       {
         x: 0,
@@ -171,39 +62,6 @@ export const store = createStore<State>({
     },
     deleteFocusedPoints: state => {
       state.points = state.points.filter(p => !p.isSelected)
-    },
-    updateOptions: (state, options: Partial<Options>) => {
-      if ((options?.fromValue as unknown) === '') options.fromValue = 0
-      if ((options?.toValue as unknown) === '') options.toValue = 1
-      if ((options?.duration as unknown) === '') options.duration = 1
-      if ((options?.beginingDelay as unknown) === '') options.beginingDelay = 0
-      if ((options?.endDelay as unknown) === '') options.endDelay = 0
-
-      if (options.duration !== undefined && options.duration <= 0) {
-        options.duration = 1
-      }
-      if (options.beginingDelay !== undefined && options.beginingDelay < 0) {
-        options.beginingDelay = 0
-      }
-      if (options.endDelay !== undefined && options.endDelay < 0) {
-        options.endDelay = 0
-      }
-
-      if (
-        options.property &&
-        !allowedValueUnits[options.property].includes(
-          options.valueUnits ?? state.options.valueUnits
-        )
-      ) {
-        options.valueUnits = allowedValueUnits[options.property][0]
-      }
-
-      if (options.valueUnits !== undefined) {
-        options.toValue = valueUnitsDefaultToValue[options.valueUnits || 'none']
-        options.fromValue = 0
-      }
-
-      state.options = { ...state.options, ...options }
     },
     focusPoint: (state, { x }: { x: number }) => {
       state.points = state.points.map(p => ({

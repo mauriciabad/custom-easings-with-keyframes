@@ -1,9 +1,10 @@
 <script lang="ts">
+import { computeKeyframes, getSorroundingPoints } from '@/helpers'
+import { Options, Property, ValueUnits } from '@/helpers/options'
+import { key } from '@/store'
+import interpolate from 'color-interpolate'
 import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
-import { key, Options, Property, ValueUnits } from '@/store'
-import interpolate from 'color-interpolate'
-import { computeKeyframes, getSorroundingPoints } from '@/helpers'
 
 const beginColor = '#b721ff'
 const endColor = '#21d4fd'

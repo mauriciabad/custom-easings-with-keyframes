@@ -1,72 +1,46 @@
 <script lang="ts">
-import { key, Property, allowedValueUnits } from '@/store'
-import { computed, defineComponent } from 'vue'
-import { useStore } from 'vuex'
+import { assign } from '@/helpers'
+import {
+  allowedValueUnits,
+  fillWithDefaultOptions,
+  LocalOptions,
+  Property,
+  removeDefaults,
+  validateOptions
+} from '@/helpers/options'
+import useOptions from '@/modules/options'
+import deepClone from 'deep-clone'
+import { computed, defineComponent, reactive, watch, watchEffect } from 'vue'
 
 export default defineComponent({
   props: {},
 
   setup() {
-    const store = useStore(key)
-    const options = computed(() => store.state.options)
-
-    const property = computed({
-      get: () => options.value.property,
-      set: value => {
-        store.commit('updateOptions', { property: value })
-      }
-    })
-    const fromValue = computed({
-      get: () => options.value.fromValue,
-      set: value => {
-        store.commit('updateOptions', { fromValue: value })
-      }
-    })
-    const toValue = computed({
-      get: () => options.value.toValue,
-      set: value => {
-        store.commit('updateOptions', { toValue: value })
-      }
-    })
-    const duration = computed({
-      get: () => options.value.duration,
-      set: value => {
-        store.commit('updateOptions', { duration: value })
-      }
-    })
-    const valueUnits = computed({
-      get: () => options.value.valueUnits,
-      set: value => {
-        store.commit('updateOptions', { valueUnits: value })
-      }
-    })
-    const beginingDelay = computed({
-      get: () => options.value.beginingDelay,
-      set: value => {
-        store.commit('updateOptions', { beginingDelay: value })
-      }
-    })
-    const endDelay = computed({
-      get: () => options.value.endDelay,
-      set: value => {
-        store.commit('updateOptions', { endDelay: value })
-      }
-    })
-
-    const valueUnitsList = computed(
-      () => allowedValueUnits[options.value.property]
+    const { options, lastUpdatedOptions, updateSomeOptions } = useOptions()
+    const localOptions = reactive<LocalOptions>(deepClone(options))
+    const validOptions = computed(() =>
+      validateOptions(fillWithDefaultOptions(localOptions))
     )
 
+    watch(lastUpdatedOptions, () => {
+      assign(localOptions, {
+        ...localOptions,
+        ...removeDefaults(lastUpdatedOptions, localOptions)
+      })
+    })
+
+    watchEffect(() => {
+      updateSomeOptions(localOptions)
+    })
+
+    const valueUnitsList = computed(() => allowedValueUnits[options.property])
+
     return {
-      property,
-      fromValue,
-      toValue,
-      duration,
-      valueUnits,
-      beginingDelay,
-      endDelay,
+      options,
       Property,
-      valueUnitsList
+      valueUnitsList,
+      validOptions,
+      localOptions
     }
   }
 })
@@ -76,7 +50,10 @@ export default defineComponent({
   <div class="options">
     <div class="option option--property">
       <label class="label" for="property">Property</label>
-      <div class="field-wrapper">
+      <div
+        class="field-wrapper"
+        :class="{ 'field-wrapper--invalid': !validOptions.property }"
+      >
         <span class="icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +69,7 @@ export default defineComponent({
           class="field field--select"
           name="property"
           id="property"
-          v-model="property"
+          v-model="localOptions.property"
         >
           <option
             v-for="[key, value] of Object.entries(Property)"
@@ -106,7 +83,10 @@ export default defineComponent({
 
     <div class="option option--valueUnits">
       <label class="label" for="valueUnits">Units</label>
-      <div class="field-wrapper">
+      <div
+        class="field-wrapper"
+        :class="{ 'field-wrapper--invalid': !validOptions.valueUnits }"
+      >
         <span class="icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +104,7 @@ export default defineComponent({
           class="field field--select"
           name="valueUnits"
           id="valueUnits"
-          v-model="valueUnits"
+          v-model="localOptions.valueUnits"
         >
           <option v-for="value of valueUnitsList" :key="value" :value="value">
             {{ value || 'none' }}
@@ -135,7 +115,10 @@ export default defineComponent({
 
     <div class="option option--fromValue">
       <label class="label" for="fromValue">Initial value</label>
-      <div class="field-wrapper">
+      <div
+        class="field-wrapper"
+        :class="{ 'field-wrapper--invalid': !validOptions.fromValue }"
+      >
         <span class="icon">
           <svg
             transform="rotate(90)"
@@ -155,15 +138,18 @@ export default defineComponent({
           type="number"
           name="fromValue"
           id="fromValue"
-          v-model.number="fromValue"
-          placeholder="0"
+          v-model.number="localOptions.fromValue"
+          :placeholder="options.fromValue"
         />
       </div>
     </div>
 
     <div class="option option--toValue">
       <label class="label" for="toValue">Final value</label>
-      <div class="field-wrapper">
+      <div
+        class="field-wrapper"
+        :class="{ 'field-wrapper--invalid': !validOptions.toValue }"
+      >
         <span class="icon">
           <svg
             transform="rotate(-90)"
@@ -183,16 +169,19 @@ export default defineComponent({
           type="number"
           name="toValue"
           id="toValue"
-          v-model.number="toValue"
+          v-model.number="localOptions.toValue"
           width="6ch"
-          placeholder="1"
+          :placeholder="options.toValue"
         />
       </div>
     </div>
 
     <div class="option option--beginingDelay">
       <label class="label" for="beginingDelay">Begining delay</label>
-      <div class="field-wrapper">
+      <div
+        class="field-wrapper"
+        :class="{ 'field-wrapper--invalid': !validOptions.beginingDelay }"
+      >
         <span class="icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -211,9 +200,9 @@ export default defineComponent({
           type="number"
           name="beginingDelay"
           id="beginingDelay"
-          v-model.number="beginingDelay"
+          v-model.number="localOptions.beginingDelay"
           min="0"
-          placeholder="0"
+          :placeholder="options.beginingDelay"
         />
       </div>
     </div>
@@ -222,7 +211,10 @@ export default defineComponent({
       <label class="label" for="duration"
         >Duration <span class="small">(ms)</span></label
       >
-      <div class="field-wrapper">
+      <div
+        class="field-wrapper"
+        :class="{ 'field-wrapper--invalid': !validOptions.duration }"
+      >
         <span class="icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -241,16 +233,19 @@ export default defineComponent({
           type="number"
           name="duration"
           id="duration"
-          v-model.number="duration"
+          v-model.number="localOptions.duration"
           min="0"
-          placeholder="0"
+          :placeholder="options.duration"
         />
       </div>
     </div>
 
     <div class="option option--endDelay">
       <label class="label" for="endDelay">End delay</label>
-      <div class="field-wrapper">
+      <div
+        class="field-wrapper"
+        :class="{ 'field-wrapper--invalid': !validOptions.endDelay }"
+      >
         <span class="icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -269,9 +264,9 @@ export default defineComponent({
           type="number"
           name="endDelay"
           id="endDelay"
-          v-model.number="endDelay"
+          v-model.number="localOptions.endDelay"
           min="0"
-          placeholder="0"
+          :placeholder="options.endDelay"
         />
       </div>
     </div>
@@ -317,59 +312,85 @@ input[type='number'] {
   &--endDelay {
     grid-area: e;
   }
-  .label {
-    display: block;
-    color: #374151;
-    font-weight: 500;
-    margin-top: -0.25rem;
+}
+.label {
+  display: block;
+  color: #374151;
+  font-weight: 500;
+  margin-top: -0.25rem;
 
-    .small {
-      color: #9498a0;
-    }
+  .small {
+    color: #9498a0;
   }
-  .field-wrapper {
-    width: 100%;
-    position: relative;
+}
 
-    .field {
-      display: block;
-      padding: 0.5rem 0.75rem;
-      border: solid 1px #d1d5db;
-      background-color: #fff;
-      border-radius: 0.375rem;
-      margin-top: 0.128rem;
-      appearance: none;
-      width: 100%;
-      box-sizing: border-box;
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 0 0 0 #6466f1;
-      transition: box-shadow 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
-      padding-left: 2rem;
-      outline: none;
-    }
-    select.field {
-      background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="rgba(0,0,0,0.3)"><path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>');
-      background-repeat: no-repeat;
-      background-position: calc(100% - 0.25rem);
-      background-size: 20px;
-      padding-right: 1.75rem;
-    }
-    .field:focus {
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 0 0 0.125rem #6466f1;
-    }
-    .icon {
-      position: absolute;
-      bottom: 0;
-      top: 0;
-      left: 0.5rem;
-      display: flex;
-      align-items: center;
-      pointer-events: none;
+.field-wrapper {
+  width: 100%;
+  position: relative;
+}
 
-      svg {
-        height: 20px;
-        color: #9da6b2;
-      }
-    }
+.field {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border: solid 1px #d1d5db;
+  background-color: #fff;
+  border-radius: 0.375rem;
+  margin-top: 0.128rem;
+  appearance: none;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 0 0 0 #6466f1;
+  transition: box-shadow 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  padding-left: 2rem;
+  outline: none;
+
+  &::placeholder {
+    color: currentColor;
+    opacity: 0.5;
+  }
+
+  &--select {
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="rgba(0,0,0,0.3)"><path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 0.25rem);
+    background-size: 20px;
+    padding-right: 1.75rem;
+  }
+
+  &:focus {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 0 0 0.125rem #6466f1;
+  }
+}
+.icon {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0.5rem;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+
+  svg {
+    height: 20px;
+    color: #9da6b2;
+  }
+}
+.field-wrapper--invalid {
+  $color: tomato;
+
+  .field {
+    border-color: $color;
+    color: $color;
+    background-color: transparentize($color, 0.97);
+  }
+
+  svg {
+    color: transparentize($color, 0.3);
   }
 }
 </style>
+
+function updateSomeOptions(localOptions: { property: ""|Property; fromValue:
+number|""; toValue: number|""; valueUnits: ""|import("@/store").ValueUnits;
+duration: number|""; easingName: string; beginingDelay: number|""; endDelay:
+number|"" }) { throw new Error('Function not implemented.') }
