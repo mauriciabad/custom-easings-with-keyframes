@@ -121,12 +121,8 @@ export interface ValidOptions {
 export const validateOptions = (options: LocalOptions): ValidOptions => {
   const validOptions = {
     property: options.property !== '',
-    fromValue:
-      options.fromValue !== '' &&
-      !isNaN(options.fromValue) &&
-      options.fromValue >= 0,
-    toValue:
-      options.toValue !== '' && !isNaN(options.toValue) && options.toValue >= 0,
+    fromValue: options.fromValue !== '' && !isNaN(options.fromValue),
+    toValue: options.toValue !== '' && !isNaN(options.toValue),
     duration:
       options.duration !== '' &&
       !isNaN(options.duration) &&
