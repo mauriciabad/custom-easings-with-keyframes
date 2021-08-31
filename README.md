@@ -5,18 +5,24 @@
 Make non-cubic-bezier easings with keyframes and animations.
 
 Use it here:
-https://custom-easings-with-keyframes.netlify.app/
+https://easyeasings.com/
 
 ## Project setup
+
 Install dependencies:
+
 ```bash
 yarn install
 ```
+
 Run the app in develop mode:
+
 ```bash
 yarn serve
 ```
+
 Run the tests:
+
 ```bash
 yarn test:unit
 ```
