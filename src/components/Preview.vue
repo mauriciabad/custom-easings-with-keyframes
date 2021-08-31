@@ -126,6 +126,7 @@ export default defineComponent({
     position: relative;
     transform-style: preserve-3d;
     will-change: transform;
+    z-index: 1;
 
     svg {
       display: block;

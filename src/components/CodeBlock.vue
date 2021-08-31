@@ -258,7 +258,6 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
     line-height: 1.25rem;
     box-shadow: 0px 2px 8px #13b98180, 0 0 0 0 #fff;
     cursor: pointer;
-    z-index: 1;
     outline: none;
     transition: box-shadow 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
     appearance: none;
