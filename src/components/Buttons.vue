@@ -1,12 +1,20 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useGtag } from 'vue-gtag-next'
+import Welcome from './Welcome.vue'
 
 export default defineComponent({
-  components: {},
+  components: {
+    Welcome
+  },
   props: {},
 
   setup() {
+    const isWelcomeVisible = ref<boolean>(
+      window.localStorage['welcomeMessageWasSeen'] !== 'true'
+    )
+    window.localStorage['welcomeMessageWasSeen'] = 'true'
+
     const { event } = useGtag()
 
     function trackClickDonateFiat() {
@@ -31,7 +39,32 @@ export default defineComponent({
         event_category: 'engagement'
       })
     }
-    return { trackClickDonateFiat, trackClickDonateCrypto, trackClickStar }
+    function trackClickSourceCode() {
+      event('view_source_code', {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        event_category: 'engagement'
+      })
+    }
+    function trackClickHelp() {
+      event('help', {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        event_category: 'engagement'
+      })
+    }
+
+    function handleHelpClick() {
+      trackClickHelp()
+      isWelcomeVisible.value = true
+    }
+
+    return {
+      trackClickDonateFiat,
+      trackClickDonateCrypto,
+      trackClickStar,
+      trackClickSourceCode,
+      isWelcomeVisible,
+      handleHelpClick
+    }
   }
 })
 </script>
@@ -39,10 +72,44 @@ export default defineComponent({
 <template>
   <div class="buttons">
     <a
-      href="https://github.com/mauriciabad/custom-easings-with-keyframes/stargazers"
+      href="https://github.com/mauriciabad/custom-easings-with-keyframes"
       target="_blank"
       rel="noopener noreferrer"
-      class="button button--star"
+      class="button"
+      @click.passive="trackClickSourceCode"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          d="M16.909 6.006a7.93 7.93 0 00-10.914-2.91A7.93 7.93 0 003.557 14.7a7.943 7.943 0 003.93 2.874c.181.036.327 0 .4-.073.109-.11.145-.182.145-.328.002-.497.002-.994 0-1.491l-.255.073-.582.036-.727-.073a2.973 2.973 0 01-.691-.327c-.219-.182-.364-.364-.437-.655l-.11-.218-.327-.546c-.145-.182-.29-.327-.436-.4l-.073-.036a.764.764 0 01-.255-.255c0-.073 0-.11.073-.146l.291-.036.219.036.509.255c.182.146.364.291.51.546.145.254.327.473.545.618.255.146.473.255.691.255l.582-.073.473-.145c.073-.473.255-.837.51-1.092-.4-.036-.728-.073-1.056-.182a3.727 3.727 0 01-.982-.4 2.8 2.8 0 01-1.382-1.782c-.146-.437-.219-.983-.219-1.565 0-.836.291-1.528.837-2.146-.254-.619-.218-1.31.073-2.11.182-.073.51 0 .873.145.462.178.902.41 1.31.692a7.349 7.349 0 014.001 0l.4-.255c.255-.182.583-.328.946-.473.364-.146.655-.182.837-.11.328.801.364 1.492.11 2.11.545.62.8 1.31.8 2.147 0 .582-.073 1.128-.219 1.565-.145.473-.327.836-.545 1.09-.219.292-.51.51-.837.692a3.728 3.728 0 01-.982.4c-.291.11-.655.146-1.055.182.364.328.545.8.545 1.492v2.182c0 .146.037.219.11.328.109.073.254.11.436.073a7.943 7.943 0 003.93-2.874C17.49 13.28 18 11.718 18 10.008c0-1.455-.364-2.801-1.091-4.002z"
+        /></svg
+      >GitHub</a
+    >
+
+    <button class="button" @click.passive="handleHelpClick">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+          clip-rule="evenodd"
+        /></svg
+      >Help
+    </button>
+
+    <welcome class="welcome" v-model:isVisible="isWelcomeVisible" />
+
+    <a
+      href="https://www.buymeacoffee.com/mauriciabad"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="button"
       @click.passive="trackClickDonateFiat"
     >
       <svg
@@ -51,26 +118,8 @@ export default defineComponent({
         fill="currentColor"
       >
         <path
-          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-        /></svg
-      >Star project</a
-    >
-
-    <a
-      href="https://www.buymeacoffee.com/mauriciabad"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="button button--donate"
-      @click.passive="trackClickDonateCrypto"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-      >
-        <path
           fill-rule="evenodd"
-          d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z"
           clip-rule="evenodd"
         /></svg
       >Donate</a
@@ -79,8 +128,8 @@ export default defineComponent({
       href="bitcoin:bc1qs0srzvcamaqplqpw2gkzkrvzqzma0892xjcvyl"
       target="_blank"
       rel="noopener noreferrer"
-      class="button button--cripto"
-      @click.passive="trackClickStar"
+      class="button"
+      @click.passive="trackClickDonateCrypto"
     >
       <svg
         width="20"
@@ -96,7 +145,7 @@ export default defineComponent({
         />
       </svg>
 
-      Donate BTC</a
+      BTC</a
     >
   </div>
 </template>
@@ -104,9 +153,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .buttons {
   display: flex;
-  // gap: 1rem;
+  gap: 0.5rem;
   justify-content: space-between;
-  gap: 1rem;
   flex-wrap: wrap;
 
   .button {
@@ -124,20 +172,8 @@ export default defineComponent({
     align-items: center;
     gap: 0.5rem;
     font-weight: 500;
+    cursor: pointer;
 
-    &--cripto {
-      // background: #3772ff;
-    }
-
-    &--donate {
-      // background: #3772ff;
-    }
-
-    &--star {
-      background: #fdca41;
-      color: #3e3e3e;
-      border: none;
-    }
     &:focus {
       box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 0 0 0.125rem #6466f1;
     }
