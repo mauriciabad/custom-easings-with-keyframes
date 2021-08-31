@@ -26,7 +26,8 @@ textarea,
 button {
   font-family: 'Inter var', $defaultFonts;
 }
-body {
+body,
+button {
   margin: 0;
 }
 code {
