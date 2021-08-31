@@ -411,18 +411,29 @@ export default defineComponent({
     transition: inherit;
   }
 
-  .popup-container {
+  .popup__container {
     transition: opacity 500ms cubic-bezier(0.33, 1, 0.68, 1),
       transform 500ms cubic-bezier(0.33, 1, 0.68, 1);
   }
 }
+.fade-leave-active {
+  pointer-events: none;
+}
 
-.fade-enter-from,
+.fade-enter-from {
+  .background {
+    opacity: 0;
+  }
+  .popup__container {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+}
 .fade-leave-to {
   .background {
     opacity: 0;
   }
-  .popup-container {
+  .popup__container {
     opacity: 0;
     transform: translateY(-2rem);
   }
