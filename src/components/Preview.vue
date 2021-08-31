@@ -126,10 +126,10 @@ export default defineComponent({
     position: relative;
     transform-style: preserve-3d;
     will-change: transform;
-    z-index: 1;
+    text-align: center;
 
-    svg {
-      display: block;
+    > svg {
+      display: inline-block;
       height: 100%;
       backface-visibility: hidden;
       transform-origin: center;
