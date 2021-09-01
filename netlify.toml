@@ -6,3 +6,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[plugins]]
+package = "netlify-plugin-cypress"
+  [plugins.inputs]
+    skip = true
+  [plugins.inputs.onSuccess]
+    enable = true
+    record = true

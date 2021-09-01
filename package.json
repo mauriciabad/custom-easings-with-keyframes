@@ -43,6 +43,7 @@
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-vue": "^7.4.0",
     "lint-staged": "^9.5.0",
+    "netlify-plugin-cypress": "^2.2.0",
     "prettier": "^1.19.1",
     "prettier-config-standard": "^1.0.0",
     "sass": "^1.32.0",
