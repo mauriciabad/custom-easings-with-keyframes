@@ -26,3 +26,9 @@ Run the tests:
 ```bash
 yarn test:unit
 ```
+
+Run cypress
+
+```bash
+yarn run cypress open
+```

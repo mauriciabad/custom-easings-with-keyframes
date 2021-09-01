@@ -13,29 +13,22 @@
     "removeComments": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": [
-      "webpack-env", 
-      "jest"
-    ],
+    "types": ["webpack-env", "jest", "cypress"],
     "paths": {
       "@/*": ["src/*"]
     },
-    "lib": [
-      "esnext",
-       "dom",
-       "dom.iterable",
-       "scripthost"
-      ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
     "src/**/*.ts",
+    "cypress/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "cypress/integration/2-advanced-examples/actions.spec.js",
+    "cypress/plugins/index.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ],
+  "exclude": ["node_modules"],
   "$schema": "https://json.schemastore.org/tsconfig"
 }

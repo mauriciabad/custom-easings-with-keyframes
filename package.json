@@ -19,6 +19,7 @@
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@types/dedent": "^0.7.0",
     "@types/jest": "^24.0.19",
     "@types/resize-observer-browser": "^0.1.4",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
@@ -35,6 +36,8 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "^2.0.0-beta.13",
+    "cypress": "^8.3.1",
+    "dedent": "^0.7.0",
     "deep-clone": "^3.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.0",
