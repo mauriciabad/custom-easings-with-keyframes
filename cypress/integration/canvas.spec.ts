@@ -34,7 +34,7 @@ export function clickInCanvas(
   })
 }
 
-describe('Easy easings', () => {
+describe('Canvas element', () => {
   beforeEach(() => {
     cy.viewport(1024, 768)
 
