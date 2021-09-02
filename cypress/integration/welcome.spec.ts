@@ -17,6 +17,15 @@ describe('Welcome view', () => {
       it('hides the welcome dialog', () => {
         cy.contains('Welcome').should('not.be.visible')
       })
+
+      describe('and clicks the help button', () => {
+        beforeEach(() => {
+          cy.contains('Help').click()
+        })
+        it('shows welcome dialog', () => {
+          cy.contains('Welcome').should('be.visible')
+        })
+      })
     })
 
     describe('and clicks outside the dialog', () => {
