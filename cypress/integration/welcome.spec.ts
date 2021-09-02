@@ -19,6 +19,16 @@ describe('Welcome view', () => {
       })
     })
 
+    describe('and clicks outside the dialog', () => {
+      beforeEach(() => {
+        cy.get('body').click(8, 8)
+      })
+
+      it('hides the welcome dialog', () => {
+        cy.contains('Welcome').should('not.be.visible')
+      })
+    })
+
     describe('when it is not the first visit', () => {
       beforeEach(() => {
         cy.visit('/')
