@@ -78,6 +78,44 @@ describe('Canvas element', () => {
     expectCodeToBeTheInitialState(cy.get('@code'))
   })
 
+  it("doesn't allow to create points over 100% in the x axis", () => {
+    clickInCanvas(cy.get('@canvas'), 1.01, 0.5)
+    expectCodeToBeTheInitialState(cy.get('@code'))
+  })
+
+  it("doesn't allow to create points below 0% in the x axis", () => {
+    clickInCanvas(cy.get('@canvas'), -0.01, 0.5)
+    expectCodeToBeTheInitialState(cy.get('@code'))
+  })
+
+  it('allows to create points over 100% in the y axis', () => {
+    clickInCanvas(cy.get('@canvas'), 0.5, 1.25)
+    cy.get('@code').contains(dedent/* css */ `
+      .ease-custom {
+        animation: ease-custom 3000ms linear;
+      }
+
+      @keyframes ease-custom {
+        0% {transform: rotate(0deg)}
+        50% {transform: rotate(450deg)}
+        100% {transform: rotate(360deg)}
+      }`)
+  })
+
+  it('allows to create points below 0% in the y axis', () => {
+    clickInCanvas(cy.get('@canvas'), 0.5, -0.25)
+    cy.get('@code').contains(dedent/* css */ `
+      .ease-custom {
+        animation: ease-custom 3000ms linear;
+      }
+
+      @keyframes ease-custom {
+        0% {transform: rotate(0deg)}
+        50% {transform: rotate(-90deg)}
+        100% {transform: rotate(360deg)}
+      }`)
+  })
+
   describe('and adds a new point', () => {
     beforeEach(() => {
       clickInCanvas(cy.get('@canvas'), 0.5, 0.25)
