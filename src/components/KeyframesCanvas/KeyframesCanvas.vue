@@ -266,6 +266,7 @@ export default defineComponent({
         rx="2"
         ry="2"
         class="rectangle"
+        data-test-id="canvas-main-area"
       />
 
       <foreignObject
