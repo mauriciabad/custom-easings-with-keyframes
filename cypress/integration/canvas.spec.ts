@@ -10,7 +10,7 @@ function clickInCanvas(
   canvas: Cypress.Chainable<JQuery<HTMLElement>>,
   x: number,
   y: number,
-  clickType: 'left' | 'right' = 'left',
+  clickType: 'left' | 'right' | 'hover' = 'left',
   options: Partial<Cypress.ClickOptions> = {}
 ) {
   return canvas.then(element => {
@@ -26,6 +26,17 @@ function clickInCanvas(
           force: true,
           ...options
         })
+
+      case 'hover':
+        return canvas.trigger(
+          'mouseover',
+          canvasClickPoints.x,
+          canvasClickPoints.y,
+          {
+            force: true,
+            ...options
+          }
+        )
 
       case 'left':
       default:
