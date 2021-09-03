@@ -8,6 +8,13 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/Cypress
+            node_modules
+          key: my-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
       - name: 🎯 Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -15,8 +22,13 @@ jobs:
           check-latest: true
           cache: 'yarn'
 
-      - name: 🎁 Install dependencies
-        run: yarn install --immutable
+      - name: 🎁 Install cypress
+        run: yarn install cypress
+
+      - name: Install cypress
+        uses: cypress-io/github-action@v2
+        with:
+          runTests: false
 
       - name: 👷🏽‍♂️ Build the site
         run: yarn run build
@@ -51,6 +63,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
+          install: false
           start: 'serve dist -l 8080'
           wait-on: 'http://localhost:8080'
           wait-on-timeout: 30
