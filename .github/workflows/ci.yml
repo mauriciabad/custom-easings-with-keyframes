@@ -3,28 +3,11 @@ on: push
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
-
-      - name: 🎯 Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-
-      - name: Get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install dependencies
-        run: yarn install --skip-integrity-check --non-interactive --no-progress
 
       - name: 🎁 Install serve
         run: yarn global add serve
@@ -38,7 +21,6 @@ jobs:
           start: 'serve dist -l 8080'
           wait-on: 'http://localhost:8080'
           wait-on-timeout: 30
-          headless: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
