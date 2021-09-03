@@ -38,11 +38,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --skip-integrity-check --non-interactive --no-progress
 
-      - name: TypeScript check
-        run: yarn lint:tsc
-
-      - name: Eslint check
-        run: yarn lint:script
+      - name: Lint
+        run: yarn lint
 
   unit_test:
     name: Unit test
@@ -76,10 +73,10 @@ jobs:
       - name: Unit test
         run: yarn test:unit
 
-      - name: Update coverage report
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+      # - name: Update coverage report
+      #   uses: codecov/codecov-action@v1
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
 
   e2e_tests:
     name: E2E test
