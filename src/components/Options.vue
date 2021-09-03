@@ -320,7 +320,7 @@ input[type='number'] {
   margin-top: -0.25rem;
 
   .small {
-    color: #9498a0;
+    color: #72757b;
   }
 }
 
