@@ -38,7 +38,7 @@ jobs:
           start: 'serve dist -l 8080'
           wait-on: 'http://localhost:8080'
           wait-on-timeout: 30
-          headless: true
+          headless: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
