@@ -6,3 +6,16 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[plugins]]
+  package = "netlify-plugin-cypress"
+  [plugins.inputs.postBuild]
+    enable = true
+    spa = true
+    record = true
+    browser = "electron"
+
+[build.environment]
+  CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
+  PUPPETEER_SKIP_DOWNLOAD = 1
+  TERM = "xterm"
