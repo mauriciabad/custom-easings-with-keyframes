@@ -39,7 +39,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        containers: [1, 2, 3, 4, 5]
+        containers: [1, 2]
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
@@ -58,8 +58,8 @@ jobs:
         with:
           browser: chrome
           install: false
-          start: 'serve dist'
-          wait-on: 'http://localhost:3000'
+          start: 'serve dist -l 8080'
+          wait-on: 'http://localhost:8080'
           wait-on-timeout: 120
           record: true
           parallel: true
