@@ -1,23 +1,8 @@
 [build]
   publish = "dist"
-  command = "yarn install && yarn build"
+  command = "yarn build"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-[[plugins]]
-  package = "netlify-plugin-cypress"
-  [plugins.inputs]
-    record = true
-    group = 'deployed'
-    spa = true
-  [plugins.inputs.postBuild]
-    enable = true
-    record = true
-    group = 'built'
-
-[build.environment]
-  CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
-  TERM = "xterm"
