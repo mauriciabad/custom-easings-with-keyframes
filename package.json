@@ -16,7 +16,7 @@
     "vue": "^3.0.4",
     "vue-gtag-next": "^1.14.0",
     "vue-router": "^4.0.2",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@types/dedent": "^0.7.0",
