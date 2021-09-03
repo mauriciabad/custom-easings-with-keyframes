@@ -47,16 +47,6 @@ jobs:
           name: dist
           path: dist
 
-      - name: 🎯 Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          check-latest: true
-          cache: 'yarn'
-
-      - name: 🎁 Install dependencies
-        run: yarn install
-
       - name: 🎁 Install serve
         run: yarn global add serve
 
@@ -64,7 +54,6 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
-          install: false
           start: 'serve dist -l 8080'
           wait-on: 'http://localhost:8080'
           wait-on-timeout: 30
