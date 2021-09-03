@@ -35,7 +35,7 @@
     "@vue/compiler-sfc": "^3.0.4",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
-    "@vue/test-utils": "^2.0.0-beta.13",
+    "@vue/test-utils": "^2.0.0-rc.13",
     "cypress": "^8.3.1",
     "dedent": "^0.7.0",
     "deep-clone": "^3.0.3",
