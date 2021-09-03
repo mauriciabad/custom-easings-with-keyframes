@@ -35,8 +35,10 @@ jobs:
         with:
           name: dist
           path: dist
-      - name: 🎯 Set up Node.js using nvm
-        uses: dcodeIO/setup-node-nvm@v4
+      - name: 🎯 Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
       - name: 🎁 Install Lighthouse
         run: npm install -g @lhci/cli
       - name: 🔎 Run Lighthouse
