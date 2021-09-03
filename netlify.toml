@@ -15,6 +15,7 @@
   [plugins.inputs.postBuild]
     enable = true
     record = true
+    spa = true
     group = 'built'
 
 [build.environment]
