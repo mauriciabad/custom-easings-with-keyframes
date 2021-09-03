@@ -50,7 +50,7 @@
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "vue-eslint-parser": "^7.10.0",
-    "vue-jest": "^5.0.0-alpha.7"
+    "vue-jest": "^5.0.0-alpha.10"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
