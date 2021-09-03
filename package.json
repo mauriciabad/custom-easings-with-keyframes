@@ -46,7 +46,7 @@
     "netlify-plugin-cypress": "^2.2.0",
     "prettier": "^1.19.1",
     "prettier-config-standard": "^1.0.0",
-    "sass": "^1.32.0",
+    "sass": "^1.39.0",
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "vue-eslint-parser": "^7.10.0",
