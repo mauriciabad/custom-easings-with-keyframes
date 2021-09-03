@@ -6559,10 +6559,10 @@ inquirer@^7.0.0, inquirer@^7.1.0:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
-inter-ui@^3.15.0:
-  version "3.15.0"
-  resolved "https://registry.yarnpkg.com/inter-ui/-/inter-ui-3.15.0.tgz#05f9a13e59c7c513cedc907d244809231a79f889"
-  integrity sha512-6v0WK8FHkVYbNQZ7L9O5tP8280pgTBR9ydxqYwssMuUH6SZO70ZFK/NQ1Ob8nNmOOzpUJAzT0WE73ty96z1tAQ==
+inter-ui@^3.19.3:
+  version "3.19.3"
+  resolved "https://registry.yarnpkg.com/inter-ui/-/inter-ui-3.19.3.tgz#cf4b4b6d30de8d5463e2462588654b325206488c"
+  integrity sha512-5FG9fjuYOXocIfjzcCBhICL5cpvwEetseL3FU6tP3d6Bn7g8wODhB+I9RNGRTizCT7CUG4GOK54OPxqq3msQgg==
 
 internal-ip@^4.3.0:
   version "4.3.0"
