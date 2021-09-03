@@ -9,8 +9,13 @@
 
 [[plugins]]
   package = "netlify-plugin-cypress"
-    [plugins.inputs]
-      record = true
+  [plugins.inputs]
+    record = true
+    group = 'deployed'
+  [plugins.inputs.postBuild]
+    enable = true
+    record = true
+    group = 'built'
 
 [build.environment]
   CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
