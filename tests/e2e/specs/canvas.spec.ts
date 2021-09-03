@@ -13,7 +13,7 @@ function clickInCanvas(
   clickType: 'left' | 'right' | 'hover' = 'left',
   options: Partial<Cypress.ClickOptions> = {}
 ) {
-  return canvas.then(element => {
+  return canvas.then((element) => {
     const canvasBox = element[0].getBoundingClientRect()
     const canvasClickPoints = {
       x: x * canvasBox.width,
@@ -64,8 +64,6 @@ function expectCodeToBeTheInitialState(
 
 describe('Canvas element', () => {
   beforeEach(() => {
-    cy.viewport(1024, 768)
-
     cy.visit('/')
 
     cy.contains('Get started').click()

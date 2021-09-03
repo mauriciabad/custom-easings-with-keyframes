@@ -1,72 +1,125 @@
 name: CI
-on: push
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+
 jobs:
-  build:
-    name: Build
+  lint:
+    name: Lint
+    env:
+      CI: true
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@master
 
-      - name: 🎯 Set up Node.js
-        uses: actions/setup-node@v2
+      # https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
         with:
-          node-version: '16'
-          cache: 'yarn'
+          node-version: 14.x
 
-      - name: 🎁 Install dependencies
-        run: yarn install
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - name: 👷🏽‍♂️ Build the site and install Cypress
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        run: yarn install --skip-integrity-check --non-interactive --no-progress
+
+      - name: TypeScript check
+        run: yarn lint:tsc
+
+      - name: Eslint check
+        run: yarn lint:script
+
+  unit_test:
+    name: Unit test
+    env:
+      CI: true
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      # https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        run: yarn install --skip-integrity-check --non-interactive --no-progress
+
+      - name: Unit test
+        run: yarn test:unit
+
+      - name: Update coverage report
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  e2e_tests:
+    name: E2E test
+    env:
+      CI: true
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      # https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        run: yarn install --skip-integrity-check --non-interactive --no-progress
+
+      - name: Build
+        run: yarn build
+
+      - name: E2E test
         uses: cypress-io/github-action@v2
         with:
-          runTests: false
-          build: yarn build
-
-      - name: 💾 Store the build
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist
-          path: dist
-          if-no-files-found: error
-
-  e2e-tests:
-    name: E2E Tests
-    needs: build
-    timeout-minutes: 5
-    runs-on: ubuntu-latest
-    container: cypress/browsers:node14.17.0-chrome88-ff89
-    strategy:
-      fail-fast: false
-      matrix:
-        containers: [1, 2]
-    steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v2
-
-      - name: 🚚 Get the build
-        uses: actions/download-artifact@v2
-        with:
-          name: dist
-          path: dist
-
-      - name: 🎁 Install serve
-        run: yarn global add serve
-
-      - name: 🤖 Run the tests
-        uses: cypress-io/github-action@v2
-        with:
-          browser: chrome
-          install: false
-          start: 'serve dist -l 8080'
-          wait-on: 'http://localhost:8080'
-          wait-on-timeout: 120
           record: true
-          parallel: true
-          spec: cypress/integration/**/*
+          config: baseUrl=http://localhost:5000
+          start: yarn serve
+          wait-on: http://localhost:5000
         env:
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # Recommended: pass the GitHub token lets this action correctly
-          # determine the unique run id necessary to re-run the checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
