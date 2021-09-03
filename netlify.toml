@@ -17,5 +17,5 @@
 
 [build.environment]
   CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
-  PUPPETEER_SKIP_DOWNLOAD = 1
+  PUPPETEER_SKIP_DOWNLOAD = "1"
   TERM = "xterm"
