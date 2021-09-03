@@ -4,10 +4,47 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
+
+      - name: 🎯 Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: 🎁 Install dependencies
+        run: yarn install
+
+      - name: 👷🏽‍♂️ Build the site and install Cypress
+        uses: cypress-io/github-action@v2
+        with:
+          runTests: false
+          build: yarn build
+
+      - name: 💾 Store the build
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist
+          if-no-files-found: error
+
+  e2e-tests:
+    name: E2E Tests
+    needs: build
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    container: 'cypress/browsers:latest'
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 🚚 Get the build
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
 
       - name: 🎁 Install serve
         run: yarn global add serve
@@ -15,12 +52,12 @@ jobs:
       - name: 🤖 Run the tests
         uses: cypress-io/github-action@v2
         with:
-          record: true
           browser: chrome
-          build: yarn build
+          install: false
           start: 'serve dist -l 8080'
           wait-on: 'http://localhost:8080'
           wait-on-timeout: 30
+          record: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
