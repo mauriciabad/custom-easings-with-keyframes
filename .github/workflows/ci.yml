@@ -47,6 +47,9 @@ jobs:
           name: dist
           path: dist
 
+      - name: 🎁 Install cypress
+        run: yarn global add cypress
+
       - name: 🎁 Install serve
         run: yarn global add serve
 
@@ -54,6 +57,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
+          install: false
           start: 'serve dist -l 8080'
           wait-on: 'http://localhost:8080'
           wait-on-timeout: 30
