@@ -75,8 +75,9 @@ export default defineComponent({
             v-for="[key, value] of Object.entries(Property)"
             :key="key"
             :value="value"
-            >{{ key }}</option
           >
+            {{ key }}
+          </option>
         </select>
       </div>
     </div>

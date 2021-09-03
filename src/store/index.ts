@@ -50,7 +50,7 @@ export const store = createStore<State>({
   }),
   mutations: {
     createPoint: (state, { x, y }: { x: number; y: number }) => {
-      if (state.points.find(p => p.x === x)) return
+      if (state.points.find((p) => p.x === x)) return
 
       state.points.push({
         x,
@@ -60,29 +60,29 @@ export const store = createStore<State>({
 
       state.points.sort((a, b) => a.x - b.x)
     },
-    deleteFocusedPoints: state => {
-      state.points = state.points.filter(p => !p.isSelected)
+    deleteFocusedPoints: (state) => {
+      state.points = state.points.filter((p) => !p.isSelected)
     },
     focusPoint: (state, { x }: { x: number }) => {
-      state.points = state.points.map(p => ({
+      state.points = state.points.map((p) => ({
         ...p,
         isSelected: p.x === x ? true : p.isSelected
       }))
     },
     blurPoint: (state, { x }: { x: number }) => {
-      state.points = state.points.map(p => ({
+      state.points = state.points.map((p) => ({
         ...p,
         isSelected: p.x === x ? false : p.isSelected
       }))
     },
-    blurAllPoints: state => {
-      state.points = state.points.map(p => ({
+    blurAllPoints: (state) => {
+      state.points = state.points.map((p) => ({
         ...p,
         isSelected: false
       }))
     },
     togglePoint: (state, { x }: { x: number }) => {
-      state.points = state.points.map(p => ({
+      state.points = state.points.map((p) => ({
         ...p,
         isSelected: p.x === x ? !p.isSelected : p.isSelected
       }))
@@ -99,7 +99,7 @@ export const store = createStore<State>({
     ) => {
       const pointsToOverride: Set<number> = new Set()
 
-      state.points = originalPoints.map(point => {
+      state.points = originalPoints.map((point) => {
         if (!point.isSelected) return point
 
         const newPos = {
@@ -107,7 +107,7 @@ export const store = createStore<State>({
           y: point.y + moveOffset.y
         }
 
-        if (originalPoints.find(p => p.x === newPos.x)) {
+        if (originalPoints.find((p) => p.x === newPos.x)) {
           pointsToOverride.add(newPos.x)
         }
 
@@ -115,7 +115,7 @@ export const store = createStore<State>({
       })
 
       state.points = state.points.filter(
-        point => point.isSelected || !pointsToOverride.has(point.x)
+        (point) => point.isSelected || !pointsToOverride.has(point.x)
       )
 
       state.points.sort((a, b) => a.x - b.x)

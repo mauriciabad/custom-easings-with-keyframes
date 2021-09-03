@@ -1,6 +1,13 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Main from '../views/Main.vue'
 import { trackRouter } from 'vue-gtag-next'
+import 'vue-router'
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    title: string
+  }
+}
 
 const routes: Array<RouteRecordRaw> = [
   {

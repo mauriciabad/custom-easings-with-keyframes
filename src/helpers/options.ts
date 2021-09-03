@@ -80,21 +80,19 @@ export const allowedValueUnits: Record<keyof typeof Property, ValueUnits[]> = {
   skewY: [...units.angle]
 }
 
-export const valueUnitsDefaultToValue: Record<
-  keyof typeof ValueUnits,
-  number
-> = {
-  none: 1,
-  '%': 100,
-  px: 100,
-  rem: 10,
-  em: 10,
-  vh: 10,
-  vw: 10,
-  deg: 360,
-  turn: 1,
-  rad: 6.28319
-}
+export const valueUnitsDefaultToValue: Record<keyof typeof ValueUnits, number> =
+  {
+    none: 1,
+    '%': 100,
+    px: 100,
+    rem: 10,
+    em: 10,
+    vh: 10,
+    vw: 10,
+    deg: 360,
+    turn: 1,
+    rad: 6.28319
+  }
 
 export interface LocalOptions {
   property: Options['property'] | ''
@@ -200,7 +198,7 @@ export function fillWithDefaultOptions(options: LocalOptions): LocalOptions {
 export function removeDefaults(
   lastUpdatedOptions: Partial<Options>,
   localOptions: LocalOptions
-) {
+): Partial<Options> {
   const lastUpdatedOptionsWithoutDefaults = { ...lastUpdatedOptions }
 
   if (localOptions.fromValue === '' && lastUpdatedOptions.fromValue === 0) {

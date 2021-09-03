@@ -15,7 +15,7 @@ export default defineComponent({
     const cd = computed(() => store.state.canvasDimensions)
 
     const pointsInCanvas = computed(() =>
-      props.points.map(point => toCanvasPoint(point, cd.value))
+      props.points.map((point) => toCanvasPoint(point, cd.value))
     )
 
     const path = computed(() =>

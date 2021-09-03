@@ -25,15 +25,18 @@ export default defineComponent({
     const code = computed(() => {
       const keyframes = computeKeyframes(points.value, options)
 
-      const keyframesLines = keyframes.map(keyframe => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { composite, easing, offset, ...keyframeProperties } = keyframe
-
-        const propertyLine = Object.entries(keyframeProperties)
+      const keyframesLines = keyframes.map((keyframe) => {
+        const propertyLine = Object.entries(keyframe)
+          .filter(
+            ([property]) =>
+              property !== 'composite' &&
+              property !== 'easing' &&
+              property !== 'offset'
+          )
           .map(([property, propertyValue]) => `${property}: ${propertyValue}`)
           .join('; ')
 
-        return `${offset || 0 * 100}% {${propertyLine}}`
+        return `${keyframe.offset || 0 * 100}% {${propertyLine}}`
       })
 
       return `.${options.easingName} {
@@ -48,9 +51,7 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
     let lastCopiedCode: string
     function trackCopyCode() {
       event('copy_code', {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         event_category: 'engagement',
-        // eslint-disable-next-line @typescript-eslint/camelcase
         event_label: lastCopiedCode === code.value ? 'duplicate' : undefined
       })
 

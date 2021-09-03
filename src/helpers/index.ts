@@ -2,40 +2,40 @@ import { Options, Property } from '@/helpers/options'
 import { Point } from '@/types'
 import { CanvasDimensions } from './../store/index'
 
-export function invertCoordenates(x: number) {
+export function invertCoordenates(x: number): number {
   return (x - 1) * -1
 }
 
-export function round(value: number, decimals: number) {
+export function round(value: number, decimals: number): number {
   return Number(`${Math.round(Number(`${value}e${decimals}`))}e-${decimals}`)
 }
 
-export function isTransformProperty(property: Property) {
+export function isTransformProperty(property: Property): boolean {
   return property !== Property.opacity
 }
 
-export function clamp(num: number, min: number, max: number) {
+export function clamp(num: number, min: number, max: number): number {
   return num <= min ? min : num >= max ? max : num
 }
 
 export function toCanvasPoint(
   point: { x: number; y: number },
   cd: CanvasDimensions
-) {
+): { x: number; y: number } {
   return {
     x: (point.x / 100) * cd.width,
     y: invertCoordenates(point.y / 100) * cd.height
   }
 }
 
-export function propertyValue(point: Point, options: Options) {
+export function propertyValue(point: Point, options: Options): string {
   return `${round(
     (options.toValue - options.fromValue) * (point.y / 100) + options.fromValue,
     6
   )}${options.valueUnits}`
 }
 
-export function calculateOffset(x: number, options: Options) {
+export function calculateOffset(x: number, options: Options): number {
   const totalTime = options.beginingDelay + options.duration + options.endDelay
 
   return round(
@@ -46,7 +46,7 @@ export function calculateOffset(x: number, options: Options) {
   )
 }
 
-export function toKeyframeProperty(point: Point, options: Options) {
+export function toKeyframeProperty(point: Point, options: Options): Keyframe {
   if (isTransformProperty(options.property)) {
     return {
       transform: `${options.property}(${propertyValue(point, options)})`
@@ -56,14 +56,17 @@ export function toKeyframeProperty(point: Point, options: Options) {
   }
 }
 
-export function pointToKeyframe(point: Point, options: Options) {
+export function pointToKeyframe(point: Point, options: Options): Keyframe {
   return {
     offset: point.x / 100,
     ...toKeyframeProperty(point, options)
   }
 }
 
-export function computePointsWithDelay(points: Point[], options: Options) {
+export function computePointsWithDelay(
+  points: Point[],
+  options: Options
+): Point[] {
   const pointsWithDelay = [
     ...(options.beginingDelay
       ? [
@@ -80,7 +83,7 @@ export function computePointsWithDelay(points: Point[], options: Options) {
         ]
       : []),
 
-    ...points.map(point => ({
+    ...points.map((point) => ({
       ...point,
       x: calculateOffset(point.x, options)
     })),
@@ -128,12 +131,15 @@ export function computeKeyframes(
   points: Point[],
   options: Options
 ): Keyframe[] {
-  return computePointsWithDelay(points, options).map(point =>
+  return computePointsWithDelay(points, options).map((point) =>
     pointToKeyframe(point, options)
   )
 }
 
-export function getSorroundingPoints(x: number, points: Point[]) {
+export function getSorroundingPoints(
+  x: number,
+  points: Point[]
+): [Point | undefined, Point | undefined] {
   if (x <= points[0].x) {
     return [points[0], undefined]
   }
@@ -154,7 +160,7 @@ export function getSorroundingPoints(x: number, points: Point[]) {
 }
 
 // Workarround to asign objects without losing vue reactivity
-export const assign = <T>(oldValue: T, newValue: Partial<T>) => {
+export const assign = <T>(oldValue: T, newValue: Partial<T>): void => {
   for (const key in oldValue) {
     delete oldValue[key]
   }
@@ -162,7 +168,7 @@ export const assign = <T>(oldValue: T, newValue: Partial<T>) => {
   for (const keyAsString in newValue) {
     const key = keyAsString as keyof T
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(oldValue as any)[key] = newValue[key]
   }
 }

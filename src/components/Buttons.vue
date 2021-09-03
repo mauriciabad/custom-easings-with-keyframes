@@ -19,35 +19,28 @@ export default defineComponent({
 
     function trackClickDonateFiat() {
       event('donate', {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         event_category: 'ecommerce',
-        // eslint-disable-next-line @typescript-eslint/camelcase
         event_label: 'fiat'
       })
     }
     function trackClickDonateCrypto() {
       event('donate', {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         event_category: 'ecommerce',
-        // eslint-disable-next-line @typescript-eslint/camelcase
         event_label: 'crypto'
       })
     }
     function trackClickStar() {
       event('star_project', {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         event_category: 'engagement'
       })
     }
     function trackClickSourceCode() {
       event('view_source_code', {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         event_category: 'engagement'
       })
     }
     function trackClickHelp() {
       event('help', {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         event_category: 'engagement'
       })
     }

@@ -18,7 +18,7 @@ export default defineComponent({
     const points = computed(() => store.state.points)
 
     const pointAlreadyExists = computed(
-      () => !points.value.find(p => p.x === props.point.x)
+      () => !points.value.find((p) => p.x === props.point.x)
     )
 
     const sorroundingPoints = computed(() => {
@@ -55,7 +55,7 @@ export default defineComponent({
     <defs>
       <keyframes-canvas-points-mask
         id="new-point-mask"
-        :points="[point, ...sorroundingPoints.filter(p => p !== undefined)]"
+        :points="[point, ...sorroundingPoints.filter((p) => p !== undefined)]"
       />
     </defs>
 
