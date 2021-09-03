@@ -201,17 +201,17 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="canvas-container" ref="canvasContainer">
+  <div ref="canvasContainer" class="canvas-container">
     <svg
+      ref="canvas"
       :height="cd.height * (cd.maxY - cd.minY + cd.stepY)"
       :width="cd.width + cd.offset.x + 32"
-      ref="canvas"
+      class="canvas"
       @mousedown="handleMouseDown($event)"
       @mousemove="handleMouseMove($event)"
       @mouseup="handleMouseUp($event)"
       @contextmenu="$event.preventDefault()"
       @mouseleave="handleMouseLeave($event)"
-      class="canvas"
     >
       <defs>
         <filter

@@ -45,8 +45,8 @@ function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
 }
 
 export default defineComponent({
-  props: {},
   components: {},
+  props: {},
 
   setup() {
     const store = useStore(key)
@@ -134,9 +134,9 @@ export default defineComponent({
     "
   >
     <div
-      class="object object--faded"
       v-for="n in fadedDotsCount + 1"
       :key="n"
+      class="object object--faded"
       :style="
         `transform: translateY(${(pointInPath(
           ((n - 1) / fadedDotsCount) * 100
@@ -148,7 +148,7 @@ export default defineComponent({
         )}`
       "
     ></div>
-    <div class="object" ref="previewElement"></div>
+    <div ref="previewElement" class="object"></div>
   </div>
 </template>
 

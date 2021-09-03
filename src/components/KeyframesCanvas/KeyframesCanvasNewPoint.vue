@@ -51,7 +51,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <g class="new-point" v-if="pointAlreadyExists">
+  <g v-if="pointAlreadyExists" class="new-point">
     <defs>
       <keyframes-canvas-points-mask
         id="new-point-mask"

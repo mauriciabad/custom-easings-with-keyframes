@@ -6,8 +6,8 @@ import { computeKeyframes } from '@/helpers'
 import useOptions from '@/modules/options'
 
 export default defineComponent({
-  props: {},
   components: {},
+  props: {},
 
   setup() {
     const store = useStore(key)
@@ -35,7 +35,7 @@ export default defineComponent({
 
 <template>
   <div class="preview">
-    <div class="preview__element" ref="previewElement">
+    <div ref="previewElement" class="preview__element">
       <svg viewBox="0 0 128 128" fill="none">
         <path
           d="M64 0C28.6538 0 0 28.6538 0 64C0 72.249 1.56075 80.1337 4.40275 87.3745C13.7388 111.16 36.9028 124.137 64 124.137C91.0972 124.137 114.261 111.16 123.597 87.3745C126.439 80.1337 128 72.249 128 64C128 28.6538 99.3462 0 64 0V0ZM64 80.3173C54.9882 80.3173 47.6828 73.0118 47.6828 64C47.6828 54.9882 54.9882 47.6828 64 47.6828C73.0118 47.6828 80.3173 54.9882 80.3173 64C80.3173 73.0118 73.0118 80.3173 64 80.3173Z"

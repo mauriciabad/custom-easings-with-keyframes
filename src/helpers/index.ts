@@ -7,7 +7,7 @@ export function invertCoordenates(x: number) {
 }
 
 export function round(value: number, decimals: number) {
-  return Number(Math.round(Number(value + 'e' + decimals)) + 'e-' + decimals)
+  return Number(`${Math.round(Number(`${value}e${decimals}`))}e-${decimals}`)
 }
 
 export function isTransformProperty(property: Property) {

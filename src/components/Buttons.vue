@@ -103,7 +103,7 @@ export default defineComponent({
       >Help
     </button>
 
-    <welcome class="welcome" v-model:isVisible="isWelcomeVisible" />
+    <welcome v-model:isVisible="isWelcomeVisible" class="welcome" />
 
     <a
       href="https://www.buymeacoffee.com/mauriciabad"

@@ -13,13 +13,15 @@ const shapes = [
 const INTERVAL_DURATION = 5000 as const
 
 export default defineComponent({
+  components: {},
   props: {
     isVisible: {
       type: Boolean,
       default: false
     }
   },
-  components: {},
+
+  emits: ['update:isVisible'],
 
   setup(props, { emit }) {
     const count = ref(0)
@@ -71,7 +73,7 @@ export default defineComponent({
 <template>
   <teleport to="#welcome-popup">
     <transition name="fade">
-      <div class="popup" v-if="isVisible">
+      <div v-if="isVisible" class="popup">
         <div class="background" @click="handleBackgroundClick"></div>
         <div class="popup__container">
           <div class="popup__content popup__content--left">
