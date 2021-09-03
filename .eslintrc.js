@@ -18,9 +18,6 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'vue/order-in-components': 'error',
-    'vue/attributes-order': 'error',
-    'vue/no-v-html': 'error',
     'vue/component-tags-order': [
       'error',
       { order: ['script', 'template', 'style'] }
