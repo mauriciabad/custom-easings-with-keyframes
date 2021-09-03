@@ -3,7 +3,7 @@ on: push
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
@@ -33,6 +33,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           record: true
+          browser: chrome
           build: yarn build
           start: 'serve dist -l 8080'
           wait-on: 'http://localhost:8080'
