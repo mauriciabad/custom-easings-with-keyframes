@@ -47,6 +47,16 @@ jobs:
           name: dist
           path: dist
 
+      - name: 🎯 Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          check-latest: true
+          cache: 'yarn'
+
+      - name: 🎁 Install dependencies
+        run: yarn install
+
       - name: 🎁 Install serve
         run: yarn global add serve
 
