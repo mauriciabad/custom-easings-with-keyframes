@@ -114,9 +114,9 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           record: true
-          config: baseUrl=http://localhost:5000
+          config: baseUrl=http://localhost:8080
           start: yarn serve
-          wait-on: http://localhost:5000
+          wait-on: http://localhost:8080
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
