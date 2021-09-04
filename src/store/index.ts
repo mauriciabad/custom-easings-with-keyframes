@@ -61,6 +61,7 @@ export const store = createStore<State>({
       state.points.sort((a, b) => a.x - b.x)
     },
     deleteFocusedPoints: (state) => {
+      if (state.points.length <= 1) return
       state.points = state.points.filter((p) => !p.isSelected)
     },
     focusPoint: (state, { x }: { x: number }) => {
