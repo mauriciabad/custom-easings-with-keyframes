@@ -1,8 +1,16 @@
 name: CI
-on: push
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+
 jobs:
-  build:
-    name: Build
+  e2e_tests:
+    name: E2E test
     runs-on: ubuntu-latest
     container: cypress/browsers:latest
     steps:
