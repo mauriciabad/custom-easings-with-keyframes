@@ -66,8 +66,8 @@ export default defineComponent({
 
 <template>
   <transition name="fade">
-    <div class="wrapper">
-      <div v-if="true" class="banner">
+    <div v-if="showBanner" class="wrapper">
+      <div class="banner">
         <div class="banner__icon">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
