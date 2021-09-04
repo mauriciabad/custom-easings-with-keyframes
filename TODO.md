@@ -5,9 +5,11 @@
 ### Features
 
 - Explain what the app does and the aproach
-- Change maxY and maxX from the UI (maybe use scroll weel)
+- Change maxY and maxX from the UI (maybe use scroll weel) (zoom in and out)
 - Use actual units in the axis
+- Add axis labels (Progress vs Time)
 - Add the title Easy Easings .com somewhere
+- Feedback button
 
 ## Bugs
 
@@ -16,8 +18,6 @@
 - Nice readme
 - share on
   - reddit (help from friend)
-  - https://tiny-helpers.dev/
-  - https://webdevresources.info/
   - https://www.producthunt.com/
   - http://easings.net/
 
@@ -25,6 +25,8 @@
 
 - SEO
 - Undo/redo feature
+- Presets (bounce, elastic...)
+- Save work in localstorage
 - Dark theme
 - Optimize app fps
 - Get 100 stars to use open collective
@@ -35,3 +37,5 @@
 - Vector based curve and then calculate most optimal points
 - Site usable keyboard-only
 - Add sounds
+- Parse css and create the graph
+- If the graph can be a cubic bezier, sugest it.
