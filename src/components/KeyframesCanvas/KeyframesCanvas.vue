@@ -71,7 +71,7 @@ export default defineComponent({
       }
     }
 
-    const resizeObserver = new ResizeObserver(entries => {
+    const resizeObserver = new ResizeObserver((entries) => {
       store.commit('resize', {
         height: entries[0].contentRect.height,
         width: entries[0].contentRect.width
@@ -90,7 +90,7 @@ export default defineComponent({
       }
     })
 
-    document.body.addEventListener('keydown', function(event: KeyboardEvent) {
+    document.body.addEventListener('keydown', function (event: KeyboardEvent) {
       switch (event.key) {
         case 'Backspace':
         case 'Delete':
@@ -105,7 +105,7 @@ export default defineComponent({
     function handleLeftClick(event: MouseEvent) {
       moveOrigin = extractCoordenates(event)
 
-      const point = points.value.find(p => p.x === moveOrigin.x)
+      const point = points.value.find((p) => p.x === moveOrigin.x)
       wasMovingPointSelected.value = point ? point.isSelected : false
 
       store.commit('createPoint', moveOrigin)
@@ -155,7 +155,7 @@ export default defineComponent({
 
     function handleRightClick(event: MouseEvent) {
       const position = extractCoordenates(event)
-      const point = points.value.find(p => p.x === position.x)
+      const point = points.value.find((p) => p.x === position.x)
       if (point) store.commit('focusPoint', position)
 
       store.commit('deleteFocusedPoints')
@@ -201,17 +201,17 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="canvas-container" ref="canvasContainer">
+  <div ref="canvasContainer" class="canvas-container">
     <svg
+      ref="canvas"
       :height="cd.height * (cd.maxY - cd.minY + cd.stepY)"
       :width="cd.width + cd.offset.x + 32"
-      ref="canvas"
+      class="canvas"
       @mousedown="handleMouseDown($event)"
       @mousemove="handleMouseMove($event)"
       @mouseup="handleMouseUp($event)"
       @contextmenu="$event.preventDefault()"
       @mouseleave="handleMouseLeave($event)"
-      class="canvas"
     >
       <defs>
         <filter

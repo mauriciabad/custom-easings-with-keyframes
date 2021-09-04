@@ -25,15 +25,18 @@ export default defineComponent({
     const code = computed(() => {
       const keyframes = computeKeyframes(points.value, options)
 
-      const keyframesLines = keyframes.map(keyframe => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { composite, easing, offset, ...keyframeProperties } = keyframe
-
-        const propertyLine = Object.entries(keyframeProperties)
+      const keyframesLines = keyframes.map((keyframe) => {
+        const propertyLine = Object.entries(keyframe)
+          .filter(
+            ([property]) =>
+              property !== 'composite' &&
+              property !== 'easing' &&
+              property !== 'offset'
+          )
           .map(([property, propertyValue]) => `${property}: ${propertyValue}`)
           .join('; ')
 
-        return `${offset || 0 * 100}% {${propertyLine}}`
+        return `${keyframe.offset || 0 * 100}% {${propertyLine}}`
       })
 
       return `.${options.easingName} {
@@ -48,9 +51,7 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
     let lastCopiedCode: string
     function trackCopyCode() {
       event('copy_code', {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         event_category: 'engagement',
-        // eslint-disable-next-line @typescript-eslint/camelcase
         event_label: lastCopiedCode === code.value ? 'duplicate' : undefined
       })
 
@@ -90,7 +91,7 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
 >
 <span class="gray">}</span
     ></code></div>
-    <button class="copy-button" @click="copyCode" tabindex="0" role="button" aria-label="Copy code"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+    <button class="copy-button" tabindex="0" role="button" aria-label="Copy code" @click="copyCode"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
   <path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z" />
   <path d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z" />
 </svg></span>Copy code</button>

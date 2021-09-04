@@ -28,8 +28,8 @@ Run the tests:
 yarn test:unit
 ```
 
-Run cypress
+Run your end-to-end tests
 
-```bash
-yarn run cypress open
+```
+yarn test:e2e
 ```

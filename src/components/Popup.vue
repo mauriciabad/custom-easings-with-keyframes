@@ -2,8 +2,8 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  props: {},
   components: {},
+  props: {},
 
   setup() {
     const userAknowladges = ref(false)
@@ -20,7 +20,7 @@ export default defineComponent({
 <template>
   <teleport to="#small-screen-popup">
     <transition name="fade">
-      <div class="popup" v-if="!userAknowladges">
+      <div v-if="!userAknowladges" class="popup">
         <div class="background"></div>
         <div class="popup-container">
           <div class="icon">

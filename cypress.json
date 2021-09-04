@@ -1,6 +1,7 @@
 {
   "baseUrl": "http://localhost:8080",
-  "fixturesFolder": false,
-  "pluginsFile": false,
-  "projectId": "x4o3zk"
+  "pluginsFile": "tests/e2e/plugins/index.js",
+  "projectId": "x4o3zk",
+  "viewportWidth": 1024,
+  "viewportHeight": 768
 }

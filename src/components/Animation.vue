@@ -6,6 +6,15 @@ import interpolate from 'color-interpolate'
 import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 
+// Copied from /node_modules/typescript/lib/lib.dom.d.ts
+type CompositeOperationOrAuto = 'accumulate' | 'add' | 'auto' | 'replace'
+interface Keyframe {
+  composite?: CompositeOperationOrAuto
+  easing?: string
+  offset?: number | null
+  [property: string]: string | number | null | undefined
+}
+
 const beginColor = '#b721ff'
 const endColor = '#21d4fd'
 
@@ -45,8 +54,8 @@ function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
 }
 
 export default defineComponent({
-  props: {},
   components: {},
+  props: {},
 
   setup() {
     const store = useStore(key)
@@ -128,27 +137,19 @@ export default defineComponent({
 <template>
   <div
     class="animation"
-    :style="
-      `height: ${cd.height}px; transform: translateY(${cd.height *
-        (cd.maxY - 1 + cd.stepY / 2)}px)`
-    "
+    :style="`height: ${cd.height}px; transform: translateY(${
+      cd.height * (cd.maxY - 1 + cd.stepY / 2)
+    }px)`"
   >
     <div
-      class="object object--faded"
       v-for="n in fadedDotsCount + 1"
       :key="n"
-      :style="
-        `transform: translateY(${(pointInPath(
-          ((n - 1) / fadedDotsCount) * 100
-        ) /
-          100) *
-          -1 *
-          cd.height}px); background-color: ${colorMap(
-          (n - 1) / fadedDotsCount
-        )}`
-      "
+      class="object object--faded"
+      :style="`transform: translateY(${
+        (pointInPath(((n - 1) / fadedDotsCount) * 100) / 100) * -1 * cd.height
+      }px); background-color: ${colorMap((n - 1) / fadedDotsCount)}`"
     ></div>
-    <div class="object" ref="previewElement"></div>
+    <div ref="previewElement" class="object"></div>
   </div>
 </template>
 
@@ -166,7 +167,7 @@ export default defineComponent({
     border-radius: 100%;
     box-shadow: 0px 8px 16px rgb(138 126 255 / 63%);
     position: absolute;
-    bottom: -$height/2;
+    bottom: -$height * 0.5;
     left: 0;
 
     &--faded {

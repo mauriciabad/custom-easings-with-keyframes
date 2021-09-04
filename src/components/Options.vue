@@ -66,17 +66,18 @@ export default defineComponent({
           </svg>
         </span>
         <select
-          class="field field--select"
-          name="property"
           id="property"
           v-model="localOptions.property"
+          class="field field--select"
+          name="property"
         >
           <option
             v-for="[key, value] of Object.entries(Property)"
             :key="key"
             :value="value"
-            >{{ key }}</option
           >
+            {{ key }}
+          </option>
         </select>
       </div>
     </div>
@@ -101,10 +102,10 @@ export default defineComponent({
           </svg>
         </span>
         <select
-          class="field field--select"
-          name="valueUnits"
           id="valueUnits"
           v-model="localOptions.valueUnits"
+          class="field field--select"
+          name="valueUnits"
         >
           <option v-for="value of valueUnitsList" :key="value" :value="value">
             {{ value || 'none' }}
@@ -134,11 +135,11 @@ export default defineComponent({
           </svg>
         </span>
         <input
+          id="fromValue"
+          v-model.number="localOptions.fromValue"
           class="field"
           type="number"
           name="fromValue"
-          id="fromValue"
-          v-model.number="localOptions.fromValue"
           :placeholder="options.fromValue"
         />
       </div>
@@ -165,11 +166,11 @@ export default defineComponent({
           </svg>
         </span>
         <input
+          id="toValue"
+          v-model.number="localOptions.toValue"
           class="field"
           type="number"
           name="toValue"
-          id="toValue"
-          v-model.number="localOptions.toValue"
           width="6ch"
           :placeholder="options.toValue"
         />
@@ -196,11 +197,11 @@ export default defineComponent({
           </svg>
         </span>
         <input
+          id="beginingDelay"
+          v-model.number="localOptions.beginingDelay"
           class="field"
           type="number"
           name="beginingDelay"
-          id="beginingDelay"
-          v-model.number="localOptions.beginingDelay"
           min="0"
           :placeholder="options.beginingDelay"
         />
@@ -229,11 +230,11 @@ export default defineComponent({
           </svg>
         </span>
         <input
+          id="duration"
+          v-model.number="localOptions.duration"
           class="field"
           type="number"
           name="duration"
-          id="duration"
-          v-model.number="localOptions.duration"
           min="0"
           :placeholder="options.duration"
         />
@@ -260,11 +261,11 @@ export default defineComponent({
           </svg>
         </span>
         <input
+          id="endDelay"
+          v-model.number="localOptions.endDelay"
           class="field"
           type="number"
           name="endDelay"
-          id="endDelay"
-          v-model.number="localOptions.endDelay"
           min="0"
           :placeholder="options.endDelay"
         />
@@ -320,7 +321,7 @@ input[type='number'] {
   margin-top: -0.25rem;
 
   .small {
-    color: #9498a0;
+    color: #72757b;
   }
 }
 

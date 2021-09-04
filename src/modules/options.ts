@@ -25,8 +25,14 @@ const options = reactive<Options>({
 
 const lastUpdatedOptions = reactive<Partial<Options>>({})
 
-export default function useOptions() {
-  const updateSomeOptions = (newOptions: LocalOptions) => {
+type UseOptions = {
+  options: Options
+  lastUpdatedOptions: Partial<Options>
+  updateSomeOptions: (newOptions: LocalOptions) => void
+}
+
+export default function useOptions(): UseOptions {
+  const updateSomeOptions: UseOptions['updateSomeOptions'] = (newOptions) => {
     const updatedOptions: Partial<Options> = getUpdatedOptions(
       removeInvalidOptions(fillWithDefaultOptions(newOptions)),
       options

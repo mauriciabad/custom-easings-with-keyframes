@@ -26,14 +26,14 @@ export default defineComponent({
       </li>
       <li>
         <icon name="key-backspace" />
-        <icon name="slash" style="margin: 0 -2px;" />
-        <icon name="right-click" style="margin: 0 -2px;" />
+        <icon name="slash" style="margin: 0 -2px" />
+        <icon name="right-click" style="margin: 0 -2px" />
         <icon name="right-arrow" />Delete selected points
       </li>
       <li>
         <icon name="key-shift" />
-        <icon name="plus" style="margin: 0 -2px;" />
-        <icon name="left-click" style="margin: 0 -2px;" />
+        <icon name="plus" style="margin: 0 -2px" />
+        <icon name="left-click" style="margin: 0 -2px" />
         <icon name="right-arrow" />Select many points
       </li>
     </ul>

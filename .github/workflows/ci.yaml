@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  e2e_tests:
+    name: E2E test
+    runs-on: ubuntu-latest
+    container: cypress/browsers:latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 🎁 Install serve
+        run: yarn global add serve
+
+      - name: 🤖 Run the tests
+        uses: cypress-io/github-action@v2
+        with:
+          record: true
+          browser: chrome
+          build: yarn build
+          start: 'serve dist -l 8080'
+          wait-on: 'http://localhost:8080'
+          wait-on-timeout: 30
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
