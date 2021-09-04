@@ -14,9 +14,20 @@ export default defineComponent({
     const store = useStore(key)
     const cd = computed(() => store.state.canvasDimensions)
 
-    const pointsInCanvas = computed(() =>
-      props.points.map((point) => toCanvasPoint(point, cd.value))
-    )
+    const pointsInCanvas = computed(() => {
+      const pointsWithStartAndEnd = [...props.points]
+
+      if (pointsWithStartAndEnd[0].x !== 0) {
+        pointsWithStartAndEnd.unshift({ x: 0, y: 0, isSelected: false })
+      }
+      if (pointsWithStartAndEnd[pointsWithStartAndEnd.length - 1].x !== 100) {
+        pointsWithStartAndEnd.push({ x: 100, y: 0, isSelected: false })
+      }
+
+      return pointsWithStartAndEnd.map((point) =>
+        toCanvasPoint(point, cd.value)
+      )
+    })
 
     const path = computed(() =>
       pointsInCanvas.value.reduce((total, { x, y }) => {
