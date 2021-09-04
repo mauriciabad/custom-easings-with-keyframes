@@ -11,7 +11,7 @@ describe('Mobile experience', () => {
 
   describe('when the okay button is clicked', () => {
     beforeEach(() => {
-      cy.contains('I understant').click()
+      cy.contains('I understand').click()
     })
 
     it('hides the unsupported device warning', () => {
