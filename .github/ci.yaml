@@ -1,0 +1,40 @@
+name: CI
+on: push
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container: cypress/browsers:latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 🗂 Configure cache 1
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: 🗂 Configure cache 2
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: 🎁 Install serve
+        run: yarn global add serve
+
+      - name: 🤖 Run the tests
+        uses: cypress-io/github-action@v2
+        with:
+          record: true
+          browser: chrome
+          build: yarn build
+          start: 'serve dist -l 8080'
+          wait-on: 'http://localhost:8080'
+          wait-on-timeout: 30
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
