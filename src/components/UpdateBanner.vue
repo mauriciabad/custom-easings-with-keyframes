@@ -78,7 +78,7 @@ export default defineComponent({
         <button class="banner__button" @click="handleUpdateClick">
           Refresh
         </button>
-        <button class="banner__dismiss-button">
+        <button class="banner__dismiss-button" @click="handleDismissClick">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               stroke-linecap="round"
