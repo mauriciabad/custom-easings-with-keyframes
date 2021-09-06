@@ -52,7 +52,7 @@ export default defineComponent({
 <template>
   <pre
     class="container"
-  ><div ref="codeElement" class="code-wrapper"><div class="fade fade--top"></div><div class="fade fade--right"></div><div class="fade fade--bottom"></div><div class="fade fade--left"></div><code class="code"
+  ><div ref="codeElement" class="code-wrapper" data-test-id="code"><div class="fade fade--top"></div><div class="fade fade--right"></div><div class="fade fade--bottom"></div><div class="fade fade--left"></div><code class="code"
 ><span class="gray">.</span><span class="orange">{{options.easingName}}</span><span class="gray"> {</span>
   <span class="white">animation</span><span class="gray">: </span><span class="orange">{{options.easingName}}</span> <span class="violet">{{options.duration}}</span><span class="red">ms</span> <span class="cyan">linear</span><span class="gray">;</span>
 <span class="gray">}</span>

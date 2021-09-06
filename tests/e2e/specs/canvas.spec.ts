@@ -1,18 +1,22 @@
 import dedent from 'dedent'
+import { byTestId } from '../support/helpers'
 import { clickInCanvas } from '../support/interactions'
 
 function expectCodeToBeTheInitialState(
   code: Cypress.Chainable<JQuery<HTMLElement>>
 ) {
-  return code.contains(dedent/* css */ `
-      .ease-custom {
-        animation: ease-custom 3000ms linear;
-      }
+  return code.should(
+    'eq',
+    dedent/* css */ `
+    .ease-custom {
+      animation: ease-custom 3000ms linear;
+    }
 
-      @keyframes ease-custom {
-        0% {transform: rotate(0deg)}
-        100% {transform: rotate(360deg)}
-      }`)
+    @keyframes ease-custom {
+      0% {transform: rotate(0deg)}
+      100% {transform: rotate(360deg)}
+    }`
+  )
 }
 
 describe('Canvas element', () => {
@@ -21,8 +25,8 @@ describe('Canvas element', () => {
 
     cy.contains('Get started').click()
 
-    cy.get('[data-test-id="canvas-main-area"]').as('canvas')
-    cy.get('pre').as('code')
+    cy.get(byTestId('canvas-main-area')).as('canvas')
+    cy.get(byTestId('code')).as('code')
   })
 
   it('has default code', () => {
@@ -41,7 +45,9 @@ describe('Canvas element', () => {
 
   it('allows to create points over 100% in the y axis', () => {
     clickInCanvas(cy.get('@canvas'), 0.5, 1.25)
-    cy.get('@code').contains(dedent/* css */ `
+    cy.get('@code').should(
+      'eq',
+      dedent/* css */ `
       .ease-custom {
         animation: ease-custom 3000ms linear;
       }
@@ -50,12 +56,15 @@ describe('Canvas element', () => {
         0% {transform: rotate(0deg)}
         50% {transform: rotate(450deg)}
         100% {transform: rotate(360deg)}
-      }`)
+      }`
+    )
   })
 
   it('allows to create points below 0% in the y axis', () => {
     clickInCanvas(cy.get('@canvas'), 0.5, -0.25)
-    cy.get('@code').contains(dedent/* css */ `
+    cy.get('@code').should(
+      'eq',
+      dedent/* css */ `
       .ease-custom {
         animation: ease-custom 3000ms linear;
       }
@@ -64,7 +73,8 @@ describe('Canvas element', () => {
         0% {transform: rotate(0deg)}
         50% {transform: rotate(-90deg)}
         100% {transform: rotate(360deg)}
-      }`)
+      }`
+    )
   })
 
   describe('and adds a new point', () => {
@@ -73,16 +83,19 @@ describe('Canvas element', () => {
     })
 
     it('adds a new keyframe to the code', () => {
-      cy.get('@code').contains(dedent/* css */ `
-      .ease-custom {
-        animation: ease-custom 3000ms linear;
-      }
+      cy.get('@code').should(
+        'eq',
+        dedent/* css */ `
+        .ease-custom {
+          animation: ease-custom 3000ms linear;
+        }
 
-      @keyframes ease-custom {
-        0% {transform: rotate(0deg)}
-        50% {transform: rotate(90deg)}
-        100% {transform: rotate(360deg)}
-      }`)
+        @keyframes ease-custom {
+          0% {transform: rotate(0deg)}
+          50% {transform: rotate(90deg)}
+          100% {transform: rotate(360deg)}
+        }`
+      )
     })
 
     describe('and adds another point holding shift', () => {
@@ -93,17 +106,20 @@ describe('Canvas element', () => {
       })
 
       it('adds a new keyframe to the code', () => {
-        cy.get('@code').contains(dedent/* css */ `
-      .ease-custom {
-        animation: ease-custom 3000ms linear;
-      }
+        cy.get('@code').should(
+          'eq',
+          dedent/* css */ `
+          .ease-custom {
+            animation: ease-custom 3000ms linear;
+          }
 
-      @keyframes ease-custom {
-        0% {transform: rotate(0deg)}
-        50% {transform: rotate(90deg)}
-        75% {transform: rotate(180deg)}
-        100% {transform: rotate(360deg)}
-      }`)
+          @keyframes ease-custom {
+            0% {transform: rotate(0deg)}
+            50% {transform: rotate(90deg)}
+            75% {transform: rotate(180deg)}
+            100% {transform: rotate(360deg)}
+          }`
+        )
       })
 
       describe('and clicks the delete key', () => {
@@ -126,17 +142,20 @@ describe('Canvas element', () => {
       })
 
       it('adds a new keyframe to the code', () => {
-        cy.get('@code').contains(dedent/* css */ `
-      .ease-custom {
-        animation: ease-custom 3000ms linear;
-      }
+        cy.get('@code').should(
+          'eq',
+          dedent/* css */ `
+          .ease-custom {
+            animation: ease-custom 3000ms linear;
+          }
 
-      @keyframes ease-custom {
-        0% {transform: rotate(0deg)}
-        50% {transform: rotate(90deg)}
-        75% {transform: rotate(180deg)}
-        100% {transform: rotate(360deg)}
-      }`)
+          @keyframes ease-custom {
+            0% {transform: rotate(0deg)}
+            50% {transform: rotate(90deg)}
+            75% {transform: rotate(180deg)}
+            100% {transform: rotate(360deg)}
+          }`
+        )
       })
 
       describe('and selects the first point', () => {
