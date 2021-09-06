@@ -6,15 +6,6 @@ import interpolate from 'color-interpolate'
 import { computed, defineComponent, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 
-// Copied from /node_modules/typescript/lib/lib.dom.d.ts
-type CompositeOperationOrAuto = 'accumulate' | 'add' | 'auto' | 'replace'
-interface Keyframe {
-  composite?: CompositeOperationOrAuto
-  easing?: string
-  offset?: number | null
-  [property: string]: string | number | null | undefined
-}
-
 const beginColor = '#b721ff'
 const endColor = '#21d4fd'
 

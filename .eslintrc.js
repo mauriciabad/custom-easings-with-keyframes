@@ -23,7 +23,8 @@ module.exports = {
       { order: ['script', 'template', 'style'] }
     ],
     'vue/block-lang': ['error', { script: { lang: 'ts' } }],
-    'prefer-template': 'warn'
+    'prefer-template': 'warn',
+    'no-undef': 'off'
   },
   overrides: [
     {
