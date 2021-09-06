@@ -1,13 +1,8 @@
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
 import { key } from '@/store'
-import {
-  computeKeyframes,
-  computePointsWithDelay,
-  isTransformProperty,
-  round
-} from '@/helpers'
+import { computePointsWithDelay, isTransformProperty, round } from '@/helpers'
 import { useGtag } from 'vue-gtag-next'
 import useOptions from '@/modules/options'
 
@@ -22,30 +17,8 @@ export default defineComponent({
       computePointsWithDelay(points.value, options)
     )
 
-    const code = computed(() => {
-      const keyframes = computeKeyframes(points.value, options)
-
-      const keyframesLines = keyframes.map((keyframe) => {
-        const propertyLine = Object.entries(keyframe)
-          .filter(
-            ([property]) =>
-              property !== 'composite' &&
-              property !== 'easing' &&
-              property !== 'offset'
-          )
-          .map(([property, propertyValue]) => `${property}: ${propertyValue}`)
-          .join('; ')
-
-        return `${keyframe.offset || 0 * 100}% {${propertyLine}}`
-      })
-
-      return `.${options.easingName} {
-  animation: ${options.easingName} ${options.duration}ms linear;
-}
-
-@keyframes ${options.easingName} {
-${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
-    })
+    const codeElement = ref<HTMLPreElement | null>(null)
+    const code = computed<string>(() => codeElement.value?.textContent ?? '')
 
     const { event } = useGtag()
     let lastCopiedCode: string
@@ -69,7 +42,8 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
       isTransformProperty,
       copyCode,
       pointsWithDelay,
-      round
+      round,
+      codeElement
     }
   }
 })
@@ -78,7 +52,7 @@ ${keyframesLines.reduce((total, line) => `${total}  ${line}\n`, '')}}`
 <template>
   <pre
     class="container"
-  ><div class="code-wrapper"><div class="fade fade--top"></div><div class="fade fade--right"></div><div class="fade fade--bottom"></div><div class="fade fade--left"></div><code class="code"
+  ><div ref="codeElement" class="code-wrapper"><div class="fade fade--top"></div><div class="fade fade--right"></div><div class="fade fade--bottom"></div><div class="fade fade--left"></div><code class="code"
 ><span class="gray">.</span><span class="orange">{{options.easingName}}</span><span class="gray"> {</span>
   <span class="white">animation</span><span class="gray">: </span><span class="orange">{{options.easingName}}</span> <span class="violet">{{options.duration}}</span><span class="red">ms</span> <span class="cyan">linear</span><span class="gray">;</span>
 <span class="gray">}</span>
