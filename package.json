@@ -62,5 +62,6 @@
       "git add"
     ]
   },
-  "prettier": "prettier-config-standard"
+  "prettier": "prettier-config-standard",
+  "license": "MIT"
 }

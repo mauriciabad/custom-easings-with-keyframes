@@ -1,10 +1,6 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 
-interface EventListener {
-  (evt: Event): void
-}
-
 export default defineComponent({
   components: {},
   props: {},
