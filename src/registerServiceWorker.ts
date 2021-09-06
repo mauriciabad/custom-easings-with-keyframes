@@ -25,6 +25,7 @@ if (process.env.NODE_ENV === 'production') {
     //   console.log('New content is downloading.')
     // },
     updated(registration) {
+      console.info("There's an update, refresh")
       document.dispatchEvent(
         new CustomEvent<ServiceWorkerRegistration>('swUpdated', {
           detail: registration
