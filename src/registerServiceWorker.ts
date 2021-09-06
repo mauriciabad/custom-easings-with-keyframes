@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'production') {
     //   )
     // },
     registered(registration) {
-      if (updateIntervalId) return
+      if (updateIntervalId) clearInterval(updateIntervalId)
       updateIntervalId = setInterval(() => {
         registration.update()
       }, 1000 * 60 * 60) // Check for updates every hour
