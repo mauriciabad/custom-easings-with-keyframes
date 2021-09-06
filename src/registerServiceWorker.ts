@@ -2,6 +2,8 @@
 
 import { register } from 'register-service-worker'
 
+let updateIntervalId: number | undefined = undefined
+
 if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
     // ready() {
@@ -10,17 +12,24 @@ if (process.env.NODE_ENV === 'production') {
     //       'For more details, visit https://goo.gl/AFskqB'
     //   )
     // },
-    // registered() {
-    //   console.log('Service worker has been registered.')
-    // },
+    registered(registration) {
+      if (updateIntervalId) clearInterval(updateIntervalId)
+      updateIntervalId = setInterval(() => {
+        registration.update()
+      }, 1000 * 60 * 60) // Check for updates every hour
+    },
     // cached() {
     //   console.log('Content has been cached for offline use.')
     // },
     // updatefound() {
     //   console.log('New content is downloading.')
     // },
-    updated() {
-      window.location.reload()
+    updated(registration) {
+      document.dispatchEvent(
+        new CustomEvent<ServiceWorkerRegistration>('swUpdated', {
+          detail: registration
+        })
+      )
     },
     // offline() {
     //   console.log(
