@@ -1,8 +1,8 @@
-name: autoupdate
+name: auto-update-branches
+
 on:
-  push:
-    branches:
-      - master
+  push: {}
+
 jobs:
   auto-update-branches:
     name: autoupdate
