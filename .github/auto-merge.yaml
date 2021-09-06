@@ -1,4 +1,4 @@
 deleteBranchAfterMerge: true
 mergeMethod: squash
 mergeCommitMessage: '{title} (#{number})'
-requiredLabels: [merge]
+requiredBodyRegex: '(^|\\s)ok-to-merge($|\\s)'
