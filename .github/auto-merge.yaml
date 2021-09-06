@@ -1,0 +1,4 @@
+deleteBranchAfterMerge: true
+mergeMethod: squash
+mergeCommitMessage: '{title} (#{number})'
+requiredLabels: [merge]
