@@ -6,7 +6,7 @@ function expectCodeToBeTheInitialState(
   code: Cypress.Chainable<JQuery<HTMLElement>>
 ) {
   return code.should(
-    'eq',
+    'have.text',
     dedent/* css */ `
     .ease-custom {
       animation: ease-custom 3000ms linear;
@@ -46,7 +46,7 @@ describe('Canvas element', () => {
   it('allows to create points over 100% in the y axis', () => {
     clickInCanvas(cy.get('@canvas'), 0.5, 1.25)
     cy.get('@code').should(
-      'eq',
+      'have.text',
       dedent/* css */ `
       .ease-custom {
         animation: ease-custom 3000ms linear;
@@ -63,7 +63,7 @@ describe('Canvas element', () => {
   it('allows to create points below 0% in the y axis', () => {
     clickInCanvas(cy.get('@canvas'), 0.5, -0.25)
     cy.get('@code').should(
-      'eq',
+      'have.text',
       dedent/* css */ `
       .ease-custom {
         animation: ease-custom 3000ms linear;
@@ -84,7 +84,7 @@ describe('Canvas element', () => {
 
     it('adds a new keyframe to the code', () => {
       cy.get('@code').should(
-        'eq',
+        'have.text',
         dedent/* css */ `
         .ease-custom {
           animation: ease-custom 3000ms linear;
@@ -107,7 +107,7 @@ describe('Canvas element', () => {
 
       it('adds a new keyframe to the code', () => {
         cy.get('@code').should(
-          'eq',
+          'have.text',
           dedent/* css */ `
           .ease-custom {
             animation: ease-custom 3000ms linear;
@@ -143,7 +143,7 @@ describe('Canvas element', () => {
 
       it('adds a new keyframe to the code', () => {
         cy.get('@code').should(
-          'eq',
+          'have.text',
           dedent/* css */ `
           .ease-custom {
             animation: ease-custom 3000ms linear;
