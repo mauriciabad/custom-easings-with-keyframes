@@ -10,4 +10,5 @@ jobs:
     steps:
       - uses: docker://chinthakagodawita/autoupdate-action:v1
         env:
+          EXCLUDED_LABELS: 'dependencies'
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
