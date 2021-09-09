@@ -101,6 +101,7 @@ export default defineComponent({
   right: 0;
   display: flex;
   justify-content: center;
+  pointer-events: none;
 }
 .banner {
   $bg: #4caf50;
@@ -116,6 +117,7 @@ export default defineComponent({
   line-height: 1;
   align-items: center;
   box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+  pointer-events: all;
 
   &__icon {
     background: $bg-dark;
