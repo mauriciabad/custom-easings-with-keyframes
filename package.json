@@ -14,7 +14,7 @@
     "core-js": "^3.17.3",
     "inter-ui": "^3.19.3",
     "register-service-worker": "^1.7.2",
-    "vue": "^3.2.11",
+    "vue": "^3.2.12",
     "vue-gtag-next": "^1.14.0",
     "vue-router": "^4.0.11",
     "vuex": "^4.0.2"
@@ -34,7 +34,7 @@
     "@vue/cli-plugin-unit-jest": "^4.5.13",
     "@vue/cli-plugin-vuex": "^4.5.13",
     "@vue/cli-service": "^4.5.13",
-    "@vue/compiler-sfc": "^3.2.8",
+    "@vue/compiler-sfc": "^3.2.11",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/test-utils": "^2.0.0-rc.14",
