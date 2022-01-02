@@ -371,9 +371,10 @@ export default defineComponent({
     position: relative;
     background: #4f46e4 linear-gradient(45deg, #4776e6, #8e54e9);
 
-    &:focus {
+    &:focus-visible {
       box-shadow: 0px 2px 8px #4f46e480, 0 0 0 0.125rem #fff,
         0 0 0 0.35rem #4a4a53;
+      outline: none;
     }
   }
   &__content {
