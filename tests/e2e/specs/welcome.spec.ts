@@ -18,12 +18,32 @@ describe('Welcome view', () => {
         cy.contains('Welcome').should('not.be.visible')
       })
 
+      describe('and it is the second visit', () => {
+        beforeEach(() => {
+          cy.visit('/')
+        })
+
+        it("doesn't show the welcome dialog", () => {
+          cy.contains('Welcome').should('not.be.exist')
+        })
+      })
+
       describe('and clicks the help button', () => {
         beforeEach(() => {
           cy.contains('Help').click()
         })
         it('shows welcome dialog', () => {
           cy.contains('Welcome').should('be.visible')
+        })
+
+        describe('and it is the second visit', () => {
+          beforeEach(() => {
+            cy.visit('/')
+          })
+
+          it("doesn't show the welcome dialog", () => {
+            cy.contains('Welcome').should('not.be.exist')
+          })
         })
       })
     })
@@ -36,14 +56,24 @@ describe('Welcome view', () => {
       it('hides the welcome dialog', () => {
         cy.contains('Welcome').should('not.be.visible')
       })
+
+      describe('and it is the second visit', () => {
+        beforeEach(() => {
+          cy.visit('/')
+        })
+
+        it("doesn't show the welcome dialog", () => {
+          cy.contains('Welcome').should('not.be.exist')
+        })
+      })
     })
 
-    describe('when it is not the first visit', () => {
+    describe('and it is the second visit', () => {
       beforeEach(() => {
         cy.visit('/')
       })
 
-      it("doesn't show the welcome dialog", () => {
+      it("show the welcome dialog because it wasn't hidden", () => {
         cy.contains('Welcome').should('not.be.exist')
       })
     })
