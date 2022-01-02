@@ -3,7 +3,11 @@ import { byTestId } from '../support/helpers'
 import { clickInCanvas } from '../support/interactions'
 
 function expectToHaveInClipboard(text: string): Cypress.Chainable<unknown> {
-  return cy.window().its('navigator.clipboard').invoke('readText').should(text)
+  return cy
+    .window()
+    .its('navigator.clipboard')
+    .invoke('readText')
+    .should('equal', text)
 }
 
 describe('Copy code feature', () => {
@@ -19,7 +23,12 @@ describe('Copy code feature', () => {
       })
     )
 
+    // Open page and check the clipboard permissions
     cy.visit('/')
+      .its('navigator.permissions')
+      .invoke('query', { name: 'clipboard-read' })
+      .its('state')
+      .should('equal', 'granted')
 
     cy.contains('Get started').click()
 
