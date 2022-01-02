@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, onBeforeUnmount, ref } from 'vue'
 
 export default defineComponent({
   components: {},
@@ -15,36 +15,38 @@ export default defineComponent({
       () => updateExists.value && !updateDismissed.value
     )
 
-    // Listen for swUpdated event and display refresh snackbar as required.
-    document.addEventListener(
-      'swUpdated',
-      ((event: CustomEvent<ServiceWorkerRegistration>) => {
-        // Display a button inviting the user to refresh/reload the app due
-        // to an app update being available.
-        // The new service worker is installed, but not yet active.
-        // Store the ServiceWorkerRegistration instance for later use.
-        registration = event.detail
-        updateExists.value = true
-      }) as EventListener,
-      { once: true }
-    )
-
-    // Refresh all open app tabs when a new service worker is installed.
-    if (navigator.serviceWorker) {
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (refreshing) return
-        refreshing = true
-        window.location.reload()
-      })
+    function swUpdatedHandler(
+      event: DocumentEventMap['swUpdatedCustomEvent']
+    ): void {
+      registration = event.detail
+      updateExists.value = true
     }
 
-    function handleUpdateClick() {
-      // Handle a user tap on the update app button.
-      updateExists.value = false
-      // Protect against missing registration.waiting.
-      if (!registration?.waiting) return
+    // Refresh all open app tabs when a new service worker is installed.
+    function controllerchangeHandler(): void {
+      if (refreshing) return
 
-      registration.waiting.postMessage('skipWaiting')
+      refreshing = true
+      location.reload()
+    }
+
+    document.addEventListener('swUpdatedCustomEvent', swUpdatedHandler, {
+      once: true
+    })
+    onBeforeUnmount(() => {
+      document.removeEventListener('swUpdatedCustomEvent', swUpdatedHandler)
+      document.removeEventListener('controllerchange', controllerchangeHandler)
+    })
+
+    navigator.serviceWorker?.addEventListener(
+      'controllerchange',
+      controllerchangeHandler
+    )
+
+    function handleUpdateClick() {
+      updateExists.value = false
+
+      registration?.waiting?.postMessage({ type: 'SKIP_WAITING' })
     }
 
     function handleDismissClick() {
