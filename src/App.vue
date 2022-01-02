@@ -15,10 +15,8 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
-@use "~inter-ui/variable" with (
-  $inter-font-display: swap,
-  $inter-font-path: '~inter-ui/Inter (web)'
-);
+@use '~inter-ui/variable' with
+  ($inter-font-display: swap, $inter-font-path: '~inter-ui/Inter (web)');
 @include variable.all;
 
 $defaultEmojiFonts: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
@@ -31,17 +29,18 @@ $defaultFonts: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
 $defaultMonoFonts: ui-monospace, SFMono-Regular, Monaco, Consolas,
   Liberation Mono, Roboto Mono, Courier New, monospace, $defaultEmojiFonts;
 
-html,
 body {
   font-family: 'Inter var', $defaultFonts;
+  margin: 0;
 }
 input,
 textarea,
-button {
-  font-size: inherit;
-}
-body,
-button {
+button,
+optgroup,
+select {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
   margin: 0;
 }
 button {
@@ -50,8 +49,10 @@ button {
   border: 0;
   background: none;
   color: currentColor;
+  appearance: button;
 }
-code {
+code,
+pre {
   font-family: Menlo, $defaultMonoFonts;
 }
 </style>

@@ -10,6 +10,7 @@
 - Add axis labels (Progress vs Time)
 - Add the title Easy Easings .com somewhere
 - Feedback button
+- Show popup warning about unsaved changes before leaving
 
 ## Bugs
 
@@ -39,4 +40,4 @@
 - Add sounds
 - Parse css and create the graph
 - If the graph can be a cubic bezier, sugest it.
-- tap [s] key to enable symetry mode, when one point is added to a side, it appers on the other as well. would be nice to be able to meove the simetry axis/
+- Tap <kbd>S</kbd> key to enable symetry mode, when one point is added to a side, it appers on the other as well. would be nice to be able to meove the simetry axis.

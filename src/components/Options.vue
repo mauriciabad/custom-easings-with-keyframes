@@ -358,8 +358,9 @@ input[type='number'] {
     padding-right: 1.75rem;
   }
 
-  &:focus {
+  &:focus-visible {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 0 0 0.125rem #6466f1;
+    outline: none;
   }
 }
 .icon {

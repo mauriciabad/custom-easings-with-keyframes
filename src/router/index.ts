@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouterOptions } from 'vue-router'
 import Main from '../views/Main.vue'
 import { trackRouter } from 'vue-gtag-next'
 import 'vue-router'
@@ -9,7 +9,7 @@ declare module 'vue-router' {
   }
 }
 
-const routes: Array<RouteRecordRaw> = [
+const routes: RouterOptions['routes'] = [
   {
     path: '/',
     name: 'Main',

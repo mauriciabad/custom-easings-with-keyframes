@@ -145,8 +145,9 @@ export default defineComponent({
     margin: 0 -0.25rem 0 -0.5rem;
 
     &:hover,
-    &:focus {
+    &:focus-visible {
       background: $bg-dark;
+      outline: none;
     }
 
     & svg {
