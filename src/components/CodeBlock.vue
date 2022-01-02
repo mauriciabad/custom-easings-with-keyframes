@@ -230,7 +230,7 @@ export default defineComponent({
     $characterHeight: 14px;
     $lineHeight: 1.375 * $characterHeight;
 
-    width: 35ch;
+    width: 40ch;
     height: $lineHeight * 9.5;
 
     font-size: $characterHeight;
