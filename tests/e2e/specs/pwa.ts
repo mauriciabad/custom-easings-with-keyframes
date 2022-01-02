@@ -1,6 +1,8 @@
 describe('PWA', () => {
   beforeEach(() => {
     cy.visit('/')
+
+    cy.contains('Get started').click()
   })
 
   describe('when it is first visit', () => {
