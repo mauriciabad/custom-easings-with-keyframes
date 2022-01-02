@@ -50,10 +50,16 @@ export default defineComponent({
 </script>
 
 <template>
-  <pre
-    class="container"
-  ><div ref="codeElement" class="code-wrapper" data-test-id="code"><div class="fade fade--top"></div><div class="fade fade--right"></div><div class="fade fade--bottom"></div><div class="fade fade--left"></div><code class="code"
-><span class="gray">.</span><span class="orange">{{options.easingName}}</span><span class="gray"> {</span>
+  <div class="container">
+    <div ref="codeElement" class="code-wrapper" data-test-id="code">
+      <div class="fade fade--top"></div>
+      <div class="fade fade--right"></div>
+      <div class="fade fade--bottom"></div>
+      <div class="fade fade--left"></div>
+      <code>
+        <pre
+          class="code"
+        ><span class="gray">.</span><span class="orange">{{options.easingName}}</span><span class="gray"> {</span>
   <span class="white">animation</span><span class="gray">: </span><span class="orange">{{options.easingName}}</span> <span class="violet">{{options.duration}}</span><span class="red">ms</span> <span class="cyan">linear</span><span class="gray">;</span>
 <span class="gray">}</span>
 
@@ -64,30 +70,39 @@ export default defineComponent({
   <span class="white">{{options.property}}</span><span class="gray">: </span><span class="violet">{{round(((options.toValue - options.fromValue) * (point.y / 100) + options.fromValue), 6)}}</span><span class="red">{{options.valueUnits}}</span></template><span class="gray">}</span></template
 >
 <span class="gray">}</span
-    ></code></div>
-    <button class="copy-button" tabindex="0" role="button" aria-label="Copy code" @click="copyCode"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-  <path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z" />
-  <path d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z" />
-</svg></span>Copy code</button>
-  </pre>
+    ></pre>
+      </code>
+    </div>
+    <button
+      class="copy-button"
+      tabindex="0"
+      role="button"
+      aria-label="Copy code"
+      @click="copyCode"
+    >
+      <span
+        ><svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z" />
+          <path
+            d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z"
+          /></svg></span
+      >Copy code
+    </button>
+  </div>
 </template>
 
 <style scoped lang="scss">
 .container {
-  display: flex;
-  flex-direction: column;
   background: #222;
   border-radius: 0.75rem;
   color: #fff;
   padding: 0 1.5rem 1.5rem;
   margin: 0;
-  align-self: stretch;
-  justify-self: stretch;
   grid-area: code;
-  font-size: 14px;
-  line-height: 1.375;
-  width: 40ch;
-  user-select: auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
   ::selection {
@@ -212,12 +227,20 @@ export default defineComponent({
   }
 
   .code {
-    flex: 1 1 0;
-    overflow: auto;
-    text-align: left;
-    padding: 1.5rem 2rem 2rem 1.5rem;
-    display: block;
+    $characterHeight: 14px;
+    $lineHeight: 1.375 * $characterHeight;
+
+    width: 35ch;
+    height: $lineHeight * 9.5;
+
+    font-size: $characterHeight;
+    line-height: $lineHeight;
     cursor: text;
+    padding: 1.5rem 2rem 2rem 1.5rem;
+    overflow: auto;
+    margin: 0;
+    box-sizing: content-box;
+    user-select: auto;
   }
 
   .copy-button {
@@ -259,6 +282,7 @@ export default defineComponent({
 
     &:focus-visible {
       box-shadow: 0px 3px 12px 0.25rem #fff5, 0 0 0 0.1875rem #fff;
+      outline: none;
     }
   }
 }

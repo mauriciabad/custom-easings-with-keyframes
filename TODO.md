@@ -10,6 +10,7 @@
 - Add axis labels (Progress vs Time)
 - Add the title Easy Easings .com somewhere
 - Feedback button
+- Show popup warning about unsaved changes before leaving
 
 ## Bugs
 
