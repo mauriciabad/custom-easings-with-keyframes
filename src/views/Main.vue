@@ -1,26 +1,43 @@
 <script lang="ts">
-import KeyframesCanvas from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
-import Preview from '@/components/Preview.vue'
 import Animation from '@/components/Animation.vue'
-import CodeBlock from '@/components/CodeBlock.vue'
-import Options from '@/components/Options.vue'
 import Buttons from '@/components/Buttons.vue'
-import Popup from '@/components/Popup.vue'
-import { defineComponent } from 'vue'
+import CodeBlock from '@/components/CodeBlock.vue'
+import KeyframesCanvas from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
+import Options from '@/components/Options.vue'
+import SmallScreenPopup from '@/components/SmallScreenPopup.vue'
+import Preview from '@/components/Preview.vue'
+import Welcome from '@/components/Welcome.vue'
+import { defineComponent, ref, watch } from 'vue'
+import { persistedRef } from '@/compositions/useLocalStorageRefs'
 
 export default defineComponent({
   components: {
-    KeyframesCanvas,
-    CodeBlock,
-    Preview,
-    Options,
     Animation,
     Buttons,
-    Popup
+    CodeBlock,
+    KeyframesCanvas,
+    Options,
+    SmallScreenPopup,
+    Preview,
+    Welcome
   },
 
   setup() {
-    return {}
+    const welcomeMessageWasSeen = persistedRef<boolean>(
+      'welcomeMessageWasSeen',
+      false
+    )
+
+    const isWelcomeVisible = ref<boolean>(!welcomeMessageWasSeen.value)
+
+    const unwatchIsWelcomeVisible = watch(isWelcomeVisible, (newValue) => {
+      if (newValue === false) {
+        welcomeMessageWasSeen.value = true
+        unwatchIsWelcomeVisible()
+      }
+    })
+
+    return { isWelcomeVisible, welcomeMessageWasSeen }
   }
 })
 </script>
@@ -32,9 +49,12 @@ export default defineComponent({
     <code-block />
     <options class="options" />
     <preview class="preview" />
-    <buttons class="buttons" />
+    <buttons class="buttons" @help-clicked="isWelcomeVisible = true" />
   </main>
-  <popup />
+
+  <welcome v-model:isVisible="isWelcomeVisible" />
+
+  <small-screen-popup />
 </template>
 
 <style scoped lang="scss">
