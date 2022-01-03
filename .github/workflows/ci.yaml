@@ -6,19 +6,10 @@ jobs:
   e2e_tests:
     name: E2E tests
     runs-on: ubuntu-latest
-    container: cypress/browsers:latest
+    container: cypress/browsers:node16.5.0-chrome94-ff93
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
-
-      - name: 📦 Read .nvmrc
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
-        id: nvm
-
-      - name: 📦 Use .nvmrc Node version
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
 
       - name: 🎁 Install and serve
         run: yarn global add serve
