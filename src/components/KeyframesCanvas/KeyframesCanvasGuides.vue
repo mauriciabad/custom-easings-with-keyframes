@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import KeyframesCanvasGuideHorizontal from '@/components/KeyframesCanvas/KeyframesCanvasGuideHorizontal.vue'
-import KeyframesCanvasGuideVertical from '@/components/KeyframesCanvas/KeyframesCanvasGuideVertical.vue'
+import KeyframesCanvasGuideHorizontal from '@/components/keyframesCanvas/KeyframesCanvasGuideHorizontal.vue'
+import KeyframesCanvasGuideVertical from '@/components/keyframesCanvas/KeyframesCanvasGuideVertical.vue'
 import { useStore } from 'vuex'
 import { key } from '@/store'
 

@@ -1,9 +1,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Icon from '@/components/Icon.vue'
+import CustomIcon from '@/components/CustomIcon.vue'
 
 export default defineComponent({
-  components: { Icon },
+  components: { CustomIcon },
   props: {},
 
   setup() {
@@ -17,24 +17,24 @@ export default defineComponent({
     <div class="background"></div>
     <ul>
       <li>
-        <icon name="left-click" />
-        <icon name="right-arrow" />Add point / Select point
+        <custom-icon name="left-click" />
+        <custom-icon name="right-arrow" />Add point / Select point
       </li>
       <li>
-        <icon name="move" />
-        <icon name="right-arrow" />Move selected points
+        <custom-icon name="move" />
+        <custom-icon name="right-arrow" />Move selected points
       </li>
       <li>
-        <icon name="key-backspace" />
-        <icon name="slash" style="margin: 0 -2px" />
-        <icon name="right-click" style="margin: 0 -2px" />
-        <icon name="right-arrow" />Delete selected points
+        <custom-icon name="key-backspace" />
+        <custom-icon name="slash" style="margin: 0 -2px" />
+        <custom-icon name="right-click" style="margin: 0 -2px" />
+        <custom-icon name="right-arrow" />Delete selected points
       </li>
       <li>
-        <icon name="key-shift" />
-        <icon name="plus" style="margin: 0 -2px" />
-        <icon name="left-click" style="margin: 0 -2px" />
-        <icon name="right-arrow" />Select many points
+        <custom-icon name="key-shift" />
+        <custom-icon name="plus" style="margin: 0 -2px" />
+        <custom-icon name="left-click" style="margin: 0 -2px" />
+        <custom-icon name="right-arrow" />Select many points
       </li>
     </ul>
   </div>
