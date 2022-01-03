@@ -10,6 +10,11 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
+      - name: 🔧 Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.5.0
+
       - name: 🤖 Run the tests
         uses: cypress-io/github-action@v2
         with:
