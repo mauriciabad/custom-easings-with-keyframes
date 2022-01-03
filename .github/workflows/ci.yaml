@@ -15,12 +15,16 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: ⚙️ Install serve
+        run: npm install -g serve
+
       - name: 🤖 Run the tests
         uses: cypress-io/github-action@v2
         with:
           record: true
           browser: chrome
-          start: yarn serve
+          build: yarn build
+          start: 'serve dist -l 8080'
           wait-on: 'http://localhost:8080'
           wait-on-timeout: 30
         env:
