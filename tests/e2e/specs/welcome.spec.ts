@@ -68,13 +68,15 @@ describe('Welcome view', () => {
       })
     })
 
-    describe('and it is the second visit', () => {
-      beforeEach(() => {
-        cy.visit('/')
-      })
+    describe("and there isn't any interaction with the page", () => {
+      describe('and it is the second visit', () => {
+        beforeEach(() => {
+          cy.visit('/')
+        })
 
-      it("show the welcome dialog because it wasn't hidden", () => {
-        cy.contains('Welcome').should('not.be.exist')
+        it('show welcome dialog', () => {
+          cy.contains('Welcome').should('be.visible')
+        })
       })
     })
   })
