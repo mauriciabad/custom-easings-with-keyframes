@@ -1,25 +1,25 @@
 <script lang="ts">
-import Animation from '@/components/Animation.vue'
-import Buttons from '@/components/Buttons.vue'
-import CodeBlock from '@/components/CodeBlock.vue'
-import KeyframesCanvas from '@/components/KeyframesCanvas/KeyframesCanvas.vue'
-import Options from '@/components/Options.vue'
+import AnimationCode from '@/components/animation/AnimationCode.vue'
+import AnimationOptions from '@/components/animation/AnimationOptions.vue'
+import AnimationPreview from '@/components/animation/AnimationPreview.vue'
+import FooterButtons from '@/components/FooterButtons.vue'
+import KeyframesCanvas from '@/components/keyframesCanvas/KeyframesCanvas.vue'
+import KeyframesCanvasPreview from '@/components/keyframesCanvas/KeyframesCanvasPreview.vue'
 import SmallScreenPopup from '@/components/SmallScreenPopup.vue'
-import Preview from '@/components/Preview.vue'
-import Welcome from '@/components/Welcome.vue'
-import { defineComponent, ref, watch } from 'vue'
+import WelcomePopup from '@/components/WelcomePopup.vue'
 import { persistedRef } from '@/compositions/useLocalStorageRefs'
+import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   components: {
-    Animation,
-    Buttons,
-    CodeBlock,
+    AnimationCode,
+    AnimationOptions,
+    AnimationPreview,
+    FooterButtons,
     KeyframesCanvas,
-    Options,
+    KeyframesCanvasPreview,
     SmallScreenPopup,
-    Preview,
-    Welcome
+    WelcomePopup
   },
 
   setup() {
@@ -45,14 +45,14 @@ export default defineComponent({
 <template>
   <main class="main-layout">
     <keyframes-canvas class="keyframes-canvas" />
-    <animation class="animation" />
-    <code-block />
-    <options class="options" />
-    <preview class="preview" />
-    <buttons class="buttons" @help-clicked="isWelcomeVisible = true" />
+    <keyframes-canvas-preview class="animation" />
+    <animation-code />
+    <animation-options class="options" />
+    <animation-preview class="preview" />
+    <footer-buttons class="buttons" @help-clicked="isWelcomeVisible = true" />
   </main>
 
-  <welcome v-model:isVisible="isWelcomeVisible" />
+  <welcome-popup v-model:isVisible="isWelcomeVisible" />
 
   <small-screen-popup />
 </template>

@@ -1,22 +1,22 @@
 <script lang="ts">
 /// <reference types="resize-observer-browser" />
-import KeyframesCanvasPoint from '@/components/KeyframesCanvas/KeyframesCanvasPoint.vue'
-import KeyframesCanvasLine from '@/components/KeyframesCanvas/KeyframesCanvasLine.vue'
-import KeyframesCanvasGuides from '@/components/KeyframesCanvas/KeyframesCanvasGuides.vue'
-import Instructions from '@/components/Instructions.vue'
-import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
-import { invertCoordenates, clamp } from '@/helpers'
-import { useStore } from 'vuex'
+import KeyframesCanvasGuides from '@/components/keyframesCanvas/KeyframesCanvasGuides.vue'
+import KeyframesCanvasInstructions from '@/components/keyframesCanvas/KeyframesCanvasInstructions.vue'
+import KeyframesCanvasLine from '@/components/keyframesCanvas/KeyframesCanvasLine.vue'
+import KeyframesCanvasNewPoint from '@/components/keyframesCanvas/KeyframesCanvasNewPoint.vue'
+import KeyframesCanvasPoint from '@/components/keyframesCanvas/KeyframesCanvasPoint.vue'
+import { clamp, invertCoordenates } from '@/helpers'
 import { key } from '@/store'
 import deepClone from 'deep-clone'
-import KeyframesCanvasNewPoint from './KeyframesCanvasNewPoint.vue'
+import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   components: {
     KeyframesCanvasPoint,
     KeyframesCanvasLine,
     KeyframesCanvasGuides,
-    Instructions,
+    KeyframesCanvasInstructions,
     KeyframesCanvasNewPoint
   },
   props: {},
@@ -276,7 +276,7 @@ export default defineComponent({
         :height="cd.height"
       >
         <div class="instructions-container">
-          <instructions />
+          <keyframes-canvas-instructions />
         </div>
       </foreignObject>
       <svg

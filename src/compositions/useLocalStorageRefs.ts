@@ -20,7 +20,6 @@ function getPersistedValueOrFallback<T extends JSONValue>(
   try {
     return JSON.parse(persistedValue) as T
   } catch (error) {
-    console.error('Stored value is not a valid json: ', error)
     return fallbackValue
   }
 }

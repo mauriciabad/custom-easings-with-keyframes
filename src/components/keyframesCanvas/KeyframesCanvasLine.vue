@@ -4,7 +4,7 @@ import { Point } from '@/types'
 import { toCanvasPoint } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
-import KeyframesCanvasPointsMask from './KeyframesCanvasPointsMask.vue'
+import KeyframesCanvasPointsMask from '@/components/keyframesCanvas/KeyframesCanvasPointsMask.vue'
 
 export default defineComponent({
   components: { KeyframesCanvasPointsMask },

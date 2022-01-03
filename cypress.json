@@ -4,8 +4,5 @@
   "projectId": "x4o3zk",
   "viewportWidth": 1024,
   "viewportHeight": 768,
-  "chromeWebSecurity": false,
-  "retries": {
-    "runMode": 4
-  }
+  "chromeWebSecurity": false
 }

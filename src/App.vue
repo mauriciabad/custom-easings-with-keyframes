@@ -15,8 +15,10 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
-@use '~inter-ui/variable' with
-  ($inter-font-display: swap, $inter-font-path: '~inter-ui/Inter (web)');
+@use '~inter-ui/variable' with (
+  $inter-font-display: swap,
+  $inter-font-path: '~inter-ui/Inter (web)'
+);
 @include variable.all;
 
 $defaultEmojiFonts: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',

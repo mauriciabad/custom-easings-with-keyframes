@@ -3,8 +3,8 @@ import { computed, defineComponent } from 'vue'
 import { getSorroundingPoints, toCanvasPoint } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
-import KeyframesCanvasPointsMask from './KeyframesCanvasPointsMask.vue'
-import KeyframesCanvasPoint from './KeyframesCanvasPoint.vue'
+import KeyframesCanvasPointsMask from '@/components/keyframesCanvas/KeyframesCanvasPointsMask.vue'
+import KeyframesCanvasPoint from '@/components/keyframesCanvas/KeyframesCanvasPoint.vue'
 
 export default defineComponent({
   components: { KeyframesCanvasPointsMask, KeyframesCanvasPoint },
