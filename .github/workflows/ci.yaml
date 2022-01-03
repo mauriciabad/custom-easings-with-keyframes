@@ -11,7 +11,16 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
-      - name: 🎁 Install serve
+      - name: 📦 Read .nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+
+      - name: 📦 Use .nvmrc Node version
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
+
+      - name: 🎁 Install and serve
         run: yarn global add serve
 
       - name: 🤖 Run the tests
