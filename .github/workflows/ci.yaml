@@ -6,7 +6,9 @@ jobs:
   e2e_tests:
     name: E2E tests
     runs-on: ubuntu-latest
-    container: cypress/browsers:node16.5.0-chrome94-ff93
+    container:
+      image: cypress/browsers:node16.5.0-chrome94-ff93
+      options: --user 1001
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
