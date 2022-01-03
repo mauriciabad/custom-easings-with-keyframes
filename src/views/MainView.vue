@@ -1,7 +1,7 @@
 <script lang="ts">
-import AnimationCode from '@/components/AnimationCode.vue'
-import AnimationOptions from '@/components/AnimationOptions.vue'
-import AnimationPreview from '@/components/AnimationPreview.vue'
+import AnimationCode from '@/components/animation/AnimationCode.vue'
+import AnimationOptions from '@/components/animation/AnimationOptions.vue'
+import AnimationPreview from '@/components/animation/AnimationPreview.vue'
 import FooterButtons from '@/components/FooterButtons.vue'
 import KeyframesCanvas from '@/components/keyframesCanvas/KeyframesCanvas.vue'
 import KeyframesCanvasPreview from '@/components/KeyframesCanvasPreview.vue'
