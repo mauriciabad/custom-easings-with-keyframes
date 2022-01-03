@@ -1,20 +1,14 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import { useGtag } from 'vue-gtag-next'
-import Welcome from './Welcome.vue'
 
 export default defineComponent({
-  components: {
-    Welcome
-  },
+  components: {},
   props: {},
 
-  setup() {
-    const isWelcomeVisible = ref<boolean>(
-      window.localStorage['welcomeMessageWasSeen'] !== 'true'
-    )
-    window.localStorage['welcomeMessageWasSeen'] = 'true'
+  emits: ['help-clicked'],
 
+  setup(props, { emit }) {
     const { event } = useGtag()
 
     function trackClickDonate() {
@@ -40,14 +34,13 @@ export default defineComponent({
 
     function handleHelpClick() {
       trackClickHelp()
-      isWelcomeVisible.value = true
+      emit('help-clicked')
     }
 
     return {
       trackClickDonate,
       trackClickFeedback,
       trackClickSourceCode,
-      isWelcomeVisible,
       handleHelpClick
     }
   }
@@ -87,8 +80,6 @@ export default defineComponent({
         /></svg
       >Help
     </button>
-
-    <welcome v-model:isVisible="isWelcomeVisible" />
 
     <a
       href="https://www.buymeacoffee.com/mauriciabad"
