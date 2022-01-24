@@ -26,9 +26,9 @@ const options = reactive<Options>({
 const lastUpdatedOptions = reactive<Partial<Options>>({})
 
 type UseOptions = {
-  options: Options
-  lastUpdatedOptions: Partial<Options>
-  updateSomeOptions: (newOptions: LocalOptions) => void
+  options: Readonly<Options>
+  lastUpdatedOptions: Readonly<Partial<Options>>
+  updateSomeOptions: (newOptions: Readonly<LocalOptions>) => void
 }
 
 export default function useOptions(): UseOptions {

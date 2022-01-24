@@ -6,7 +6,10 @@ import {
 } from '@/helpers'
 import { Point } from '@/types'
 
-export function toKeyframeProperty(point: Point, options: Options): Keyframe {
+export function toKeyframeProperty(
+  point: Readonly<Point>,
+  options: Readonly<Options>
+): Keyframe {
   if (isTransformProperty(options.property)) {
     return {
       transform: `${options.property}(${propertyValue(point, options)})`
@@ -16,7 +19,10 @@ export function toKeyframeProperty(point: Point, options: Options): Keyframe {
   }
 }
 
-export function pointToKeyframe(point: Point, options: Options): Keyframe {
+export function pointToKeyframe(
+  point: Readonly<Point>,
+  options: Readonly<Options>
+): Keyframe {
   return {
     offset: point.x / 100,
     ...toKeyframeProperty(point, options)
@@ -24,8 +30,8 @@ export function pointToKeyframe(point: Point, options: Options): Keyframe {
 }
 
 export function computeKeyframes(
-  points: Point[],
-  options: Options
+  points: Readonly<Point[]>,
+  options: Readonly<Options>
 ): Keyframe[] {
   return computePointsWithDelay(points, options).map((point) =>
     pointToKeyframe(point, options)

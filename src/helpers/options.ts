@@ -1,3 +1,5 @@
+import deepClone from 'deep-clone'
+
 export enum Property {
   opacity = 'opacity',
 
@@ -116,7 +118,9 @@ export interface ValidOptions {
   endDelay: boolean
 }
 
-export const validateOptions = (options: LocalOptions): ValidOptions => {
+export const validateOptions = (
+  options: Readonly<LocalOptions>
+): ValidOptions => {
   const validOptions = {
     property: options.property !== '',
     fromValue: options.fromValue !== '' && !isNaN(options.fromValue),
@@ -150,8 +154,8 @@ export const validateOptions = (options: LocalOptions): ValidOptions => {
 }
 
 export function getUpdatedOptions(
-  newOptions: Partial<Options>,
-  oldOptions: Options
+  newOptions: Readonly<Partial<Options>>,
+  oldOptions: Readonly<Options>
 ): Partial<Options> {
   const updatedOptions: Partial<Options> = {}
 
@@ -167,7 +171,9 @@ export function getUpdatedOptions(
   return updatedOptions
 }
 
-export function removeInvalidOptions(options: LocalOptions): Partial<Options> {
+export function removeInvalidOptions(
+  options: Readonly<LocalOptions>
+): Partial<Options> {
   const filteredOptions: Partial<Options> = {}
 
   const validatedOptions = validateOptions(options)
@@ -185,7 +191,7 @@ export function removeInvalidOptions(options: LocalOptions): Partial<Options> {
 }
 
 export function fillWithDefaultOptions(options: LocalOptions): LocalOptions {
-  const filledWithDefaultOptions: LocalOptions = { ...options }
+  const filledWithDefaultOptions: LocalOptions = deepClone(options)
 
   if (options.fromValue === '') filledWithDefaultOptions.fromValue = 0
   if (options.toValue === '') filledWithDefaultOptions.toValue = 0
@@ -196,10 +202,11 @@ export function fillWithDefaultOptions(options: LocalOptions): LocalOptions {
 }
 
 export function removeDefaults(
-  lastUpdatedOptions: Partial<Options>,
-  localOptions: LocalOptions
+  lastUpdatedOptions: Readonly<Partial<Options>>,
+  localOptions: Readonly<LocalOptions>
 ): Partial<Options> {
-  const lastUpdatedOptionsWithoutDefaults = { ...lastUpdatedOptions }
+  const lastUpdatedOptionsWithoutDefaults: Partial<Options> =
+    deepClone(lastUpdatedOptions)
 
   if (localOptions.fromValue === '' && lastUpdatedOptions.fromValue === 0) {
     delete lastUpdatedOptionsWithoutDefaults.fromValue

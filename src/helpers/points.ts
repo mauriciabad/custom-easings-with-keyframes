@@ -124,7 +124,10 @@ export function getSorroundingPoints(
 }
 
 // Workarround to asign objects without losing vue reactivity
-export const assign = <T>(oldValue: T, newValue: Partial<T>): void => {
+export const assign = <T>(
+  oldValue: T,
+  newValue: Readonly<Partial<T>>
+): void => {
   for (const key in oldValue) {
     delete oldValue[key]
   }
