@@ -42,3 +42,5 @@
 - If the graph can be a cubic bezier, sugest it.
 - Tap <kbd>S</kbd> key to enable symetry mode, when one point is added to a side, it appers on the other as well. would be nice to be able to meove the simetry axis.
 - This proposal https://github.com/w3c/csswg-drafts/pull/6533
+  - When first or last point are not 0 or 100, the line should continue. The animation also do that behaveour. Also the delays must work.
+
