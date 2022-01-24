@@ -1,11 +1,11 @@
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
-import { useStore } from 'vuex'
-import { key } from '@/store'
-import { computePointsWithDelay, isTransformProperty, round } from '@/helpers'
-import { useGtag } from 'vue-gtag-next'
-import useOptions from '@/modules/options'
 import { persistedRef } from '@/compositions/useLocalStorageRefs'
+import { computePointsWithDelay, isTransformProperty, round } from '@/helpers'
+import useOptions from '@/modules/options'
+import { key } from '@/store'
+import { computed, defineComponent, ref } from 'vue'
+import { useGtag } from 'vue-gtag-next'
+import { useStore } from 'vuex'
 
 type CodeStyle = 'keyframes' | 'linear'
 

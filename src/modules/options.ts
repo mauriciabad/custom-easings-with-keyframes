@@ -1,6 +1,6 @@
-import { assign } from '@/helpers'
 import {
   allowedValueUnits,
+  assign,
   fillWithDefaultOptions,
   getUpdatedOptions,
   LocalOptions,
@@ -9,7 +9,7 @@ import {
   removeInvalidOptions,
   ValueUnits,
   valueUnitsDefaultToValue
-} from '@/helpers/options'
+} from '@/helpers'
 import { reactive } from 'vue'
 
 const options = reactive<Options>({

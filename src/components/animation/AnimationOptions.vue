@@ -1,13 +1,13 @@
 <script lang="ts">
-import { assign } from '@/helpers'
 import {
   allowedValueUnits,
+  assign,
   fillWithDefaultOptions,
   LocalOptions,
   Property,
   removeDefaults,
   validateOptions
-} from '@/helpers/options'
+} from '@/helpers'
 import useOptions from '@/modules/options'
 import deepClone from 'deep-clone'
 import { computed, defineComponent, reactive, watch, watchEffect } from 'vue'

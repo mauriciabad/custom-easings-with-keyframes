@@ -1,8 +1,8 @@
-import { createApp } from 'vue'
 import App from '@/App.vue'
 import '@/registerServiceWorker'
 import router from '@/router'
-import { store, key } from '@/store'
+import { key, store } from '@/store'
+import { createApp } from 'vue'
 import VueGtag from 'vue-gtag-next'
 
 createApp(App)
