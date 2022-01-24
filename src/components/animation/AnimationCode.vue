@@ -5,6 +5,7 @@ import { key } from '@/store'
 import { computePointsWithDelay, isTransformProperty, round } from '@/helpers'
 import { useGtag } from 'vue-gtag-next'
 import useOptions from '@/modules/options'
+import { persistedRef } from '@/compositions/useLocalStorageRefs'
 
 type CodeStyle = 'keyframes' | 'linear'
 
@@ -22,7 +23,7 @@ export default defineComponent({
     const codeElement = ref<HTMLPreElement | null>(null)
     const code = computed<string>(() => codeElement.value?.textContent ?? '')
 
-    const useLinear = ref<boolean>(false)
+    const useLinear = persistedRef<boolean>('useLinear', false)
     const codeStyle = computed<CodeStyle>(() =>
       useLinear.value ? 'linear' : 'keyframes'
     )
