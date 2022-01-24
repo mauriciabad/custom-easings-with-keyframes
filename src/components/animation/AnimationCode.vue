@@ -90,11 +90,11 @@ export default defineComponent({
 <span class="gray">}</span>
 
 <span class="light-gray">@</span><span class="red">keyframes</span> <span class="orange">{{options.easingName}}</span> <span class="gray">{</span
-><template v-for="point in pointsWithDelay" :key="point.x">
-  <span class="cyan">{{point.x}}%</span><span class="gray"> {</span><template v-if="isTransformProperty(options.property)"><span class="white">transform</span><span class="gray">: </span><span class="green">{{options.property}}</span><span class="gray">(</span><span class="violet">{{round(((options.toValue - options.fromValue) * (point.y / 100) + options.fromValue), 6)}}</span><span class="red">{{options.valueUnits}}</span><span class="gray">)</span></template>
-<template v-else>
-  <span class="white">{{options.property}}</span><span class="gray">: </span><span class="violet">{{round(((options.toValue - options.fromValue) * (point.y / 100) + options.fromValue), 6)}}</span><span class="red">{{options.valueUnits}}</span></template><span class="gray">}</span></template
 >
+  <span class="cyan">from</span><span class="gray"> {</span><template v-if="isTransformProperty(options.property)"><span class="white">transform</span><span class="gray">: </span><span class="green">{{options.property}}</span><span class="gray">(</span><span class="violet">{{options.fromValue}}</span><span class="red">{{options.valueUnits}}</span><span class="gray">)</span></template>
+  <template v-else><span class="white">{{options.property}}</span><span class="gray">: </span><span class="violet">{{options.fromValue}}</span><span class="red">{{options.valueUnits}}</span></template><span class="gray">}</span>
+  <span class="cyan">to</span><span class="gray"> {</span><template v-if="isTransformProperty(options.property)"><span class="white">transform</span><span class="gray">: </span><span class="green">{{options.property}}</span><span class="gray">(</span><span class="violet">{{options.toValue}}</span><span class="red">{{options.valueUnits}}</span><span class="gray">)</span></template>
+  <template v-else><span class="white">{{options.property}}</span><span class="gray">: </span><span class="violet">{{options.toValue}}</span><span class="red">{{options.valueUnits}}</span></template><span class="gray">}</span>
 <span class="gray">}</span
     ></pre>
       </code>
