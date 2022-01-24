@@ -1,7 +1,7 @@
 import { Options, round } from '@/helpers'
 import { Point } from '@/types'
 
-export function calculateOffset(x: number, options: Options): number {
+export function calculateOffset(x: number, options: Readonly<Options>): number {
   const totalTime = options.beginingDelay + options.duration + options.endDelay
 
   return round(
@@ -13,8 +13,8 @@ export function calculateOffset(x: number, options: Options): number {
 }
 
 export function computePointsWithDelay(
-  points: Point[],
-  options: Options
+  points: Readonly<Point[]>,
+  options: Readonly<Options>
 ): Point[] {
   const pointsWithDelay = [
     ...(options.beginingDelay
@@ -81,24 +81,28 @@ interface GroupedPoints {
   y: number
 }
 
-export function computeGroupedPoints(points: Point[]): GroupedPoints[] {
-  const groupedPoints: { [y: number]: number[] } = {}
-  for (const point of points) {
-    if (!groupedPoints[point.y]) groupedPoints[point.y] = []
-    groupedPoints[point.y].push(point.x)
+export function computeGroupedPoints(
+  points: Readonly<Point[]>
+): GroupedPoints[] {
+  const sortedPoints = [...points].sort((a, b) => a.x - b.x)
+  const result: GroupedPoints[] = []
+
+  for (const point of sortedPoints) {
+    const lastGroup: GroupedPoints | undefined = result[result.length - 1]
+
+    if (lastGroup && lastGroup.y === point.y) {
+      lastGroup.xs[1] = point.x
+    } else {
+      result.push({ xs: [point.x], y: point.y })
+    }
   }
 
-  return Object.entries(groupedPoints)
-    .map(([y, xs]) => ({
-      y: Number(y),
-      xs: xs.length > 2 ? [Math.min(...xs), Math.max(...xs)] : xs
-    }))
-    .sort((a, b) => a.xs[0] - b.xs[0])
+  return result
 }
 
 export function getSorroundingPoints(
   x: number,
-  points: Point[]
+  points: Readonly<Point[]>
 ): [Point | undefined, Point | undefined] {
   if (x <= points[0].x) {
     return [points[0], undefined]
