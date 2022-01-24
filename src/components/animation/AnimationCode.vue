@@ -1,6 +1,11 @@
 <script lang="ts">
 import { persistedRef } from '@/compositions/useLocalStorageRefs'
-import { computePointsWithDelay, isTransformProperty, round } from '@/helpers'
+import {
+  computeGroupedPoints,
+  computePointsWithDelay,
+  isTransformProperty,
+  round
+} from '@/helpers'
 import useOptions from '@/modules/options'
 import { key } from '@/store'
 import { computed, defineComponent, ref } from 'vue'
@@ -18,6 +23,9 @@ export default defineComponent({
     const { options } = useOptions()
     const pointsWithDelay = computed(() =>
       computePointsWithDelay(points.value, options)
+    )
+    const pointsWithDelayGrouped = computed(() =>
+      computeGroupedPoints(pointsWithDelay.value)
     )
 
     const codeElement = ref<HTMLPreElement | null>(null)
@@ -50,6 +58,7 @@ export default defineComponent({
       isTransformProperty,
       copyCode,
       pointsWithDelay,
+      pointsWithDelayGrouped,
       round,
       codeElement,
       codeStyle,
@@ -86,7 +95,7 @@ export default defineComponent({
           v-else-if="codeStyle === 'linear'"
           class="code"
         ><span class="gray">.</span><span class="orange">{{options.easingName}}</span><span class="gray"> {</span>
-  <span class="white">animation</span><span class="gray">: </span><span class="orange">{{options.easingName}}</span> <span class="violet">{{options.duration}}</span><span class="red">ms</span> <span class="green">linear</span><span class="gray">(</span><template v-for="point in pointsWithDelay" :key="point.x"><span class="white">{{point.y/100}} {{point.x}}%, </span></template><span class="gray">)</span><span class="gray">;</span>
+  <span class="white">animation</span><span class="gray">: </span><span class="orange">{{options.easingName}}</span> <span class="violet">{{options.duration}}</span><span class="red">ms</span> <span class="green">linear</span><span class="gray">(</span><template v-for="groupedPoint, index in pointsWithDelayGrouped" :key="groupedPoint.y"><span class="violet">{{round(groupedPoint.y/100, 6)}}</span><template v-for="x in groupedPoint.xs" :key="x"><span class="violet"> {{x}}</span><span class="red">%</span></template><span v-if="index < pointsWithDelayGrouped.length - 1" class="gray">, </span></template><span class="gray">)</span><span class="gray">;</span>
 <span class="gray">}</span>
 
 <span class="light-gray">@</span><span class="red">keyframes</span> <span class="orange">{{options.easingName}}</span> <span class="gray">{</span

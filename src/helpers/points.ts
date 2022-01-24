@@ -11,6 +11,7 @@ export function calculateOffset(x: number, options: Options): number {
     6
   )
 }
+
 export function computePointsWithDelay(
   points: Point[],
   options: Options
@@ -73,6 +74,26 @@ export function computePointsWithDelay(
         isSelected: false
       } as Point
     })
+}
+
+interface GroupedPoints {
+  xs: number[]
+  y: number
+}
+
+export function computeGroupedPoints(points: Point[]): GroupedPoints[] {
+  const groupedPoints: { [y: number]: number[] } = {}
+  for (const point of points) {
+    if (!groupedPoints[point.y]) groupedPoints[point.y] = []
+    groupedPoints[point.y].push(point.x)
+  }
+
+  return Object.entries(groupedPoints)
+    .map(([y, xs]) => ({
+      y: Number(y),
+      xs: xs.length > 2 ? [Math.min(...xs), Math.max(...xs)] : xs
+    }))
+    .sort((a, b) => a.xs[0] - b.xs[0])
 }
 
 export function getSorroundingPoints(
