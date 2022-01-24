@@ -10,6 +10,12 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
+      - name: ⚙️ Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
       - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v2
         with:
