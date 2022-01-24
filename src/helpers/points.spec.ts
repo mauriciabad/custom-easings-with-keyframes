@@ -61,14 +61,6 @@ describe('computeGroupedPoints', () => {
     ],
     ['Single point', [[10, 50]], [{ xs: [10], y: 50 }]],
     [
-      'Duplicated point',
-      [
-        [10, 50],
-        [10, 50]
-      ],
-      [{ xs: [10], y: 50 }]
-    ],
-    [
       '2 points with same y',
       [
         [10, 50],
