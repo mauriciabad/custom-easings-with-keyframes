@@ -76,7 +76,7 @@ export function computePointsWithDelay(
     })
 }
 
-interface GroupedPoints {
+export interface GroupedPoints {
   xs: number[]
   y: number
 }
