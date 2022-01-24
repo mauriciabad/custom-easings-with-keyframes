@@ -86,7 +86,7 @@ export default defineComponent({
           v-else-if="codeStyle === 'linear'"
           class="code"
         ><span class="gray">.</span><span class="orange">{{options.easingName}}</span><span class="gray"> {</span>
-  <span class="white">animation</span><span class="gray">: </span><span class="orange">{{options.easingName}}</span> <span class="violet">{{options.duration}}</span><span class="red">ms</span> <span class="cyan">linear</span><span class="gray">;</span>
+  <span class="white">animation</span><span class="gray">: </span><span class="orange">{{options.easingName}}</span> <span class="violet">{{options.duration}}</span><span class="red">ms</span> <span class="green">linear</span><span class="gray">(</span><template v-for="point in pointsWithDelay" :key="point.x"><span class="white">{{point.y/100}} {{point.x}}%, </span></template><span class="gray">)</span><span class="gray">;</span>
 <span class="gray">}</span>
 
 <span class="light-gray">@</span><span class="red">keyframes</span> <span class="orange">{{options.easingName}}</span> <span class="gray">{</span
