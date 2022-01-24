@@ -15,5 +15,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: 🚚 Install dependencies
+        run: yarn
+
       - name: 🧪 Test
         run: yarn test:unit
