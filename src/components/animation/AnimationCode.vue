@@ -51,9 +51,13 @@ export default defineComponent({
       navigator.clipboard.writeText(code.value)
       trackCopyCode()
     }
+    function toggleSettings() {
+      // TODO: implement me
+    }
 
     return {
       options,
+      toggleSettings,
       points,
       isTransformProperty,
       copyCode,
@@ -108,7 +112,7 @@ export default defineComponent({
     ></pre>
       </code>
     </div>
-
+    <!-- 
     <label for="use-linear" class="use-linear">
       <input id="use-linear" v-model="useLinear" type="checkbox" />
       <span
@@ -117,27 +121,58 @@ export default defineComponent({
           >CSS linear proposal</a
         ></span
       >
-    </label>
+    </label> -->
 
-    <button
-      class="copy-button"
-      tabindex="0"
-      role="button"
-      aria-label="Copy code"
-      @click="copyCode"
-    >
-      <span
-        ><svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z" />
-          <path
-            d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z"
-          /></svg></span
-      >Copy code
-    </button>
+    <div class="buttons">
+      <button
+        class="button button__copy"
+        tabindex="0"
+        role="button"
+        aria-label="Copy code"
+        @click="copyCode"
+      >
+        <span
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z" />
+            <path
+              d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z"
+            /></svg></span
+        >Copy code
+      </button>
+
+      <button
+        class="button button__settings"
+        tabindex="0"
+        role="button"
+        aria-label="Open/close code generation settings"
+        @click="toggleSettings"
+      >
+        <span
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            /></svg
+        ></span>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -289,34 +324,39 @@ export default defineComponent({
   user-select: auto;
 }
 
-.use-linear {
-  padding: 0.25rem 1rem 1rem;
+// .use-linear {
+//   padding: 0.25rem 1rem 1rem;
+//   display: flex;
+//   gap: 1rem;
+//   align-items: center;
+//   cursor: pointer;
+
+//   a {
+//     color: #13b981;
+//     font-weight: 500;
+//   }
+
+//   & input {
+//     cursor: inherit;
+//     outline: none;
+//     box-shadow: 0 0 0 0 #fff;
+//     transition: box-shadow 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+
+//     &:focus-visible {
+//       box-shadow: 0 0 0 0.1875rem #fff;
+//       outline: none;
+//     }
+//   }
+// }
+
+.buttons {
   display: flex;
   gap: 1rem;
-  align-items: center;
-  cursor: pointer;
-
-  a {
-    color: #13b981;
-    font-weight: 500;
-  }
-
-  & input {
-    cursor: inherit;
-    outline: none;
-    box-shadow: 0 0 0 0 #fff;
-    transition: box-shadow 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
-
-    &:focus-visible {
-      box-shadow: 0 0 0 0.1875rem #fff;
-      outline: none;
-    }
-  }
+  position: relative;
 }
 
-.copy-button {
+.button {
   display: block;
-  width: 100%;
   padding: 0.5rem 1rem;
   text-align: center;
   border: none;
@@ -325,35 +365,69 @@ export default defineComponent({
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.25rem;
-  box-shadow: 0px 2px 8px #13b98180, 0 0 0 0 #fff;
+  box-shadow: 0px 2px 8px #44444480, 0 0 0 0 #fff;
   cursor: pointer;
   outline: none;
   transition: box-shadow 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
   appearance: none;
-  position: relative;
-  background: #13b981 linear-gradient(45deg, #26ada2, #2bc364);
+  background: #444;
 
   span {
-    position: absolute;
-    left: 0.75rem;
-    top: 0;
-    bottom: 0;
     display: flex;
     align-items: center;
   }
 
   svg {
     height: 1.25rem;
-    opacity: 0.6667;
-    transition: opacity 100ms ease-out;
-  }
-  &:hover svg {
-    opacity: 1;
   }
 
   &:focus-visible {
     box-shadow: 0px 3px 12px 0.25rem #fff5, 0 0 0 0.1875rem #fff;
     outline: none;
+  }
+
+  &__settings {
+    background: #4dabde linear-gradient(45deg, #36d1dc, #5b86e5);
+    box-shadow: 0px 2px 8px #3a2bc380, 0 0 0 0 #fff;
+
+    padding: 0.5rem;
+
+    svg {
+      filter: drop-shadow(0 0 0.25rem rgba(0, 0, 0, 0.2));
+      transition: transform 600ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    }
+
+    &:hover,
+    &:focus-visible {
+      svg {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &__copy {
+    background: #13b981 linear-gradient(45deg, #26ada2, #2bc364);
+    box-shadow: 0px 2px 8px #4dabde80, 0 0 0 0 #fff;
+
+    flex-grow: 1;
+    position: relative;
+
+    span {
+      position: absolute;
+      left: 0.75rem;
+      top: 0;
+      bottom: 0;
+    }
+
+    svg {
+      height: 1.25rem;
+      opacity: 0.6667;
+      transition: opacity 100ms ease-out;
+    }
+    &:hover svg,
+    &:focus-visible svg {
+      opacity: 1;
+    }
   }
 }
 
