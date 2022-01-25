@@ -1,6 +1,11 @@
 <script lang="ts">
-import { computeKeyframes, getSorroundingPoints } from '@/helpers'
-import { Options, Property, ValueUnits } from '@/helpers/options'
+import {
+  computeKeyframes,
+  getSorroundingPoints,
+  Options,
+  Property,
+  ValueUnits
+} from '@/helpers'
 import { key } from '@/store'
 import interpolate from 'color-interpolate'
 import { computed, defineComponent, ref, watchEffect } from 'vue'

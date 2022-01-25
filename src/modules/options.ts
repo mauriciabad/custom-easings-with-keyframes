@@ -1,6 +1,6 @@
-import { assign } from '@/helpers'
 import {
   allowedValueUnits,
+  assign,
   fillWithDefaultOptions,
   getUpdatedOptions,
   LocalOptions,
@@ -9,7 +9,7 @@ import {
   removeInvalidOptions,
   ValueUnits,
   valueUnitsDefaultToValue
-} from '@/helpers/options'
+} from '@/helpers'
 import { reactive } from 'vue'
 
 const options = reactive<Options>({
@@ -26,9 +26,9 @@ const options = reactive<Options>({
 const lastUpdatedOptions = reactive<Partial<Options>>({})
 
 type UseOptions = {
-  options: Options
-  lastUpdatedOptions: Partial<Options>
-  updateSomeOptions: (newOptions: LocalOptions) => void
+  options: Readonly<Options>
+  lastUpdatedOptions: Readonly<Partial<Options>>
+  updateSomeOptions: (newOptions: Readonly<LocalOptions>) => void
 }
 
 export default function useOptions(): UseOptions {

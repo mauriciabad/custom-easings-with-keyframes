@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory, RouterOptions } from 'vue-router'
-import MainView from '../views/MainView.vue'
 import { trackRouter } from 'vue-gtag-next'
 import 'vue-router'
+import { createRouter, createWebHistory, RouterOptions } from 'vue-router'
+import MainView from '../views/MainView.vue'
 
 declare module 'vue-router' {
   interface RouteMeta {
