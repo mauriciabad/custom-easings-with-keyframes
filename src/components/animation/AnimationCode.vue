@@ -11,11 +11,16 @@ import { key } from '@/store'
 import { computed, defineComponent, ref } from 'vue'
 import { useGtag } from 'vue-gtag-next'
 import { useStore } from 'vuex'
+import Popper from 'vue3-popper'
+import CelebrationCheckbox from '../generic/CelebrationCheckbox.vue'
 
 type CodeStyle = 'keyframes' | 'linear'
 
 export default defineComponent({
-  components: {},
+  components: {
+    Popper,
+    CelebrationCheckbox
+  },
 
   setup() {
     const store = useStore(key)
@@ -112,16 +117,6 @@ export default defineComponent({
     ></pre>
       </code>
     </div>
-    <!-- 
-    <label for="use-linear" class="use-linear">
-      <input id="use-linear" v-model="useLinear" type="checkbox" />
-      <span
-        >Use
-        <a href="https://github.com/w3c/csswg-drafts/pull/6533" target="_blank"
-          >CSS linear proposal</a
-        ></span
-      >
-    </label> -->
 
     <div class="buttons">
       <button
@@ -144,34 +139,51 @@ export default defineComponent({
         >Copy code
       </button>
 
-      <button
-        class="button button__settings"
-        tabindex="0"
-        role="button"
-        aria-label="Open/close code generation settings"
-        @click="toggleSettings"
-      >
-        <span
-          ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-            />
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-            /></svg
-        ></span>
-      </button>
+      <popper class="popup" placement="top" arrow>
+        <button
+          class="button button__settings"
+          tabindex="0"
+          role="button"
+          aria-label="Open/close code generation settings"
+          @click="toggleSettings"
+        >
+          <span
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              /></svg
+          ></span>
+        </button>
+
+        <template #content>
+          <label for="use-linear" class="use-linear">
+            <celebration-checkbox id="use-linear" v-model="useLinear" />
+            <span>
+              Use
+              <a
+                href="https://github.com/w3c/csswg-drafts/pull/6533"
+                target="_blank"
+              >
+                CSS linear proposal
+              </a>
+            </span>
+          </label>
+        </template>
+      </popper>
     </div>
   </div>
 </template>
@@ -307,6 +319,19 @@ export default defineComponent({
   }
 }
 
+.popup {
+  --popper-theme-background-color: #fff;
+  --popper-theme-background-color-hover: var(--popper-theme-background-color);
+  --popper-theme-text-color: #374151;
+  --popper-theme-border-width: 2px;
+  --popper-theme-border-style: solid;
+  --popper-theme-border-color: #f0f0f0;
+  --popper-theme-border-radius: 1rem;
+  --popper-theme-padding: 1.5rem;
+  --popper-theme-box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
 .code {
   $characterHeight: 14px;
   $lineHeight: 1.375 * $characterHeight;
@@ -324,30 +349,18 @@ export default defineComponent({
   user-select: auto;
 }
 
-// .use-linear {
-//   padding: 0.25rem 1rem 1rem;
-//   display: flex;
-//   gap: 1rem;
-//   align-items: center;
-//   cursor: pointer;
+.use-linear {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  cursor: pointer;
+  font-size: 15px;
 
-//   a {
-//     color: #13b981;
-//     font-weight: 500;
-//   }
-
-//   & input {
-//     cursor: inherit;
-//     outline: none;
-//     box-shadow: 0 0 0 0 #fff;
-//     transition: box-shadow 200ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
-
-//     &:focus-visible {
-//       box-shadow: 0 0 0 0.1875rem #fff;
-//       outline: none;
-//     }
-//   }
-// }
+  a {
+    color: #13b981;
+    font-weight: 500;
+  }
+}
 
 .buttons {
   display: flex;
