@@ -42,7 +42,7 @@
     "cypress": "^9.2.0",
     "dedent": "^0.7.0",
     "deep-clone": "^3.0.3",
-    "eslint": "^7.32.0",
+    "eslint": "^8.7.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.2.0",
     "lint-staged": "^12.1.5",
