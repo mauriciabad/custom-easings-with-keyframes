@@ -63,7 +63,12 @@ function handleBackgroundClick() {
 <template>
   <transition name="fade">
     <div v-if="isVisible" class="popup">
-      <div class="background" @click="handleBackgroundClick"></div>
+      <div
+        class="background"
+        @click="handleBackgroundClick"
+        @keyup.space="handleBackgroundClick"
+        @keyup.enter="handleBackgroundClick"
+      ></div>
       <div class="popup__container">
         <div class="popup__content popup__content--left">
           <h2 class="popup__title">

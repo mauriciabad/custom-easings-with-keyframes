@@ -98,7 +98,6 @@ function toggleSettings() {
       <button
         class="button button__copy"
         tabindex="0"
-        role="button"
         aria-label="Copy code"
         @click="copyCode"
       >
@@ -119,7 +118,6 @@ function toggleSettings() {
         <button
           class="button button__settings"
           tabindex="0"
-          role="button"
           aria-label="Open/close code generation settings"
           @click="toggleSettings"
         >
