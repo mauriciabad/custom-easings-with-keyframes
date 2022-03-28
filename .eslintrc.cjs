@@ -9,7 +9,9 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript',
     '@vue/eslint-config-prettier',
+    'plugin:vuejs-accessibility/recommended',
   ],
+    plugins: ['vuejs-accessibility'],
   rules: {
     'no-console': 'warn',
     'no-debugger': 'warn',
