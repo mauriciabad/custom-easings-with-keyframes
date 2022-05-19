@@ -14,7 +14,7 @@
     "core-js": "^3.20.2",
     "inter-ui": "^3.19.3",
     "register-service-worker": "^1.7.2",
-    "vue": "^3.2.26",
+    "vue": "^3.2.34",
     "vue-gtag-next": "^1.14.0",
     "vue-router": "^4.0.12",
     "vue3-popper": "^1.4.1",
