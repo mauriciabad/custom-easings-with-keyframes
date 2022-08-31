@@ -39,7 +39,7 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^10.0.0",
     "@vue/test-utils": "^2.0.0-rc.18",
-    "cypress": "^9.2.0",
+    "cypress": "^10.7.0",
     "dedent": "^0.7.0",
     "deep-clone": "^3.0.3",
     "eslint": "^7.32.0",
