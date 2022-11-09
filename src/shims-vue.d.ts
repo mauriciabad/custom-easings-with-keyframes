@@ -1,0 +1,14 @@
+// TODO: remove this file once all usages of defineComponent() are removed
+
+/* eslint-disable */
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
+}
+
+declare module 'vue3-popper' {
+  import { Component } from 'vue'
+  const file: Component
+  export default file
+}

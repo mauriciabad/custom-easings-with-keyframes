@@ -47,3 +47,9 @@
   - Also, the delays must work. 
   - And add e2e tests.
 
+## Migration to vue
+- [ ] Serviceworker ("there's an update" popup)
+- [ ] Pinia example file and setup is there,change vuex to pinia
+- [ ] Remove usages of defineComponent() and use script setup instead
+    - Delete the shims file after that 
+- [ ] Fix event type (there's a todo)
