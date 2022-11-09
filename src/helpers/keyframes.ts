@@ -1,10 +1,10 @@
 import {
   computePointsWithDelay,
   isTransformProperty,
-  Options,
-  propertyValue
+  type Options,
+  propertyValue,
 } from '@/helpers'
-import { Point } from '@/types'
+import type { Point } from '@/types'
 
 export function toKeyframeProperty(
   point: Readonly<Point>,
@@ -12,7 +12,7 @@ export function toKeyframeProperty(
 ): Keyframe {
   if (isTransformProperty(options.property)) {
     return {
-      transform: `${options.property}(${propertyValue(point, options)})`
+      transform: `${options.property}(${propertyValue(point, options)})`,
     }
   } else {
     return { [options.property]: propertyValue(point, options) }
@@ -25,7 +25,7 @@ export function pointToKeyframe(
 ): Keyframe {
   return {
     offset: point.x / 100,
-    ...toKeyframeProperty(point, options)
+    ...toKeyframeProperty(point, options),
   }
 }
 

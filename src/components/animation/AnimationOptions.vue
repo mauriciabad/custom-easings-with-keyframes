@@ -3,18 +3,16 @@ import {
   allowedValueUnits,
   assign,
   fillWithDefaultOptions,
-  LocalOptions,
+  type LocalOptions,
   Property,
   removeDefaults,
-  validateOptions
+  validateOptions,
 } from '@/helpers'
 import useOptions from '@/modules/options'
 import deepClone from 'deep-clone'
 import { computed, defineComponent, reactive, watch, watchEffect } from 'vue'
 
 export default defineComponent({
-  props: {},
-
   setup() {
     const { options, lastUpdatedOptions, updateSomeOptions } = useOptions()
     const localOptions = reactive<LocalOptions>(deepClone(options))
@@ -25,7 +23,7 @@ export default defineComponent({
     watch(lastUpdatedOptions, () => {
       assign(localOptions, {
         ...localOptions,
-        ...removeDefaults(lastUpdatedOptions, localOptions)
+        ...removeDefaults(lastUpdatedOptions, localOptions),
       })
     })
 
@@ -40,9 +38,9 @@ export default defineComponent({
       Property,
       valueUnitsList,
       validOptions,
-      localOptions
+      localOptions,
     }
-  }
+  },
 })
 </script>
 
@@ -140,7 +138,7 @@ export default defineComponent({
           class="field"
           type="number"
           name="fromValue"
-          :placeholder="options.fromValue"
+          :placeholder="String(options.fromValue)"
         />
       </div>
     </div>
@@ -172,7 +170,7 @@ export default defineComponent({
           type="number"
           name="toValue"
           width="6ch"
-          :placeholder="options.toValue"
+          :placeholder="String(options.toValue)"
         />
       </div>
     </div>
@@ -203,7 +201,7 @@ export default defineComponent({
           type="number"
           name="beginingDelay"
           min="0"
-          :placeholder="options.beginingDelay"
+          :placeholder="String(options.beginingDelay)"
         />
       </div>
     </div>
@@ -236,7 +234,7 @@ export default defineComponent({
           type="number"
           name="duration"
           min="0"
-          :placeholder="options.duration"
+          :placeholder="String(options.duration)"
         />
       </div>
     </div>
@@ -267,7 +265,7 @@ export default defineComponent({
           type="number"
           name="endDelay"
           min="0"
-          :placeholder="options.endDelay"
+          :placeholder="String(options.endDelay)"
         />
       </div>
     </div>

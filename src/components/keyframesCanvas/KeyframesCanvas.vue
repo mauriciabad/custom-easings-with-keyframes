@@ -1,5 +1,4 @@
 <script lang="ts">
-/// <reference types="resize-observer-browser" />
 import KeyframesCanvasGuides from '@/components/keyframesCanvas/KeyframesCanvasGuides.vue'
 import KeyframesCanvasInstructions from '@/components/keyframesCanvas/KeyframesCanvasInstructions.vue'
 import KeyframesCanvasLine from '@/components/keyframesCanvas/KeyframesCanvasLine.vue'
@@ -17,9 +16,8 @@ export default defineComponent({
     KeyframesCanvasLine,
     KeyframesCanvasGuides,
     KeyframesCanvasInstructions,
-    KeyframesCanvasNewPoint
+    KeyframesCanvasNewPoint,
   },
-  props: {},
 
   setup() {
     const store = useStore(key)
@@ -36,7 +34,7 @@ export default defineComponent({
 
     let moveOrigin = {
       x: 0,
-      y: 0
+      y: 0,
     }
 
     const originalPoints = ref(points.value)
@@ -52,7 +50,7 @@ export default defineComponent({
       const canvasRects = canvas.value.getClientRects()[0]
       const offset = {
         x: event.clientX - canvasRects.left,
-        y: event.clientY - canvasRects.top
+        y: event.clientY - canvasRects.top,
       }
 
       return {
@@ -67,14 +65,14 @@ export default defineComponent({
               cd.value.height * (cd.value.maxY - 1 + cd.value.stepY / 2)) /
               cd.value.height
           ) * 100
-        )
+        ),
       }
     }
 
     const resizeObserver = new ResizeObserver((entries) => {
       store.commit('resize', {
         height: entries[0].contentRect.height,
-        width: entries[0].contentRect.width
+        width: entries[0].contentRect.width,
       })
     })
 
@@ -127,11 +125,11 @@ export default defineComponent({
 
         const moveOffset = {
           x: moveEnd.x - moveOrigin.x,
-          y: moveEnd.y - moveOrigin.y
+          y: moveEnd.y - moveOrigin.y,
         }
         store.commit('moveSelectedPoints', {
           moveOffset,
-          originalPoints: originalPoints.value
+          originalPoints: originalPoints.value,
         })
       }
     }
@@ -194,9 +192,9 @@ export default defineComponent({
       handleMouseLeave,
       canvas,
       canvasContainer,
-      newPoint
+      newPoint,
     }
-  }
+  },
 })
 </script>
 
@@ -211,7 +209,7 @@ export default defineComponent({
       @mousemove="handleMouseMove($event)"
       @mouseup="handleMouseUp($event)"
       @contextmenu="$event.preventDefault()"
-      @mouseleave="handleMouseLeave($event)"
+      @mouseleave="handleMouseLeave()"
     >
       <defs>
         <filter

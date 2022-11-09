@@ -1,20 +1,15 @@
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution')
+
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   root: true,
-  env: {
-    node: true
-  },
-  extends: [
+  'extends': [
     'plugin:vue/vue3-recommended',
     'eslint:recommended',
-    '@vue/typescript/recommended',
-    '@vue/prettier',
-    '@vue/prettier/@typescript-eslint'
+    '@vue/eslint-config-typescript',
+    '@vue/eslint-config-prettier'
   ],
-  parser: 'vue-eslint-parser',
-  parserOptions: {
-    ecmaVersion: 2021
-  },
   rules: {
     'no-console': 'warn',
     'no-debugger': 'warn',
@@ -28,8 +23,15 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*.spec.{j,t}s'],
-      env: { jest: true }
+      files: [
+        'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}'
+      ],
+      'extends': [
+        'plugin:cypress/recommended'
+      ]
     }
-  ]
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest'
+  }
 }

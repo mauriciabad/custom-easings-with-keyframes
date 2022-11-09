@@ -6,8 +6,6 @@ import { computeKeyframes } from '@/helpers'
 import useOptions from '@/modules/options'
 
 export default defineComponent({
-  components: {},
-  props: {},
 
   setup() {
     const store = useStore(key)
@@ -23,13 +21,13 @@ export default defineComponent({
         if (animation.value) animation.value.cancel()
         animation.value = previewElement.value.animate(keyframes, {
           duration: options.duration,
-          iterations: Infinity
+          iterations: Infinity,
         })
       }
     })
 
     return { previewElement }
-  }
+  },
 })
 </script>
 

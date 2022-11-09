@@ -7,7 +7,7 @@ import { key } from '@/store'
 
 export default defineComponent({
   props: {
-    position: { type: Number, required: true }
+    position: { type: Number, required: true },
   },
 
   setup(props) {
@@ -18,9 +18,9 @@ export default defineComponent({
 
     return {
       positionInverted,
-      cd
+      cd,
     }
-  }
+  },
 })
 </script>
 

@@ -1,6 +1,6 @@
 import { clamp } from '@/helpers'
-import { Point } from '@/types'
-import { InjectionKey } from 'vue'
+import type { Point } from '@/types'
+import type { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
 
 export const key: InjectionKey<Store<State>> = Symbol()
@@ -28,13 +28,13 @@ export const store = createStore<State>({
       {
         x: 0,
         y: 0,
-        isSelected: false
+        isSelected: false,
       },
       {
         x: 100,
         y: 100,
-        isSelected: false
-      }
+        isSelected: false,
+      },
     ],
     canvasDimensions: {
       height: 800,
@@ -45,8 +45,8 @@ export const store = createStore<State>({
       stepY: 0.1,
       maxX: 1,
       minX: 0,
-      stepX: 0.1
-    }
+      stepX: 0.1,
+    },
   }),
   mutations: {
     createPoint: (state, { x, y }: { x: number; y: number }) => {
@@ -55,7 +55,7 @@ export const store = createStore<State>({
       state.points.push({
         x,
         y,
-        isSelected: false
+        isSelected: false,
       })
 
       state.points.sort((a, b) => a.x - b.x)
@@ -67,32 +67,32 @@ export const store = createStore<State>({
     focusPoint: (state, { x }: { x: number }) => {
       state.points = state.points.map((p) => ({
         ...p,
-        isSelected: p.x === x ? true : p.isSelected
+        isSelected: p.x === x ? true : p.isSelected,
       }))
     },
     blurPoint: (state, { x }: { x: number }) => {
       state.points = state.points.map((p) => ({
         ...p,
-        isSelected: p.x === x ? false : p.isSelected
+        isSelected: p.x === x ? false : p.isSelected,
       }))
     },
     blurAllPoints: (state) => {
       state.points = state.points.map((p) => ({
         ...p,
-        isSelected: false
+        isSelected: false,
       }))
     },
     togglePoint: (state, { x }: { x: number }) => {
       state.points = state.points.map((p) => ({
         ...p,
-        isSelected: p.x === x ? !p.isSelected : p.isSelected
+        isSelected: p.x === x ? !p.isSelected : p.isSelected,
       }))
     },
     moveSelectedPoints: (
       state,
       {
         moveOffset,
-        originalPoints
+        originalPoints,
       }: {
         moveOffset: { x: number; y: number }
         originalPoints: Point[]
@@ -105,7 +105,7 @@ export const store = createStore<State>({
 
         const newPos = {
           x: clamp(point.x + moveOffset.x, 0, 100),
-          y: point.y + moveOffset.y
+          y: point.y + moveOffset.y,
         }
 
         if (originalPoints.find((p) => p.x === newPos.x)) {
@@ -129,7 +129,7 @@ export const store = createStore<State>({
         (state.canvasDimensions.maxY -
           state.canvasDimensions.minY +
           state.canvasDimensions.stepY)
-    }
+    },
   },
-  actions: {}
+  actions: {},
 })

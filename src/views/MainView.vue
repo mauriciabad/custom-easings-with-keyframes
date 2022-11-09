@@ -19,7 +19,7 @@ export default defineComponent({
     KeyframesCanvas,
     KeyframesCanvasPreview,
     SmallScreenPopup,
-    WelcomePopup
+    WelcomePopup,
   },
 
   setup() {
@@ -38,7 +38,7 @@ export default defineComponent({
     })
 
     return { isWelcomeVisible, welcomeMessageWasSeen }
-  }
+  },
 })
 </script>
 

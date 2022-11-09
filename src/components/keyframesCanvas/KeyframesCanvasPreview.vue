@@ -2,9 +2,9 @@
 import {
   computeKeyframes,
   getSorroundingPoints,
-  Options,
+  type Options,
   Property,
-  ValueUnits
+  ValueUnits,
 } from '@/helpers'
 import { key } from '@/store'
 import interpolate from 'color-interpolate'
@@ -19,17 +19,17 @@ function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
 
   const disabledStyle = {
     backgroundColor: '#bbb',
-    boxShadow: '0px 8px 16px #bbba'
+    boxShadow: '0px 8px 16px #bbba',
   }
 
   if (options.beginingDelay) {
     styledKeyframes[0] = {
       ...styledKeyframes[0],
-      ...disabledStyle
+      ...disabledStyle,
     }
     styledKeyframes[1] = {
       ...styledKeyframes[1],
-      ...disabledStyle
+      ...disabledStyle,
     }
     styledKeyframes[2].backgroundColor = beginColor
   }
@@ -38,11 +38,11 @@ function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
     styledKeyframes[styledKeyframes.length - 3].backgroundColor = endColor
     styledKeyframes[styledKeyframes.length - 2] = {
       ...styledKeyframes[styledKeyframes.length - 2],
-      ...disabledStyle
+      ...disabledStyle,
     }
     styledKeyframes[styledKeyframes.length - 1] = {
       ...styledKeyframes[styledKeyframes.length - 1],
-      ...disabledStyle
+      ...disabledStyle,
     }
   }
 
@@ -50,8 +50,6 @@ function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
 }
 
 export default defineComponent({
-  components: {},
-  props: {},
 
   setup() {
     const store = useStore(key)
@@ -73,7 +71,7 @@ export default defineComponent({
           duration: 5000,
           easingName: 'animation-easing',
           beginingDelay: 750,
-          endDelay: 750
+          endDelay: 750,
         }
 
         const keyframes = styleKeyframes(
@@ -84,7 +82,7 @@ export default defineComponent({
         if (animation.value) animation.value.cancel()
         animation.value = previewElement.value.animate(keyframes, {
           duration: options.duration,
-          iterations: Infinity
+          iterations: Infinity,
         })
       }
     })
@@ -124,9 +122,9 @@ export default defineComponent({
       cd,
       pointInPath,
       fadedDotsCount,
-      colorMap
+      colorMap,
     }
-  }
+  },
 })
 </script>
 

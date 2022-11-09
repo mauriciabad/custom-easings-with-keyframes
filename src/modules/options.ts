@@ -3,12 +3,12 @@ import {
   assign,
   fillWithDefaultOptions,
   getUpdatedOptions,
-  LocalOptions,
-  Options,
+  type LocalOptions,
+  type Options,
   Property,
   removeInvalidOptions,
   ValueUnits,
-  valueUnitsDefaultToValue
+  valueUnitsDefaultToValue,
 } from '@/helpers'
 import { reactive } from 'vue'
 
@@ -20,7 +20,7 @@ const options = reactive<Options>({
   duration: 3000,
   easingName: 'ease-custom',
   beginingDelay: 0,
-  endDelay: 0
+  endDelay: 0,
 })
 
 const lastUpdatedOptions = reactive<Partial<Options>>({})

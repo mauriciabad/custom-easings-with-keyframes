@@ -4,11 +4,10 @@ import CustomIcon from '@/components/CustomIcon.vue'
 
 export default defineComponent({
   components: { CustomIcon },
-  props: {},
 
   setup() {
     return {}
-  }
+  },
 })
 </script>
 

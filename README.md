@@ -8,28 +8,21 @@ Make non-cubic-bezier easings with keyframes and animations.
 Use it here:
 https://easyeasings.com/
 
-## Project setup
+## Development
 
-Install dependencies:
+```zsh
+# Install dependencies
+npm run i
 
-```bash
-yarn install
-```
+# Run the app in develop mode
+npm run dev
 
-Run the app in develop mode:
+# Run the tests
+npm run test:unit
 
-```bash
-yarn serve
-```
+# Run your end-to-end tests
+npm run test:e2e
 
-Run the tests:
-
-```bash
-yarn test:unit
-```
-
-Run your end-to-end tests
-
-```
-yarn test:e2e
+# Build the app
+npm run build
 ```

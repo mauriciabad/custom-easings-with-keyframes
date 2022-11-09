@@ -1,4 +1,4 @@
-import { Ref, ref, UnwrapRef, watch } from 'vue'
+import { type Ref, ref, type UnwrapRef, watch } from 'vue'
 
 type JSONValue = string | number | boolean | null | JSONArray | JSONObject
 

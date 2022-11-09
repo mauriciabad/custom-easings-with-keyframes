@@ -18,8 +18,8 @@ describe('Copy code feature', () => {
         command: 'Browser.grantPermissions',
         params: {
           permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
-          origin: window.location.origin
-        }
+          origin: window.location.origin,
+        },
       })
     )
 

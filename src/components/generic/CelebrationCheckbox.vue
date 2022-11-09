@@ -5,12 +5,12 @@ export default defineComponent({
   props: {
     id: {
       type: String,
-      required: true
+      required: true,
     },
     modelValue: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
 
   emits: ['update:modelValue'],
@@ -18,13 +18,13 @@ export default defineComponent({
   setup(props, context) {
     const localValue = computed({
       get: () => props.modelValue,
-      set: (value) => context.emit('update:modelValue', value)
+      set: (value) => context.emit('update:modelValue', value),
     })
 
     return {
-      localValue
+      localValue,
     }
-  }
+  },
 })
 </script>
 
@@ -40,18 +40,18 @@ export default defineComponent({
   <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: none">
     <defs>
       <filter id="goo">
-        <fegaussianblur
+        <feGaussianBlur
           in="SourceGraphic"
           stddeviation="4"
           result="blur"
-        ></fegaussianblur>
-        <fecolormatrix
+        ></feGaussianBlur>
+        <feColorMatrix
           in="blur"
           mode="matrix"
           values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7"
           result="goo"
-        ></fecolormatrix>
-        <feblend in="SourceGraphic" in2="goo"></feblend>
+        ></feColorMatrix>
+        <feBlend in="SourceGraphic" in2="goo"></feBlend>
       </filter>
     </defs>
   </svg>

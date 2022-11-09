@@ -4,7 +4,7 @@ import {
   computeGroupedPoints,
   computePointsWithDelay,
   isTransformProperty,
-  round
+  round,
 } from '@/helpers'
 import useOptions from '@/modules/options'
 import { key } from '@/store'
@@ -19,7 +19,7 @@ type CodeStyle = 'keyframes' | 'linear'
 export default defineComponent({
   components: {
     Popper,
-    CelebrationCheckbox
+    CelebrationCheckbox,
   },
 
   setup() {
@@ -46,7 +46,7 @@ export default defineComponent({
     function trackCopyCode() {
       event('copy_code', {
         event_category: 'engagement',
-        event_label: lastCopiedCode === code.value ? 'duplicate' : undefined
+        event_label: lastCopiedCode === code.value ? 'duplicate' : undefined,
       })
 
       lastCopiedCode = code.value
@@ -71,9 +71,9 @@ export default defineComponent({
       round,
       codeElement,
       codeStyle,
-      useLinear
+      useLinear,
     }
-  }
+  },
 })
 </script>
 

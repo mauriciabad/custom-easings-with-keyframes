@@ -1,5 +1,5 @@
-import { Options, Property, round } from '@/helpers'
-import { Point } from '@/types'
+import { type Options, Property, round } from '@/helpers'
+import type { Point } from '@/types'
 
 export function isTransformProperty(property: Property): boolean {
   return property !== Property.opacity

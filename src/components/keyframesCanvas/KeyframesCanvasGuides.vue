@@ -8,18 +8,17 @@ import { key } from '@/store'
 export default defineComponent({
   components: {
     KeyframesCanvasGuideHorizontal,
-    KeyframesCanvasGuideVertical
+    KeyframesCanvasGuideVertical,
   },
-  props: {},
 
   setup() {
     const store = useStore(key)
     const cd = computed(() => store.state.canvasDimensions)
 
     return {
-      cd
+      cd,
     }
-  }
+  },
 })
 </script>
 

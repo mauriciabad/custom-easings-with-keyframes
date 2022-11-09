@@ -4,8 +4,8 @@ import UpdateBanner from './components/UpdateBanner.vue'
 
 export default defineComponent({
   components: {
-    UpdateBanner
-  }
+    UpdateBanner,
+  },
 })
 </script>
 
@@ -15,9 +15,9 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
-@use '~inter-ui/variable' with (
+@use 'inter-ui/variable' with (
   $inter-font-display: swap,
-  $inter-font-path: '~inter-ui/Inter (web)'
+  $inter-font-path: 'inter-ui/Inter (web)'
 );
 @include variable.all;
 

@@ -6,7 +6,10 @@ import { toCanvasPoint } from '@/helpers'
 
 export default defineComponent({
   props: {
-    points: { type: Object as () => { x: number; y: number }[], required: true }
+    points: {
+      type: Object as () => { x: number; y: number }[],
+      required: true,
+    },
   },
 
   setup(props) {
@@ -18,7 +21,7 @@ export default defineComponent({
     )
 
     return { cd, pointsInCanvas }
-  }
+  },
 })
 </script>
 

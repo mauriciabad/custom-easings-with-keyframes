@@ -3,9 +3,6 @@ import { defineComponent } from 'vue'
 import { useGtag } from 'vue-gtag-next'
 
 export default defineComponent({
-  components: {},
-  props: {},
-
   emits: ['help-clicked'],
 
   setup(props, { emit }) {
@@ -13,22 +10,22 @@ export default defineComponent({
 
     function trackClickDonate() {
       event('donate', {
-        event_category: 'ecommerce'
+        event_category: 'ecommerce',
       })
     }
     function trackClickFeedback() {
       event('feedback', {
-        event_category: 'engagement'
+        event_category: 'engagement',
       })
     }
     function trackClickSourceCode() {
       event('view_source_code', {
-        event_category: 'engagement'
+        event_category: 'engagement',
       })
     }
     function trackClickHelp() {
       event('help', {
-        event_category: 'engagement'
+        event_category: 'engagement',
       })
     }
 
@@ -41,9 +38,9 @@ export default defineComponent({
       trackClickDonate,
       trackClickFeedback,
       trackClickSourceCode,
-      handleHelpClick
+      handleHelpClick,
     }
-  }
+  },
 })
 </script>
 

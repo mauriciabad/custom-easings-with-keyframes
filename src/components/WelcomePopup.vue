@@ -7,18 +7,17 @@ const shapes = [
   'M0 295.5C150 295.5 112.5 30 150 30C187.5 30 150 295.5 300 295.5',
   'M0.893555 299L30.3936 270H89.8936L150.394 149.5H209.394L270.894 2.5H298.394',
   'M3.39355 299.5C3.39355 299.5 18.9967 3.30024 149.894 3.99999C280.442 4.69788 297.394 299.5 297.394 299.5',
-  'M0.393555 296H28.9413V237.204H60.4941V177.428H90.0435V117.652H119.092V60.8161H150.645V3C150.645 3 169.176 3 179.693 3C179.693 296 287.373 296 299.394 296'
+  'M0.393555 296H28.9413V237.204H60.4941V177.428H90.0435V117.652H119.092V60.8161H150.645V3C150.645 3 169.176 3 179.693 3C179.693 296 287.373 296 299.394 296',
 ] as const
 
 const INTERVAL_DURATION = 5000 as const
 
 export default defineComponent({
-  components: {},
   props: {
     isVisible: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   emits: ['update:isVisible'],
@@ -34,18 +33,18 @@ export default defineComponent({
       path.value?.animate(
         [
           { clipPath: 'inset(-100% 100% -100% 0)' },
-          { clipPath: 'inset(-100% 0 -100% 0)' }
+          { clipPath: 'inset(-100% 0 -100% 0)' },
         ],
         {
           duration: 1000,
           delay: 500,
-          fill: 'backwards'
+          fill: 'backwards',
         }
       )
       path.value?.animate([{ opacity: 1 }, { opacity: 0 }], {
         duration: 1000,
         delay: INTERVAL_DURATION - 1000,
-        easing: 'cubic-bezier(0.5, 0, 0.75, 0)'
+        easing: 'cubic-bezier(0.5, 0, 0.75, 0)',
       })
     })
 
@@ -64,9 +63,9 @@ export default defineComponent({
       pathShape,
       path,
       handleAcceptButtonClick,
-      handleBackgroundClick
+      handleBackgroundClick,
     }
-  }
+  },
 })
 </script>
 

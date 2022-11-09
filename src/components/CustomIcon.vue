@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 
 const labels = {
   move: 'Move',
@@ -9,7 +9,7 @@ const labels = {
   'key-backspace': 'Key backspace',
   'right-arrow': 'Right arrow',
   slash: 'or',
-  plus: 'and'
+  plus: 'and',
 } as const
 
 type LabelName = keyof typeof labels
@@ -18,13 +18,13 @@ export default defineComponent({
   props: {
     name: {
       type: String as PropType<LabelName>,
-      required: true
-    }
+      required: true,
+    },
   },
 
   setup() {
     return { labels }
-  }
+  },
 })
 </script>
 

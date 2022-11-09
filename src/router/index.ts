@@ -1,6 +1,6 @@
 import { trackRouter } from 'vue-gtag-next'
 import 'vue-router'
-import { createRouter, createWebHistory, RouterOptions } from 'vue-router'
+import { createRouter, createWebHistory, type RouterOptions } from 'vue-router'
 import MainView from '../views/MainView.vue'
 
 declare module 'vue-router' {
@@ -15,14 +15,14 @@ const routes: RouterOptions['routes'] = [
     name: 'Main',
     component: MainView,
     meta: {
-      title: 'Keyframes easings editor | Make non-cubic-bezier easings in CSS'
-    }
-  }
+      title: 'Keyframes easings editor | Make non-cubic-bezier easings in CSS',
+    },
+  },
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes,
 })
 
 router.beforeEach((to, from, next) => {

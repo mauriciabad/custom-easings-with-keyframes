@@ -2,9 +2,6 @@
 import { computed, defineComponent, onBeforeUnmount, ref } from 'vue'
 
 export default defineComponent({
-  components: {},
-  props: {},
-
   setup() {
     let refreshing = false
     let registration: ServiceWorkerRegistration | null = null
@@ -16,7 +13,9 @@ export default defineComponent({
     )
 
     function swUpdatedHandler(
-      event: DocumentEventMap['swUpdatedCustomEvent']
+      // TODO: use the right type
+      // event: DocumentEventMap['swUpdatedCustomEvent']
+      event: any
     ): void {
       registration = event.detail
       updateExists.value = true
@@ -31,7 +30,7 @@ export default defineComponent({
     }
 
     document.addEventListener('swUpdatedCustomEvent', swUpdatedHandler, {
-      once: true
+      once: true,
     })
     onBeforeUnmount(() => {
       document.removeEventListener('swUpdatedCustomEvent', swUpdatedHandler)
@@ -56,9 +55,9 @@ export default defineComponent({
     return {
       handleUpdateClick,
       showBanner,
-      handleDismissClick
+      handleDismissClick,
     }
-  }
+  },
 })
 </script>
 

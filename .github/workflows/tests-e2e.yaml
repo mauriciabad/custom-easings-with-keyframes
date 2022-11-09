@@ -13,8 +13,9 @@ jobs:
       - name: ⚙️ Setup Cache
         uses: actions/cache@v2
         with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
 
       - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v2
@@ -25,15 +26,15 @@ jobs:
         run: npm install -g serve
 
       - name: 🤖 Run the tests
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
-          # record: true
+          record: true
           browser: chrome
-          build: yarn build
-          start: 'serve dist -l 8080'
-          wait-on: 'http://localhost:8080'
+          build: npm run build
+          start: 'serve dist -l 4173'
+          wait-on: 'http://localhost:4173'
           wait-on-timeout: 30
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

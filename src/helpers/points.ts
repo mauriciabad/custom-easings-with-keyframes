@@ -1,5 +1,5 @@
-import { Options, round } from '@/helpers'
-import { Point } from '@/types'
+import { type Options, round } from '@/helpers'
+import type { Point } from '@/types'
 
 export function calculateOffset(x: number, options: Readonly<Options>): number {
   const totalTime = options.beginingDelay + options.duration + options.endDelay
@@ -22,19 +22,19 @@ export function computePointsWithDelay(
           {
             x: 0,
             y: points[0].y,
-            isSelected: false
+            isSelected: false,
           },
           {
             x: calculateOffset(0, options) - 1e-6,
             y: points[0].y,
-            isSelected: false
-          }
+            isSelected: false,
+          },
         ]
       : []),
 
     ...points.map((point) => ({
       ...point,
-      x: calculateOffset(point.x, options)
+      x: calculateOffset(point.x, options),
     })),
 
     ...(options.endDelay
@@ -42,15 +42,15 @@ export function computePointsWithDelay(
           {
             x: calculateOffset(points[points.length - 1].x, options) + 1e-6,
             y: points[points.length - 1].y,
-            isSelected: false
+            isSelected: false,
           },
           {
             x: 100,
             y: points[points.length - 1].y,
-            isSelected: false
-          }
+            isSelected: false,
+          },
         ]
-      : [])
+      : []),
   ]
 
   const pointsCount: { [x: number]: number[] } = {}
@@ -71,7 +71,7 @@ export function computePointsWithDelay(
             : i === array.length - 1
             ? ys[ys.length - 1]
             : ys.reduce((sum, val) => sum + val, 0) / ys.length,
-        isSelected: false
+        isSelected: false,
       } as Point
     })
 }

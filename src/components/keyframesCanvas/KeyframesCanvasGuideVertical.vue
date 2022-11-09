@@ -5,7 +5,7 @@ import { useStore } from 'vuex'
 
 export default defineComponent({
   props: {
-    position: { type: Number, required: true }
+    position: { type: Number, required: true },
   },
 
   setup() {
@@ -13,9 +13,9 @@ export default defineComponent({
     const cd = computed(() => store.state.canvasDimensions)
 
     return {
-      cd
+      cd,
     }
-  }
+  },
 })
 </script>
 
