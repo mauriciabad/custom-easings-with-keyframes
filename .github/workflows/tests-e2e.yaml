@@ -12,9 +12,6 @@ jobs:
 
       - name: ⚙️ Setup Cache
         uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v2
@@ -29,7 +26,7 @@ jobs:
         with:
           # record: true
           browser: chrome
-          build: yarn build
+          build: npm run build
           start: 'serve dist -l 8080'
           wait-on: 'http://localhost:8080'
           wait-on-timeout: 30

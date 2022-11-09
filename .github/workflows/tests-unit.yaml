@@ -12,9 +12,6 @@ jobs:
 
       - name: ⚙️ Setup Cache
         uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v2
@@ -22,7 +19,7 @@ jobs:
           node-version-file: '.nvmrc'
 
       - name: 🚚 Install dependencies
-        run: yarn
+        run: npm ci
 
       - name: 🧪 Test
-        run: yarn test:unit
+        run: npm run test:unit
