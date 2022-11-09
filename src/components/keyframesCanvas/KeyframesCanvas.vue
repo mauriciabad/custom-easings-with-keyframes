@@ -6,7 +6,6 @@ import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
 import { useStore } from 'vuex'
 
 export default defineComponent({
-  
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)

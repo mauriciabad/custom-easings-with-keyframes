@@ -50,7 +50,6 @@ function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
 }
 
 export default defineComponent({
-
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)

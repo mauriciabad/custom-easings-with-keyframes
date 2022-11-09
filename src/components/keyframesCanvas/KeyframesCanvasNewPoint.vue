@@ -6,7 +6,7 @@ import { key } from '@/store'
 import type { Point } from '@/types'
 
 export default defineComponent({
-    props: {
+  props: {
     point: { type: Object as () => { x: number; y: number }, required: true },
   },
 

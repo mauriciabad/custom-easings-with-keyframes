@@ -1,4 +1,4 @@
-<script lang="ts">
+<script setup lang="ts">
 import { persistedRef } from '@/compositions/useLocalStorageRefs'
 import {
   computeGroupedPoints,
@@ -8,68 +8,49 @@ import {
 } from '@/helpers'
 import useOptions from '@/modules/options'
 import { key } from '@/store'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useGtag } from 'vue-gtag-next'
 import { useStore } from 'vuex'
 import Popper from 'vue3-popper'
 
 type CodeStyle = 'keyframes' | 'linear'
 
-export default defineComponent({
-  
-  setup() {
-    const store = useStore(key)
-    const points = computed(() => store.state.points)
-    const { options } = useOptions()
-    const pointsWithDelay = computed(() =>
-      computePointsWithDelay(points.value, options)
-    )
-    const pointsWithDelayGrouped = computed(() =>
-      computeGroupedPoints(pointsWithDelay.value)
-    )
+const store = useStore(key)
+const points = computed(() => store.state.points)
+const { options } = useOptions()
+const pointsWithDelay = computed(() =>
+  computePointsWithDelay(points.value, options)
+)
+const pointsWithDelayGrouped = computed(() =>
+  computeGroupedPoints(pointsWithDelay.value)
+)
 
-    const codeElement = ref<HTMLPreElement | null>(null)
-    const code = computed<string>(() => codeElement.value?.textContent ?? '')
+const codeElement = ref<HTMLPreElement | null>(null)
+const code = computed<string>(() => codeElement.value?.textContent ?? '')
 
-    const useLinear = persistedRef<boolean>('useLinear', false)
-    const codeStyle = computed<CodeStyle>(() =>
-      useLinear.value ? 'linear' : 'keyframes'
-    )
+const useLinear = persistedRef<boolean>('useLinear', false)
+const codeStyle = computed<CodeStyle>(() =>
+  useLinear.value ? 'linear' : 'keyframes'
+)
 
-    const { event } = useGtag()
-    let lastCopiedCode: string
-    function trackCopyCode() {
-      event('copy_code', {
-        event_category: 'engagement',
-        event_label: lastCopiedCode === code.value ? 'duplicate' : undefined,
-      })
+const { event } = useGtag()
+let lastCopiedCode: string
+function trackCopyCode() {
+  event('copy_code', {
+    event_category: 'engagement',
+    event_label: lastCopiedCode === code.value ? 'duplicate' : undefined,
+  })
 
-      lastCopiedCode = code.value
-    }
+  lastCopiedCode = code.value
+}
 
-    function copyCode() {
-      navigator.clipboard.writeText(code.value)
-      trackCopyCode()
-    }
-    function toggleSettings() {
-      // TODO: implement me
-    }
-
-    return {
-      options,
-      toggleSettings,
-      points,
-      isTransformProperty,
-      copyCode,
-      pointsWithDelay,
-      pointsWithDelayGrouped,
-      round,
-      codeElement,
-      codeStyle,
-      useLinear,
-    }
-  },
-})
+function copyCode() {
+  navigator.clipboard.writeText(code.value)
+  trackCopyCode()
+}
+function toggleSettings() {
+  // TODO: implement me
+}
 </script>
 
 <template>

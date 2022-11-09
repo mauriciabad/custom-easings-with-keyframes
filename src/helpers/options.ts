@@ -16,7 +16,7 @@ export enum Property {
   rotateY = 'rotateY',
 
   skewX = 'skewX',
-  skewY = 'skewY'
+  skewY = 'skewY',
 }
 
 export enum ValueUnits {
@@ -29,7 +29,7 @@ export enum ValueUnits {
   vw = 'vw',
   deg = 'deg',
   turn = 'turn',
-  rad = 'rad'
+  rad = 'rad',
 }
 
 export type Options = {
@@ -50,7 +50,7 @@ const units = {
     ValueUnits.rem,
     ValueUnits.em,
     ValueUnits.vw,
-    ValueUnits.vh
+    ValueUnits.vh,
   ],
   lengthPercentage: [
     ValueUnits['%'],
@@ -58,9 +58,9 @@ const units = {
     ValueUnits.rem,
     ValueUnits.em,
     ValueUnits.vw,
-    ValueUnits.vh
+    ValueUnits.vh,
   ],
-  angle: [ValueUnits.deg, ValueUnits.turn, ValueUnits.rad]
+  angle: [ValueUnits.deg, ValueUnits.turn, ValueUnits.rad],
 }
 
 export const allowedValueUnits: Record<keyof typeof Property, ValueUnits[]> = {
@@ -79,7 +79,7 @@ export const allowedValueUnits: Record<keyof typeof Property, ValueUnits[]> = {
   rotateY: [...units.angle],
 
   skewX: [...units.angle],
-  skewY: [...units.angle]
+  skewY: [...units.angle],
 }
 
 export const valueUnitsDefaultToValue: Record<keyof typeof ValueUnits, number> =
@@ -93,7 +93,7 @@ export const valueUnitsDefaultToValue: Record<keyof typeof ValueUnits, number> =
     vw: 10,
     deg: 360,
     turn: 1,
-    rad: 6.28319
+    rad: 6.28319,
   }
 
 export interface LocalOptions {
@@ -138,7 +138,7 @@ export const validateOptions = (
     endDelay:
       options.endDelay !== '' &&
       !isNaN(options.endDelay) &&
-      options.endDelay >= 0
+      options.endDelay >= 0,
   }
 
   if (
