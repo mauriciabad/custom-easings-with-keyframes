@@ -12,6 +12,10 @@ jobs:
 
       - name: ⚙️ Setup Cache
         uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
 
       - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v2
