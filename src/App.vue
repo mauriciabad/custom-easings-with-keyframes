@@ -1,12 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import UpdateBanner from './components/UpdateBanner.vue'
 
 export default defineComponent({
-  components: {
-    UpdateBanner,
-  },
-})
+  })
 </script>
 
 <template>

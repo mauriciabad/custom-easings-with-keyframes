@@ -1,27 +1,8 @@
 <script lang="ts">
-import AnimationCode from '@/components/animation/AnimationCode.vue'
-import AnimationOptions from '@/components/animation/AnimationOptions.vue'
-import AnimationPreview from '@/components/animation/AnimationPreview.vue'
-import FooterButtons from '@/components/FooterButtons.vue'
-import KeyframesCanvas from '@/components/keyframesCanvas/KeyframesCanvas.vue'
-import KeyframesCanvasPreview from '@/components/keyframesCanvas/KeyframesCanvasPreview.vue'
-import SmallScreenPopup from '@/components/SmallScreenPopup.vue'
-import WelcomePopup from '@/components/WelcomePopup.vue'
 import { persistedRef } from '@/compositions/useLocalStorageRefs'
 import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
-  components: {
-    AnimationCode,
-    AnimationOptions,
-    AnimationPreview,
-    FooterButtons,
-    KeyframesCanvas,
-    KeyframesCanvasPreview,
-    SmallScreenPopup,
-    WelcomePopup,
-  },
-
   setup() {
     const welcomeMessageWasSeen = persistedRef<boolean>(
       'welcomeMessageWasSeen',

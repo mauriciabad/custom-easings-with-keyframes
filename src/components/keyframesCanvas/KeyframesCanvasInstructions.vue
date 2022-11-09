@@ -1,10 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import CustomIcon from '@/components/CustomIcon.vue'
 
 export default defineComponent({
-  components: { CustomIcon },
-
+  
   setup() {
     return {}
   },
