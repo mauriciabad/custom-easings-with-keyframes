@@ -21,6 +21,7 @@
     "vuex": "4.1.0"
   },
   "devDependencies": {
+    "@rushstack/eslint-patch": "^1.1.4",
     "@types/dedent": "0.7.0",
     "@types/jest": "29.2.2",
     "@types/resize-observer-browser": "0.1.7",
@@ -44,7 +45,6 @@
     "dedent": "0.7.0",
     "deep-clone": "3.0.3",
     "eslint": "8.27.0",
-    "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-vue": "9.7.0",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
