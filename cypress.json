@@ -1,8 +1,0 @@
-{
-  "baseUrl": "http://localhost:8080",
-  "pluginsFile": "tests/e2e/plugins/index.js",
-  "projectId": "x4o3zk",
-  "viewportWidth": 1024,
-  "viewportHeight": 768,
-  "chromeWebSecurity": false
-}

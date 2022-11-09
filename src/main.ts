@@ -1,16 +1,14 @@
-import App from '@/App.vue'
-import '@/registerServiceWorker'
-import router from '@/router'
-import { key, store } from '@/store'
 import { createApp } from 'vue'
-import VueGtag from 'vue-gtag-next'
+import { createPinia } from 'pinia'
 
-createApp(App)
-  .use(store, key)
-  .use(router)
-  .use(VueGtag, {
-    property: {
-      id: 'G-27Z7FH09S0'
-    }
-  })
-  .mount('#app')
+import App from './App.vue'
+import router from './router'
+
+import './assets/main.css'
+
+const app = createApp(App)
+
+app.use(createPinia())
+app.use(router)
+
+app.mount('#app')

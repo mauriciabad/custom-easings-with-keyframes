@@ -1,35 +1,68 @@
-# Easy easings
+# custom-easings-with-keyframes
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/389499b3-5eff-4822-8fb8-4b4def71525e/deploy-status)](https://app.netlify.com/sites/custom-easings-with-keyframes/deploys)
-[![Cypress status](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/x4o3zk/main&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/x4o3zk/runs)
+This template should help get you started developing with Vue 3 in Vite.
 
-Make non-cubic-bezier easings with keyframes and animations.
+## Recommended IDE Setup
 
-Use it here:
-https://easyeasings.com/
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Project setup
+## Type Support for `.vue` Imports in TS
 
-Install dependencies:
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
-```bash
-yarn install
+If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+
+1. Disable the built-in TypeScript Extension
+    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
+    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
+2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Project Setup
+
+```sh
+npm install
 ```
 
-Run the app in develop mode:
+### Compile and Hot-Reload for Development
 
-```bash
-yarn serve
+```sh
+npm run dev
 ```
 
-Run the tests:
+### Type-Check, Compile and Minify for Production
 
-```bash
-yarn test:unit
+```sh
+npm run build
 ```
 
-Run your end-to-end tests
+### Run Unit Tests with [Vitest](https://vitest.dev/)
 
+```sh
+npm run test:unit
 ```
-yarn test:e2e
+
+### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
+
+```sh
+npm run test:e2e:dev
+```
+
+This runs the end-to-end tests against the Vite development server.
+It is much faster than the production build.
+
+But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
+
+```sh
+npm run build
+npm run test:e2e
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
 ```
