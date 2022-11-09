@@ -31,8 +31,8 @@ jobs:
           # record: true
           browser: chrome
           build: npm run build
-          start: 'serve dist -l 8080'
-          wait-on: 'http://localhost:8080'
+          start: 'serve dist -l 4173'
+          wait-on: 'http://localhost:4173'
           wait-on-timeout: 30
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

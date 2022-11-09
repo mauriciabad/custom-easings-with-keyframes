@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 /**
  * Cliks in the canvas at the specified coordenates
  * @param canvas Canvas to click in
@@ -15,14 +16,14 @@ export function clickInCanvas(
     const canvasBox = element[0].getBoundingClientRect()
     const canvasClickPoints = {
       x: x * canvasBox.width,
-      y: canvasBox.height - y * canvasBox.height
+      y: canvasBox.height - y * canvasBox.height,
     }
 
     switch (clickType) {
       case 'right':
         return canvas.rightclick(canvasClickPoints.x, canvasClickPoints.y, {
           force: true,
-          ...options
+          ...options,
         })
 
       case 'hover':
@@ -32,7 +33,7 @@ export function clickInCanvas(
           canvasClickPoints.y,
           {
             force: true,
-            ...options
+            ...options,
           }
         )
 
@@ -40,7 +41,7 @@ export function clickInCanvas(
       default:
         return canvas.click(canvasClickPoints.x, canvasClickPoints.y, {
           force: true,
-          ...options
+          ...options,
         })
     }
   })
