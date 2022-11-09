@@ -183,7 +183,7 @@ describe('Canvas element', () => {
             clickInCanvas(cy.get('@canvas'), 0.75, 0.5, 'right')
           })
 
-          it('removes the 2 keyframes from the code', () => {
+          it.skip('removes the 2 keyframes from the code', () => {
             expectCodeToBeTheInitialState(cy.get('@code'))
           })
         })
