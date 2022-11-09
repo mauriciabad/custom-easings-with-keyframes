@@ -48,9 +48,12 @@
   - Also, the delays must work.
   - And add e2e tests.
 
-## Migration to vue
+## Migration to Vite
 
-- [ ] Serviceworker ("there's an update" popup)
-- [ ] Pinia example file and setup is there,change vuex to pinia
-- [ ] Remove usages of defineComponent() and use script setup instead
+This are things pending after the Vite migration
+
+- [ ] Serviceworker (make sure that the "there's an update" popup works)
+- [ ] Pinia example file and setup is there, change vuex to pinia
+- [ ] Remove usages of defineComponent() and use &lt;script setup&gt; instead
 - [ ] Fix event type (there's a todo)
+- [ ] Fix skipped test
