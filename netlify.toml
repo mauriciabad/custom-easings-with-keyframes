@@ -1,0 +1,9 @@
+[build]
+  publish = "dist"
+  command = "npm build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
