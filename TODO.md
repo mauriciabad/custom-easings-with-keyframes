@@ -13,6 +13,7 @@
 - Show popup warning about unsaved changes before leaving
 
 ## Bugs
+- Too slow on some laptops
 
 ### Marketing
 
