@@ -3,6 +3,7 @@ import { computed, defineComponent } from 'vue'
 import { getSorroundingPoints, toCanvasPoint } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
+import type { Point } from '@/types'
 
 export default defineComponent({
   props: {
