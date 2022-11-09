@@ -4,11 +4,9 @@ import type { Point } from '@/types'
 import { toCanvasPoint } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
-import KeyframesCanvasPointsMask from '@/components/keyframesCanvas/KeyframesCanvasPointsMask.vue'
 
 export default defineComponent({
-  components: { KeyframesCanvasPointsMask },
-  props: { points: { type: Object as () => Point[], required: true } },
+    props: { points: { type: Object as () => Point[], required: true } },
 
   setup(props) {
     const store = useStore(key)

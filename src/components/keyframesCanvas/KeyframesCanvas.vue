@@ -1,9 +1,4 @@
 <script lang="ts">
-import KeyframesCanvasGuides from '@/components/keyframesCanvas/KeyframesCanvasGuides.vue'
-import KeyframesCanvasInstructions from '@/components/keyframesCanvas/KeyframesCanvasInstructions.vue'
-import KeyframesCanvasLine from '@/components/keyframesCanvas/KeyframesCanvasLine.vue'
-import KeyframesCanvasNewPoint from '@/components/keyframesCanvas/KeyframesCanvasNewPoint.vue'
-import KeyframesCanvasPoint from '@/components/keyframesCanvas/KeyframesCanvasPoint.vue'
 import { clamp, invertCoordenates } from '@/helpers'
 import { key } from '@/store'
 import deepClone from 'deep-clone'
@@ -11,14 +6,7 @@ import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
 import { useStore } from 'vuex'
 
 export default defineComponent({
-  components: {
-    KeyframesCanvasPoint,
-    KeyframesCanvasLine,
-    KeyframesCanvasGuides,
-    KeyframesCanvasInstructions,
-    KeyframesCanvasNewPoint,
-  },
-
+  
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)

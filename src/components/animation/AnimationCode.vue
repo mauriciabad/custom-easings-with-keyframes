@@ -12,16 +12,11 @@ import { computed, defineComponent, ref } from 'vue'
 import { useGtag } from 'vue-gtag-next'
 import { useStore } from 'vuex'
 import Popper from 'vue3-popper'
-import CelebrationCheckbox from '../generic/CelebrationCheckbox.vue'
 
 type CodeStyle = 'keyframes' | 'linear'
 
 export default defineComponent({
-  components: {
-    Popper,
-    CelebrationCheckbox,
-  },
-
+  
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)
