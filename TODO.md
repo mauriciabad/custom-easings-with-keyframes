@@ -13,6 +13,7 @@
 - Show popup warning about unsaved changes before leaving
 
 ## Bugs
+
 - Too slow on some laptops
 
 ### Marketing
@@ -20,8 +21,8 @@
 - Nice readme
 - share on
   - reddit (help from friend)
-  - https://www.producthunt.com/
-  - http://easings.net/
+  - <https://www.producthunt.com/>
+  - <http://easings.net/>
 
 ## Mid-term
 
@@ -42,12 +43,13 @@
 - Parse css and create the graph
 - If the graph can be a cubic bezier, sugest it.
 - Tap <kbd>S</kbd> key to enable symetry mode, when one point is added to a side, it appears on the other as well. Would be nice to be able to move the simetry axis.
-- This proposal https://github.com/w3c/csswg-drafts/pull/6533
-  - When first or last point are not 0 or 100, the line should continue. The animation also do that behavior. 
-  - Also, the delays must work. 
+- This proposal <https://github.com/w3c/csswg-drafts/pull/6533>
+  - When first or last point are not 0 or 100, the line should continue. The animation also do that behavior.
+  - Also, the delays must work.
   - And add e2e tests.
 
 ## Migration to vue
+
 - [ ] Serviceworker ("there's an update" popup)
 - [ ] Pinia example file and setup is there,change vuex to pinia
 - [ ] Remove usages of defineComponent() and use script setup instead
