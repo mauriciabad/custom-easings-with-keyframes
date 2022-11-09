@@ -6,7 +6,12 @@ import { useStore } from 'vuex'
 import { key } from '@/store'
 
 export default defineComponent({
-  props: { point: { type: Object as () => Point, required: true } },
+  props: {
+    point: {
+      type: Object as () => Point,
+      required: true,
+    },
+  },
 
   setup(props) {
     const store = useStore(key)

@@ -6,8 +6,6 @@ import { computeKeyframes } from '@/helpers'
 import useOptions from '@/modules/options'
 
 export default defineComponent({
-  components: {},
-  props: {},
 
   setup() {
     const store = useStore(key)

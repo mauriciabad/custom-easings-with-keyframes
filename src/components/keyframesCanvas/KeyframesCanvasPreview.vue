@@ -50,8 +50,6 @@ function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
 }
 
 export default defineComponent({
-  components: {},
-  props: {},
 
   setup() {
     const store = useStore(key)

@@ -3,9 +3,6 @@ import { defineComponent } from 'vue'
 import { useGtag } from 'vue-gtag-next'
 
 export default defineComponent({
-  components: {},
-  props: {},
-
   emits: ['help-clicked'],
 
   setup(props, { emit }) {

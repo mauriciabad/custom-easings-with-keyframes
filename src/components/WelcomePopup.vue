@@ -13,7 +13,6 @@ const shapes = [
 const INTERVAL_DURATION = 5000 as const
 
 export default defineComponent({
-  components: {},
   props: {
     isVisible: {
       type: Boolean,

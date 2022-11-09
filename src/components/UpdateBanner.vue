@@ -2,9 +2,6 @@
 import { computed, defineComponent, onBeforeUnmount, ref } from 'vue'
 
 export default defineComponent({
-  components: {},
-  props: {},
-
   setup() {
     let refreshing = false
     let registration: ServiceWorkerRegistration | null = null
@@ -18,7 +15,7 @@ export default defineComponent({
     function swUpdatedHandler(
       // TODO: use the right type
       // event: DocumentEventMap['swUpdatedCustomEvent']
-      event
+      event: any
     ): void {
       registration = event.detail
       updateExists.value = true

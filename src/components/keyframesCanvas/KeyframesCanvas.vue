@@ -1,5 +1,4 @@
 <script lang="ts">
-/// <reference types="resize-observer-browser" />
 import KeyframesCanvasGuides from '@/components/keyframesCanvas/KeyframesCanvasGuides.vue'
 import KeyframesCanvasInstructions from '@/components/keyframesCanvas/KeyframesCanvasInstructions.vue'
 import KeyframesCanvasLine from '@/components/keyframesCanvas/KeyframesCanvasLine.vue'
@@ -19,7 +18,6 @@ export default defineComponent({
     KeyframesCanvasInstructions,
     KeyframesCanvasNewPoint,
   },
-  props: {},
 
   setup() {
     const store = useStore(key)

@@ -5,6 +5,7 @@ import { useStore } from 'vuex'
 import { key } from '@/store'
 import KeyframesCanvasPointsMask from '@/components/keyframesCanvas/KeyframesCanvasPointsMask.vue'
 import KeyframesCanvasPoint from '@/components/keyframesCanvas/KeyframesCanvasPoint.vue'
+import type { Point } from '@/types'
 
 export default defineComponent({
   components: { KeyframesCanvasPointsMask, KeyframesCanvasPoint },
@@ -55,7 +56,10 @@ export default defineComponent({
     <defs>
       <keyframes-canvas-points-mask
         id="new-point-mask"
-        :points="[point, ...sorroundingPoints.filter((p) => p !== undefined)]"
+        :points="[
+          point,
+          ...(sorroundingPoints.filter((p):p is Point => p !== undefined)),
+        ]"
       />
     </defs>
 
@@ -77,7 +81,7 @@ export default defineComponent({
         class="path"
       />
     </g>
-    <keyframes-canvas-point :point="point" />
+    <keyframes-canvas-point :point="{ isSelected: false, ...point }" />
   </g>
 </template>
 

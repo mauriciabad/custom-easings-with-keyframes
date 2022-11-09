@@ -2,8 +2,6 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  components: {},
-  props: {},
 
   setup() {
     const userAknowladges = ref(false)

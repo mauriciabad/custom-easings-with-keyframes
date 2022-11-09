@@ -10,7 +10,6 @@ export default defineComponent({
     KeyframesCanvasGuideHorizontal,
     KeyframesCanvasGuideVertical,
   },
-  props: {},
 
   setup() {
     const store = useStore(key)
