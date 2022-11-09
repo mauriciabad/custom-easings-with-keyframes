@@ -6,7 +6,6 @@ import { computeKeyframes } from '@/helpers'
 import useOptions from '@/modules/options'
 
 export default defineComponent({
-
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)

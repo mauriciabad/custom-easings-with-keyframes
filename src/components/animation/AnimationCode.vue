@@ -16,7 +16,6 @@ import Popper from 'vue3-popper'
 type CodeStyle = 'keyframes' | 'linear'
 
 export default defineComponent({
-  
   setup() {
     const store = useStore(key)
     const points = computed(() => store.state.points)
