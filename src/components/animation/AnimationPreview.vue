@@ -11,7 +11,7 @@ const animation = ref<Animation>()
 
 watchEffect(() => {
   if (previewElement.value) {
-    const keyframes = computeKeyframes(points.value, options)
+    const keyframes = computeKeyframes(points, options)
 
     if (animation.value) animation.value.cancel()
     animation.value = previewElement.value.animate(keyframes, {
