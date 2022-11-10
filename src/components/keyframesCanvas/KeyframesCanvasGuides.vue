@@ -1,18 +1,10 @@
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 import { key } from '@/store'
 
-export default defineComponent({
-  setup() {
-    const store = useStore(key)
-    const cd = computed(() => store.state.canvasDimensions)
-
-    return {
-      cd,
-    }
-  },
-})
+const store = useStore(key)
+const cd = computed(() => store.state.canvasDimensions)
 </script>
 
 <template>

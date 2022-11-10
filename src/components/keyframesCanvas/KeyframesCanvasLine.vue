@@ -1,41 +1,34 @@
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 import type { Point } from '@/types'
 import { toCanvasPoint } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
 
-export default defineComponent({
-  props: { points: { type: Object as () => Point[], required: true } },
+const props = defineProps<{
+  points: Point[]
+}>()
+const store = useStore(key)
+const cd = computed(() => store.state.canvasDimensions)
 
-  setup(props) {
-    const store = useStore(key)
-    const cd = computed(() => store.state.canvasDimensions)
+const pointsInCanvas = computed(() => {
+  const pointsWithStartAndEnd = [...props.points]
 
-    const pointsInCanvas = computed(() => {
-      const pointsWithStartAndEnd = [...props.points]
+  if (pointsWithStartAndEnd[0].x !== 0) {
+    pointsWithStartAndEnd.unshift({ x: 0, y: 0, isSelected: false })
+  }
+  if (pointsWithStartAndEnd[pointsWithStartAndEnd.length - 1].x !== 100) {
+    pointsWithStartAndEnd.push({ x: 100, y: 0, isSelected: false })
+  }
 
-      if (pointsWithStartAndEnd[0].x !== 0) {
-        pointsWithStartAndEnd.unshift({ x: 0, y: 0, isSelected: false })
-      }
-      if (pointsWithStartAndEnd[pointsWithStartAndEnd.length - 1].x !== 100) {
-        pointsWithStartAndEnd.push({ x: 100, y: 0, isSelected: false })
-      }
-
-      return pointsWithStartAndEnd.map((point) =>
-        toCanvasPoint(point, cd.value)
-      )
-    })
-
-    const path = computed(() =>
-      pointsInCanvas.value.reduce((total, { x, y }) => {
-        return total ? `${total}L${x} ${y}` : `M${x} ${y}`
-      }, '')
-    )
-
-    return { path, pointsInCanvas, cd }
-  },
+  return pointsWithStartAndEnd.map((point) => toCanvasPoint(point, cd.value))
 })
+
+const path = computed(() =>
+  pointsInCanvas.value.reduce((total, { x, y }) => {
+    return total ? `${total}L${x} ${y}` : `M${x} ${y}`
+  }, '')
+)
 </script>
 
 <template>

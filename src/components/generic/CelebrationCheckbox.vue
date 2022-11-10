@@ -1,30 +1,18 @@
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 
-export default defineComponent({
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-    modelValue: {
-      type: Boolean,
-      required: true,
-    },
-  },
+const props = defineProps<{
+  id: string
+  modelValue: boolean
+}>()
 
-  emits: ['update:modelValue'],
+const emit = defineEmits<{
+  (event: 'update:modelValue', value: boolean): void
+}>()
 
-  setup(props, context) {
-    const localValue = computed({
-      get: () => props.modelValue,
-      set: (value) => context.emit('update:modelValue', value),
-    })
-
-    return {
-      localValue,
-    }
-  },
+const localValue = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value),
 })
 </script>
 

@@ -1,47 +1,37 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import { useGtag } from 'vue-gtag-next'
 
-export default defineComponent({
-  emits: ['help-clicked'],
+const emit = defineEmits<{
+  (event: 'help-clicked'): void
+}>()
 
-  setup(props, { emit }) {
-    const { event } = useGtag()
+const { event } = useGtag()
 
-    function trackClickDonate() {
-      event('donate', {
-        event_category: 'ecommerce',
-      })
-    }
-    function trackClickFeedback() {
-      event('feedback', {
-        event_category: 'engagement',
-      })
-    }
-    function trackClickSourceCode() {
-      event('view_source_code', {
-        event_category: 'engagement',
-      })
-    }
-    function trackClickHelp() {
-      event('help', {
-        event_category: 'engagement',
-      })
-    }
+function trackClickDonate() {
+  event('donate', {
+    event_category: 'ecommerce',
+  })
+}
+function trackClickFeedback() {
+  event('feedback', {
+    event_category: 'engagement',
+  })
+}
+function trackClickSourceCode() {
+  event('view_source_code', {
+    event_category: 'engagement',
+  })
+}
+function trackClickHelp() {
+  event('help', {
+    event_category: 'engagement',
+  })
+}
 
-    function handleHelpClick() {
-      trackClickHelp()
-      emit('help-clicked')
-    }
-
-    return {
-      trackClickDonate,
-      trackClickFeedback,
-      trackClickSourceCode,
-      handleHelpClick,
-    }
-  },
-})
+function handleHelpClick() {
+  trackClickHelp()
+  emit('help-clicked')
+}
 </script>
 
 <template>
