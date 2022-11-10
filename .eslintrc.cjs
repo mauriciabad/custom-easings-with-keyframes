@@ -20,7 +20,6 @@ module.exports = {
     'vue/block-lang': ['error', { script: { lang: 'ts' } }],
     'prefer-template': 'warn',
     'no-undef': 'off',
-    'no-unused-vars': 'warn',
     'vue/component-api-style': ['error', ['script-setup']],
   },
   overrides: [
