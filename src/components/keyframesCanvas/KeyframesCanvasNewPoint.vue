@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed } from 'vue'
 import { getSorroundingPoints, toCanvasPoint } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
