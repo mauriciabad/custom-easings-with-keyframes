@@ -1,32 +1,26 @@
-<script lang="ts">
-import { computed, defineComponent, ref, watchEffect } from 'vue'
+<script setup lang="ts">
+import { computed, ref, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { key } from '@/store'
 import { computeKeyframes } from '@/helpers'
 import useOptions from '@/modules/options'
 
-export default defineComponent({
-  setup() {
-    const store = useStore(key)
-    const points = computed(() => store.state.points)
-    const { options } = useOptions()
-    const previewElement = ref<HTMLDivElement>()
-    const animation = ref<Animation>()
+const store = useStore(key)
+const points = computed(() => store.state.points)
+const { options } = useOptions()
+const previewElement = ref<HTMLDivElement>()
+const animation = ref<Animation>()
 
-    watchEffect(() => {
-      if (previewElement.value) {
-        const keyframes = computeKeyframes(points.value, options)
+watchEffect(() => {
+  if (previewElement.value) {
+    const keyframes = computeKeyframes(points.value, options)
 
-        if (animation.value) animation.value.cancel()
-        animation.value = previewElement.value.animate(keyframes, {
-          duration: options.duration,
-          iterations: Infinity,
-        })
-      }
+    if (animation.value) animation.value.cancel()
+    animation.value = previewElement.value.animate(keyframes, {
+      duration: options.duration,
+      iterations: Infinity,
     })
-
-    return { previewElement }
-  },
+  }
 })
 </script>
 

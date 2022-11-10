@@ -1,27 +1,16 @@
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 
 import { invertCoordenates } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
 
-export default defineComponent({
-  props: {
-    position: { type: Number, required: true },
-  },
+const props = defineProps<{ position: number }>()
 
-  setup(props) {
-    const store = useStore(key)
-    const cd = computed(() => store.state.canvasDimensions)
+const store = useStore(key)
+const cd = computed(() => store.state.canvasDimensions)
 
-    const positionInverted = computed(() => invertCoordenates(props.position))
-
-    return {
-      positionInverted,
-      cd,
-    }
-  },
-})
+const positionInverted = computed(() => invertCoordenates(props.position))
 </script>
 
 <template>

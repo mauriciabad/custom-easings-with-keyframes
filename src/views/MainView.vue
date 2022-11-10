@@ -1,25 +1,19 @@
-<script lang="ts">
+<script setup lang="ts">
 import { persistedRef } from '@/compositions/useLocalStorageRefs'
-import { defineComponent, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
-export default defineComponent({
-  setup() {
-    const welcomeMessageWasSeen = persistedRef<boolean>(
-      'welcomeMessageWasSeen',
-      false
-    )
+const welcomeMessageWasSeen = persistedRef<boolean>(
+  'welcomeMessageWasSeen',
+  false
+)
 
-    const isWelcomeVisible = ref<boolean>(!welcomeMessageWasSeen.value)
+const isWelcomeVisible = ref<boolean>(!welcomeMessageWasSeen.value)
 
-    const unwatchIsWelcomeVisible = watch(isWelcomeVisible, (newValue) => {
-      if (newValue === false) {
-        welcomeMessageWasSeen.value = true
-        unwatchIsWelcomeVisible()
-      }
-    })
-
-    return { isWelcomeVisible, welcomeMessageWasSeen }
-  },
+const unwatchIsWelcomeVisible = watch(isWelcomeVisible, (newValue) => {
+  if (newValue === false) {
+    welcomeMessageWasSeen.value = true
+    unwatchIsWelcomeVisible()
+  }
 })
 </script>
 

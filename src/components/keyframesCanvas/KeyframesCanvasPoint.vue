@@ -1,29 +1,20 @@
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 import type { Point } from '@/types'
 import { toCanvasPoint } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
 
-export default defineComponent({
-  props: {
-    point: {
-      type: Object as () => Point,
-      required: true,
-    },
-  },
+const props = defineProps<{
+  point: Point
+}>()
 
-  setup(props) {
-    const store = useStore(key)
-    const canvasDimensions = computed(() => store.state.canvasDimensions)
+const store = useStore(key)
+const canvasDimensions = computed(() => store.state.canvasDimensions)
 
-    const pointInCanvas = computed(() =>
-      toCanvasPoint(props.point, canvasDimensions.value)
-    )
-
-    return { pointInCanvas }
-  },
-})
+const pointInCanvas = computed(() =>
+  toCanvasPoint(props.point, canvasDimensions.value)
+)
 </script>
 
 <template>

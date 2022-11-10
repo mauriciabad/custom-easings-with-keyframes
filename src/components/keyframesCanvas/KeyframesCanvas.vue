@@ -1,188 +1,171 @@
-<script lang="ts">
+<script setup lang="ts">
 import { clamp, invertCoordenates } from '@/helpers'
 import { key } from '@/store'
 import deepClone from 'deep-clone'
-import { computed, defineComponent, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useStore } from 'vuex'
 
-export default defineComponent({
-  setup() {
-    const store = useStore(key)
-    const points = computed(() => store.state.points)
-    const cd = computed(() => store.state.canvasDimensions)
+const store = useStore(key)
+const points = computed(() => store.state.points)
+const cd = computed(() => store.state.canvasDimensions)
 
-    const newPoint = ref<
-      | {
-          x: number
-          y: number
-        }
-      | undefined
-    >()
-
-    let moveOrigin = {
-      x: 0,
-      y: 0,
+const newPoint = ref<
+  | {
+      x: number
+      y: number
     }
+  | undefined
+>()
 
-    const originalPoints = ref(points.value)
-    const isMoving = ref(false)
-    const wasMovingPointSelected = ref(false)
+let moveOrigin = {
+  x: 0,
+  y: 0,
+}
 
-    const canvas = ref<SVGElement>()
-    const canvasContainer = ref<HTMLDivElement>()
+const originalPoints = ref(points.value)
+const isMoving = ref(false)
+const wasMovingPointSelected = ref(false)
 
-    function extractCoordenates(event: MouseEvent) {
-      if (!canvas.value) return { x: 0, y: 0 }
+const canvas = ref<SVGElement>()
+const canvasContainer = ref<HTMLDivElement>()
 
-      const canvasRects = canvas.value.getClientRects()[0]
-      const offset = {
-        x: event.clientX - canvasRects.left,
-        y: event.clientY - canvasRects.top,
-      }
+function extractCoordenates(event: MouseEvent) {
+  if (!canvas.value) return { x: 0, y: 0 }
 
-      return {
-        x: clamp(
-          Math.round(((offset.x - cd.value.offset.x) / cd.value.width) * 100),
-          0,
-          100
-        ),
-        y: Math.round(
-          invertCoordenates(
-            (offset.y -
-              cd.value.height * (cd.value.maxY - 1 + cd.value.stepY / 2)) /
-              cd.value.height
-          ) * 100
-        ),
-      }
+  const canvasRects = canvas.value.getClientRects()[0]
+  const offset = {
+    x: event.clientX - canvasRects.left,
+    y: event.clientY - canvasRects.top,
+  }
+
+  return {
+    x: clamp(
+      Math.round(((offset.x - cd.value.offset.x) / cd.value.width) * 100),
+      0,
+      100
+    ),
+    y: Math.round(
+      invertCoordenates(
+        (offset.y -
+          cd.value.height * (cd.value.maxY - 1 + cd.value.stepY / 2)) /
+          cd.value.height
+      ) * 100
+    ),
+  }
+}
+
+const resizeObserver = new ResizeObserver((entries) => {
+  store.commit('resize', {
+    height: entries[0].contentRect.height,
+    width: entries[0].contentRect.width,
+  })
+})
+
+onMounted(() => {
+  if (canvasContainer.value) {
+    resizeObserver.observe(canvasContainer.value)
+  }
+})
+
+onUnmounted(() => {
+  if (canvasContainer.value) {
+    resizeObserver.unobserve(canvasContainer.value)
+  }
+})
+
+document.body.addEventListener('keydown', function (event: KeyboardEvent) {
+  switch (event.key) {
+    case 'Backspace':
+    case 'Delete':
+      store.commit('deleteFocusedPoints')
+      break
+    case 'Escape':
+      store.commit('blurAllPoints')
+      break
+  }
+})
+
+function handleLeftClick(event: MouseEvent) {
+  moveOrigin = extractCoordenates(event)
+
+  const point = points.value.find((p) => p.x === moveOrigin.x)
+  wasMovingPointSelected.value = point ? point.isSelected : false
+
+  store.commit('createPoint', moveOrigin)
+
+  if (!wasMovingPointSelected.value && !event.shiftKey) {
+    store.commit('blurAllPoints', moveOrigin)
+  }
+  store.commit('focusPoint', moveOrigin)
+
+  originalPoints.value = deepClone(points.value)
+  isMoving.value = true
+}
+
+function handleMouseMove(event: MouseEvent) {
+  newPoint.value = extractCoordenates(event)
+
+  if (isMoving.value) {
+    const moveEnd = extractCoordenates(event)
+
+    const moveOffset = {
+      x: moveEnd.x - moveOrigin.x,
+      y: moveEnd.y - moveOrigin.y,
     }
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      store.commit('resize', {
-        height: entries[0].contentRect.height,
-        width: entries[0].contentRect.width,
-      })
+    store.commit('moveSelectedPoints', {
+      moveOffset,
+      originalPoints: originalPoints.value,
     })
+  }
+}
 
-    onMounted(() => {
-      if (canvasContainer.value) {
-        resizeObserver.observe(canvasContainer.value)
-      }
-    })
+function handleLeftClickUp(event: MouseEvent) {
+  handleMouseMove(event)
 
-    onUnmounted(() => {
-      if (canvasContainer.value) {
-        resizeObserver.unobserve(canvasContainer.value)
-      }
-    })
-
-    document.body.addEventListener('keydown', function (event: KeyboardEvent) {
-      switch (event.key) {
-        case 'Backspace':
-        case 'Delete':
-          store.commit('deleteFocusedPoints')
-          break
-        case 'Escape':
-          store.commit('blurAllPoints')
-          break
-      }
-    })
-
-    function handleLeftClick(event: MouseEvent) {
-      moveOrigin = extractCoordenates(event)
-
-      const point = points.value.find((p) => p.x === moveOrigin.x)
-      wasMovingPointSelected.value = point ? point.isSelected : false
-
-      store.commit('createPoint', moveOrigin)
-
-      if (!wasMovingPointSelected.value && !event.shiftKey) {
+  const moveEnd = extractCoordenates(event)
+  if (moveOrigin.x === moveEnd.x && moveOrigin.y === moveEnd.y) {
+    if (wasMovingPointSelected.value) {
+      store.commit('blurPoint', moveOrigin)
+    } else {
+      if (!event.shiftKey) {
         store.commit('blurAllPoints', moveOrigin)
       }
       store.commit('focusPoint', moveOrigin)
-
-      originalPoints.value = deepClone(points.value)
-      isMoving.value = true
     }
+  }
+  isMoving.value = false
+}
 
-    function handleMouseMove(event: MouseEvent) {
-      newPoint.value = extractCoordenates(event)
+function handleRightClick(event: MouseEvent) {
+  const position = extractCoordenates(event)
+  const point = points.value.find((p) => p.x === position.x)
+  if (point) store.commit('focusPoint', position)
 
-      if (isMoving.value) {
-        const moveEnd = extractCoordenates(event)
+  store.commit('deleteFocusedPoints')
+}
 
-        const moveOffset = {
-          x: moveEnd.x - moveOrigin.x,
-          y: moveEnd.y - moveOrigin.y,
-        }
-        store.commit('moveSelectedPoints', {
-          moveOffset,
-          originalPoints: originalPoints.value,
-        })
-      }
-    }
+function handleMouseLeave() {
+  newPoint.value = undefined
+}
 
-    function handleLeftClickUp(event: MouseEvent) {
-      handleMouseMove(event)
+function handleMouseUp(event: MouseEvent) {
+  event.preventDefault()
+  if (event.which === 1) {
+    handleLeftClickUp(event)
+  }
+}
 
-      const moveEnd = extractCoordenates(event)
-      if (moveOrigin.x === moveEnd.x && moveOrigin.y === moveEnd.y) {
-        if (wasMovingPointSelected.value) {
-          store.commit('blurPoint', moveOrigin)
-        } else {
-          if (!event.shiftKey) {
-            store.commit('blurAllPoints', moveOrigin)
-          }
-          store.commit('focusPoint', moveOrigin)
-        }
-      }
-      isMoving.value = false
-    }
-
-    function handleRightClick(event: MouseEvent) {
-      const position = extractCoordenates(event)
-      const point = points.value.find((p) => p.x === position.x)
-      if (point) store.commit('focusPoint', position)
-
-      store.commit('deleteFocusedPoints')
-    }
-
-    function handleMouseLeave() {
-      newPoint.value = undefined
-    }
-
-    function handleMouseUp(event: MouseEvent) {
-      event.preventDefault()
-      if (event.which === 1) {
-        handleLeftClickUp(event)
-      }
-    }
-
-    function handleMouseDown(event: MouseEvent) {
-      event.preventDefault()
-      switch (event.which) {
-        case 1:
-          handleLeftClick(event)
-          break
-        case 3:
-          handleRightClick(event)
-          break
-      }
-    }
-
-    return {
-      points,
-      cd,
-      handleMouseDown,
-      handleMouseMove,
-      handleMouseUp,
-      handleRightClick,
-      handleMouseLeave,
-      canvas,
-      canvasContainer,
-      newPoint,
-    }
-  },
-})
+function handleMouseDown(event: MouseEvent) {
+  event.preventDefault()
+  switch (event.which) {
+    case 1:
+      handleLeftClick(event)
+      break
+    case 3:
+      handleRightClick(event)
+      break
+  }
+}
 </script>
 
 <template>

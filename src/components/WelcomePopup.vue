@@ -1,5 +1,5 @@
-<script lang="ts">
-import { computed, defineComponent, onDeactivated, ref, watch } from 'vue'
+<script setup lang="ts">
+import { computed, onDeactivated, ref, watch } from 'vue'
 
 const shapes = [
   'M0.393555 148.5C0.393555 148.5 18.8936 148.5 27.3936 148.5C35.8936 148.5 37.1566 135 44.8936 135C52.6305 135 49.8936 179 59.8936 179C72.3936 179 75.8936 90 90.3936 90C104.894 90 106.394 227 121.394 227C136.394 227 137.394 29 150.394 29C163.394 29 163.894 227 180.394 227C194.394 227 196.394 90 210.394 90C224.394 90 227.394 179 239.394 179C251.394 179 251.916 135 260.394 135C268.871 135 266.894 148.5 274.394 148.5C281.894 148.5 298.894 148.5 298.894 148.5',
@@ -12,61 +12,52 @@ const shapes = [
 
 const INTERVAL_DURATION = 5000 as const
 
-export default defineComponent({
-  props: {
-    isVisible: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['update:isVisible'],
-
-  setup(props, { emit }) {
-    const count = ref(0)
-    const intervalId = setInterval(() => ++count.value, INTERVAL_DURATION)
-
-    const path = ref<SVGPathElement | null>(null)
-    const pathShape = computed(() => shapes[count.value % shapes.length])
-
-    watch(pathShape, () => {
-      path.value?.animate(
-        [
-          { clipPath: 'inset(-100% 100% -100% 0)' },
-          { clipPath: 'inset(-100% 0 -100% 0)' },
-        ],
-        {
-          duration: 1000,
-          delay: 500,
-          fill: 'backwards',
-        }
-      )
-      path.value?.animate([{ opacity: 1 }, { opacity: 0 }], {
-        duration: 1000,
-        delay: INTERVAL_DURATION - 1000,
-        easing: 'cubic-bezier(0.5, 0, 0.75, 0)',
-      })
-    })
-
-    onDeactivated(() => {
-      clearInterval(intervalId)
-    })
-
-    function handleAcceptButtonClick() {
-      emit('update:isVisible', false)
-    }
-    function handleBackgroundClick() {
-      emit('update:isVisible', false)
-    }
-
-    return {
-      pathShape,
-      path,
-      handleAcceptButtonClick,
-      handleBackgroundClick,
-    }
+defineProps({
+  isVisible: {
+    type: Boolean,
+    default: false,
   },
 })
+
+const emit = defineEmits<{
+  (event: 'update:isVisible', value: boolean): void
+}>()
+
+const count = ref(0)
+const intervalId = setInterval(() => ++count.value, INTERVAL_DURATION)
+
+const path = ref<SVGPathElement | null>(null)
+const pathShape = computed(() => shapes[count.value % shapes.length])
+
+watch(pathShape, () => {
+  path.value?.animate(
+    [
+      { clipPath: 'inset(-100% 100% -100% 0)' },
+      { clipPath: 'inset(-100% 0 -100% 0)' },
+    ],
+    {
+      duration: 1000,
+      delay: 500,
+      fill: 'backwards',
+    }
+  )
+  path.value?.animate([{ opacity: 1 }, { opacity: 0 }], {
+    duration: 1000,
+    delay: INTERVAL_DURATION - 1000,
+    easing: 'cubic-bezier(0.5, 0, 0.75, 0)',
+  })
+})
+
+onDeactivated(() => {
+  clearInterval(intervalId)
+})
+
+function handleAcceptButtonClick() {
+  emit('update:isVisible', false)
+}
+function handleBackgroundClick() {
+  emit('update:isVisible', false)
+}
 </script>
 
 <template>

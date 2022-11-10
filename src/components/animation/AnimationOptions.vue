@@ -1,4 +1,4 @@
-<script lang="ts">
+<script setup lang="ts">
 import {
   allowedValueUnits,
   assign,
@@ -10,38 +10,26 @@ import {
 } from '@/helpers'
 import useOptions from '@/modules/options'
 import deepClone from 'deep-clone'
-import { computed, defineComponent, reactive, watch, watchEffect } from 'vue'
+import { computed, reactive, watch, watchEffect } from 'vue'
 
-export default defineComponent({
-  setup() {
-    const { options, lastUpdatedOptions, updateSomeOptions } = useOptions()
-    const localOptions = reactive<LocalOptions>(deepClone(options))
-    const validOptions = computed(() =>
-      validateOptions(fillWithDefaultOptions(localOptions))
-    )
+const { options, lastUpdatedOptions, updateSomeOptions } = useOptions()
+const localOptions = reactive<LocalOptions>(deepClone(options))
+const validOptions = computed(() =>
+  validateOptions(fillWithDefaultOptions(localOptions))
+)
 
-    watch(lastUpdatedOptions, () => {
-      assign(localOptions, {
-        ...localOptions,
-        ...removeDefaults(lastUpdatedOptions, localOptions),
-      })
-    })
-
-    watchEffect(() => {
-      updateSomeOptions(localOptions)
-    })
-
-    const valueUnitsList = computed(() => allowedValueUnits[options.property])
-
-    return {
-      options,
-      Property,
-      valueUnitsList,
-      validOptions,
-      localOptions,
-    }
-  },
+watch(lastUpdatedOptions, () => {
+  assign(localOptions, {
+    ...localOptions,
+    ...removeDefaults(lastUpdatedOptions, localOptions),
+  })
 })
+
+watchEffect(() => {
+  updateSomeOptions(localOptions)
+})
+
+const valueUnitsList = computed(() => allowedValueUnits[options.property])
 </script>
 
 <template>

@@ -1,17 +1,11 @@
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
 
-export default defineComponent({
-  setup() {
-    const userAknowladges = ref(false)
+const userAknowladges = ref(false)
 
-    function handleClick() {
-      userAknowladges.value = true
-    }
-
-    return { userAknowladges, handleClick }
-  },
-})
+function handleClick() {
+  userAknowladges.value = true
+}
 </script>
 
 <template>

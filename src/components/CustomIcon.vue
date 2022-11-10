@@ -1,6 +1,4 @@
-<script lang="ts">
-import { defineComponent, type PropType } from 'vue'
-
+<script setup lang="ts">
 const labels = {
   move: 'Move',
   'left-click': 'Left click',
@@ -14,18 +12,7 @@ const labels = {
 
 type LabelName = keyof typeof labels
 
-export default defineComponent({
-  props: {
-    name: {
-      type: String as PropType<LabelName>,
-      required: true,
-    },
-  },
-
-  setup() {
-    return { labels }
-  },
-})
+defineProps<{ name: LabelName }>()
 </script>
 
 <template>

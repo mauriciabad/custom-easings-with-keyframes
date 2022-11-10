@@ -1,50 +1,38 @@
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue'
 import { getSorroundingPoints, toCanvasPoint } from '@/helpers'
 import { useStore } from 'vuex'
 import { key } from '@/store'
 import type { Point } from '@/types'
 
-export default defineComponent({
-  props: {
-    point: { type: Object as () => { x: number; y: number }, required: true },
-  },
+const props = defineProps<{
+  point: { x: number; y: number }
+}>()
 
-  setup(props) {
-    const store = useStore(key)
-    const cd = computed(() => store.state.canvasDimensions)
-    const points = computed(() => store.state.points)
+const store = useStore(key)
+const cd = computed(() => store.state.canvasDimensions)
+const points = computed(() => store.state.points)
 
-    const pointAlreadyExists = computed(
-      () => !points.value.find((p) => p.x === props.point.x)
-    )
+const pointAlreadyExists = computed(
+  () => !points.value.find((p) => p.x === props.point.x)
+)
 
-    const sorroundingPoints = computed(() => {
-      return getSorroundingPoints(props.point.x, points.value)
-    })
+const sorroundingPoints = computed(() => {
+  return getSorroundingPoints(props.point.x, points.value)
+})
 
-    const leftPointInCanvas = computed(() => {
-      return sorroundingPoints.value[0]
-        ? toCanvasPoint(sorroundingPoints.value[0], cd.value)
-        : undefined
-    })
-    const rightPointInCanvas = computed(() => {
-      return sorroundingPoints.value[1]
-        ? toCanvasPoint(sorroundingPoints.value[1], cd.value)
-        : undefined
-    })
-    const centerPointInCanvas = computed(() => {
-      return toCanvasPoint(props.point, cd.value)
-    })
-
-    return {
-      sorroundingPoints,
-      leftPointInCanvas,
-      centerPointInCanvas,
-      rightPointInCanvas,
-      pointAlreadyExists,
-    }
-  },
+const leftPointInCanvas = computed(() => {
+  return sorroundingPoints.value[0]
+    ? toCanvasPoint(sorroundingPoints.value[0], cd.value)
+    : undefined
+})
+const rightPointInCanvas = computed(() => {
+  return sorroundingPoints.value[1]
+    ? toCanvasPoint(sorroundingPoints.value[1], cd.value)
+    : undefined
+})
+const centerPointInCanvas = computed(() => {
+  return toCanvasPoint(props.point, cd.value)
 })
 </script>
 

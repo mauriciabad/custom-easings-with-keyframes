@@ -1,64 +1,52 @@
-<script lang="ts">
-import { computed, defineComponent, onBeforeUnmount, ref } from 'vue'
+<script setup lang="ts">
+import { computed, onBeforeUnmount, ref } from 'vue'
 
-export default defineComponent({
-  setup() {
-    let refreshing = false
-    let registration: ServiceWorkerRegistration | null = null
-    const updateExists = ref<boolean>(false)
-    const updateDismissed = ref<boolean>(false)
+let refreshing = false
+let registration: ServiceWorkerRegistration | null = null
+const updateExists = ref<boolean>(false)
+const updateDismissed = ref<boolean>(false)
 
-    const showBanner = computed(
-      () => updateExists.value && !updateDismissed.value
-    )
+const showBanner = computed(() => updateExists.value && !updateDismissed.value)
 
-    function swUpdatedHandler(
-      // TODO: use the right type
-      // event: DocumentEventMap['swUpdatedCustomEvent']
-      event: any
-    ): void {
-      registration = event.detail
-      updateExists.value = true
-    }
+function swUpdatedHandler(
+  // TODO: use the right type
+  // event: DocumentEventMap['swUpdatedCustomEvent']
+  event: any
+): void {
+  registration = event.detail
+  updateExists.value = true
+}
 
-    // Refresh all open app tabs when a new service worker is installed.
-    function controllerchangeHandler(): void {
-      if (refreshing) return
+// Refresh all open app tabs when a new service worker is installed.
+function controllerchangeHandler(): void {
+  if (refreshing) return
 
-      refreshing = true
-      location.reload()
-    }
+  refreshing = true
+  location.reload()
+}
 
-    document.addEventListener('swUpdatedCustomEvent', swUpdatedHandler, {
-      once: true,
-    })
-    onBeforeUnmount(() => {
-      document.removeEventListener('swUpdatedCustomEvent', swUpdatedHandler)
-      document.removeEventListener('controllerchange', controllerchangeHandler)
-    })
-
-    navigator.serviceWorker?.addEventListener(
-      'controllerchange',
-      controllerchangeHandler
-    )
-
-    function handleUpdateClick() {
-      updateExists.value = false
-
-      registration?.waiting?.postMessage({ type: 'SKIP_WAITING' })
-    }
-
-    function handleDismissClick() {
-      updateDismissed.value = true
-    }
-
-    return {
-      handleUpdateClick,
-      showBanner,
-      handleDismissClick,
-    }
-  },
+document.addEventListener('swUpdatedCustomEvent', swUpdatedHandler, {
+  once: true,
 })
+onBeforeUnmount(() => {
+  document.removeEventListener('swUpdatedCustomEvent', swUpdatedHandler)
+  document.removeEventListener('controllerchange', controllerchangeHandler)
+})
+
+navigator.serviceWorker?.addEventListener(
+  'controllerchange',
+  controllerchangeHandler
+)
+
+function handleUpdateClick() {
+  updateExists.value = false
+
+  registration?.waiting?.postMessage({ type: 'SKIP_WAITING' })
+}
+
+function handleDismissClick() {
+  updateDismissed.value = true
+}
 </script>
 
 <template>

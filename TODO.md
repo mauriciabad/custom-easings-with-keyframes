@@ -54,6 +54,5 @@ This are things pending after the Vite migration
 
 - [ ] Serviceworker (make sure that the "there's an update" popup works)
 - [ ] Pinia example file and setup is there, change vuex to pinia
-- [ ] Remove usages of defineComponent() and use &lt;script setup&gt; instead
 - [ ] Fix event type (there's a todo)
 - [ ] Fix skipped test
