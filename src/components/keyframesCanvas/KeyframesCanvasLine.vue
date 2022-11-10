@@ -2,14 +2,12 @@
 import { computed } from 'vue'
 import type { Point } from '@/types'
 import { toCanvasPoint } from '@/helpers'
-import { useStore } from 'vuex'
-import { key } from '@/store'
+import { useCanvasStore } from '@/stores/canvas'
 
 const props = defineProps<{
   points: Point[]
 }>()
-const store = useStore(key)
-const cd = computed(() => store.state.canvasDimensions)
+const { canvasDimensions: cd } = useCanvasStore()
 
 const pointsInCanvas = computed(() => {
   const pointsWithStartAndEnd = [...props.points]
@@ -21,7 +19,7 @@ const pointsInCanvas = computed(() => {
     pointsWithStartAndEnd.push({ x: 100, y: 0, isSelected: false })
   }
 
-  return pointsWithStartAndEnd.map((point) => toCanvasPoint(point, cd.value))
+  return pointsWithStartAndEnd.map((point) => toCanvasPoint(point, cd))
 })
 
 const path = computed(() =>

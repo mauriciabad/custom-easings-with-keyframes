@@ -6,10 +6,9 @@ import {
   Property,
   ValueUnits,
 } from '@/helpers'
-import { key } from '@/store'
 import interpolate from 'color-interpolate'
 import { computed, ref, watchEffect } from 'vue'
-import { useStore } from 'vuex'
+import { useCanvasStore } from '@/stores/canvas'
 
 const beginColor = '#b721ff'
 const endColor = '#21d4fd'
@@ -49,9 +48,7 @@ function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
   return styledKeyframes
 }
 
-const store = useStore(key)
-const points = computed(() => store.state.points)
-const cd = computed(() => store.state.canvasDimensions)
+const { points, canvasDimensions: cd } = useCanvasStore()
 
 const previewElement = ref<HTMLDivElement>()
 const animation = ref<Animation>()
@@ -63,7 +60,7 @@ watchEffect(() => {
     const options: Options = {
       property: Property.translateY,
       fromValue: 0,
-      toValue: -1 * cd.value.height,
+      toValue: -1 * cd.height,
       valueUnits: ValueUnits.px,
       duration: 5000,
       easingName: 'animation-easing',
@@ -71,10 +68,7 @@ watchEffect(() => {
       endDelay: 750,
     }
 
-    const keyframes = styleKeyframes(
-      computeKeyframes(points.value, options),
-      options
-    )
+    const keyframes = styleKeyframes(computeKeyframes(points, options), options)
 
     if (animation.value) animation.value.cancel()
     animation.value = previewElement.value.animate(keyframes, {
@@ -85,21 +79,21 @@ watchEffect(() => {
 })
 
 function pointInPath(x: number): number {
-  if (x <= points.value[0].x) {
-    return points.value[0].y
+  if (x <= points[0].x) {
+    return points[0].y
   }
 
-  if (x >= points.value[points.value.length - 1].x) {
-    return points.value[points.value.length - 1].y
+  if (x >= points[points.length - 1].x) {
+    return points[points.length - 1].y
   }
 
-  const sorroundingPoints = getSorroundingPoints(x, points.value)
+  const sorroundingPoints = getSorroundingPoints(x, points)
 
   if (!sorroundingPoints[0]) {
-    return points.value[0].y
+    return points[0].y
   }
   if (!sorroundingPoints[1]) {
-    return points.value[points.value.length - 1].y
+    return points[points.length - 1].y
   }
 
   const p =

@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue'
-import { useStore } from 'vuex'
-import { key } from '@/store'
+import { ref, watchEffect } from 'vue'
 import { computeKeyframes } from '@/helpers'
 import useOptions from '@/modules/options'
+import { useCanvasStore } from '@/stores/canvas'
 
-const store = useStore(key)
-const points = computed(() => store.state.points)
+const { points } = useCanvasStore()
 const { options } = useOptions()
 const previewElement = ref<HTMLDivElement>()
 const animation = ref<Animation>()

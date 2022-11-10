@@ -1,38 +1,35 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { getSorroundingPoints, toCanvasPoint } from '@/helpers'
-import { useStore } from 'vuex'
-import { key } from '@/store'
+import { useCanvasStore } from '@/stores/canvas'
 import type { Point } from '@/types'
 
 const props = defineProps<{
   point: { x: number; y: number }
 }>()
 
-const store = useStore(key)
-const cd = computed(() => store.state.canvasDimensions)
-const points = computed(() => store.state.points)
+const { points, canvasDimensions: cd } = useCanvasStore()
 
 const pointAlreadyExists = computed(
-  () => !points.value.find((p) => p.x === props.point.x)
+  () => !points.find((p) => p.x === props.point.x)
 )
 
 const sorroundingPoints = computed(() => {
-  return getSorroundingPoints(props.point.x, points.value)
+  return getSorroundingPoints(props.point.x, points)
 })
 
 const leftPointInCanvas = computed(() => {
   return sorroundingPoints.value[0]
-    ? toCanvasPoint(sorroundingPoints.value[0], cd.value)
+    ? toCanvasPoint(sorroundingPoints.value[0], cd)
     : undefined
 })
 const rightPointInCanvas = computed(() => {
   return sorroundingPoints.value[1]
-    ? toCanvasPoint(sorroundingPoints.value[1], cd.value)
+    ? toCanvasPoint(sorroundingPoints.value[1], cd)
     : undefined
 })
 const centerPointInCanvas = computed(() => {
-  return toCanvasPoint(props.point, cd.value)
+  return toCanvasPoint(props.point, cd)
 })
 </script>
 

@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-import { key } from '@/store'
-
-const store = useStore(key)
-const cd = computed(() => store.state.canvasDimensions)
+import { useCanvasStore } from '@/stores/canvas'
+const { canvasDimensions: cd } = useCanvasStore()
 </script>
 
 <template>

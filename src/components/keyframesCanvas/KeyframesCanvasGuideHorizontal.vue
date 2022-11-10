@@ -2,14 +2,11 @@
 import { computed } from 'vue'
 
 import { invertCoordenates } from '@/helpers'
-import { useStore } from 'vuex'
-import { key } from '@/store'
+import { useCanvasStore } from '@/stores/canvas'
 
 const props = defineProps<{ position: number }>()
 
-const store = useStore(key)
-const cd = computed(() => store.state.canvasDimensions)
-
+const { canvasDimensions: cd } = useCanvasStore()
 const positionInverted = computed(() => invertCoordenates(props.position))
 </script>
 

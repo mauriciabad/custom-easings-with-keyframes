@@ -2,19 +2,15 @@
 import { computed } from 'vue'
 import type { Point } from '@/types'
 import { toCanvasPoint } from '@/helpers'
-import { useStore } from 'vuex'
-import { key } from '@/store'
+import { useCanvasStore } from '@/stores/canvas'
 
 const props = defineProps<{
   point: Point
 }>()
 
-const store = useStore(key)
-const canvasDimensions = computed(() => store.state.canvasDimensions)
+const { canvasDimensions: cd } = useCanvasStore()
 
-const pointInCanvas = computed(() =>
-  toCanvasPoint(props.point, canvasDimensions.value)
-)
+const pointInCanvas = computed(() => toCanvasPoint(props.point, cd))
 </script>
 
 <template>
