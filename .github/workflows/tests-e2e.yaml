@@ -28,7 +28,7 @@ jobs:
       - name: 🤖 Run the tests
         uses: cypress-io/github-action@v4
         with:
-          record: true
+          # record: true
           browser: chrome
           build: npm run build
           start: 'serve dist -l 4173'
