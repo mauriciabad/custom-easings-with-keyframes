@@ -89,7 +89,7 @@ export const useCanvasStore = defineStore('canvas', () => {
       isSelected: p.x === x ? !p.isSelected : p.isSelected,
     }))
   }
-  function moveSelectedPoint({
+  function moveSelectedPoints({
     moveOffset,
     originalPoints,
   }: {
@@ -139,7 +139,7 @@ export const useCanvasStore = defineStore('canvas', () => {
     blurPoint,
     blurAllPoints,
     togglePoint,
-    moveSelectedPoint,
+    moveSelectedPoints,
     resize,
   }
 })
