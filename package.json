@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "1.1.4",
-    "@types/jsdom": "20.0.0",
+    "@types/jsdom": "20.0.1",
     "@types/node": "16.11.68",
     "@vitejs/plugin-vue": "3.1.2",
     "@vue/eslint-config-prettier": "7.0.0",
@@ -34,7 +34,7 @@
     "eslint": "8.22.0",
     "eslint-plugin-cypress": "2.12.1",
     "eslint-plugin-vue": "9.3.0",
-    "jsdom": "20.0.1",
+    "jsdom": "20.0.2",
     "npm-run-all": "4.1.5",
     "prettier": "2.7.1",
     "sass": "1.56.1",
