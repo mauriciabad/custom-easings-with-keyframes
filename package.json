@@ -19,7 +19,7 @@
     "vue-router": "4.1.5"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "1.1.4",
+    "@rushstack/eslint-patch": "1.2.0",
     "@types/jsdom": "20.0.1",
     "@types/node": "16.11.68",
     "@vitejs/plugin-vue": "3.2.0",
