@@ -3,15 +3,17 @@ import { ref, watchEffect } from 'vue'
 import { computeKeyframes } from '@/helpers'
 import useOptions from '@/modules/options'
 import { useCanvasStore } from '@/stores/canvas'
+import { storeToRefs } from 'pinia'
 
-const { points } = useCanvasStore()
+const canvasStore = useCanvasStore()
+const { points } = storeToRefs(canvasStore)
 const { options } = useOptions()
 const previewElement = ref<HTMLDivElement>()
 const animation = ref<Animation>()
 
 watchEffect(() => {
   if (previewElement.value) {
-    const keyframes = computeKeyframes(points, options)
+    const keyframes = computeKeyframes(points.value, options)
 
     if (animation.value) animation.value.cancel()
     animation.value = previewElement.value.animate(keyframes, {

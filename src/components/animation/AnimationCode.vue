@@ -11,12 +11,16 @@ import { computed, ref } from 'vue'
 import { useGtag } from 'vue-gtag-next'
 import Popper from 'vue3-popper'
 import { useCanvasStore } from '@/stores/canvas'
+import { storeToRefs } from 'pinia'
 
 type CodeStyle = 'keyframes' | 'linear'
 
-const { points } = useCanvasStore()
+const canvasStore = useCanvasStore()
+const { points } = storeToRefs(canvasStore)
 const { options } = useOptions()
-const pointsWithDelay = computed(() => computePointsWithDelay(points, options))
+const pointsWithDelay = computed(() =>
+  computePointsWithDelay(points.value, options)
+)
 const pointsWithDelayGrouped = computed(() =>
   computeGroupedPoints(pointsWithDelay.value)
 )

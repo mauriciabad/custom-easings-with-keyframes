@@ -7,9 +7,9 @@ import {
   Property,
   removeDefaults,
   validateOptions,
+  deepClone,
 } from '@/helpers'
 import useOptions from '@/modules/options'
-import deepClone from 'deep-clone'
 import { computed, reactive, watch, watchEffect } from 'vue'
 
 const { options, lastUpdatedOptions, updateSomeOptions } = useOptions()

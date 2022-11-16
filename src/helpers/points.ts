@@ -13,7 +13,7 @@ export function calculateOffset(x: number, options: Readonly<Options>): number {
 }
 
 export function computePointsWithDelay(
-  points: Readonly<Point[]>,
+  points: readonly Point[],
   options: Readonly<Options>
 ): Point[] {
   const pointsWithDelay = [

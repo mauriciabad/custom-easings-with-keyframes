@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { clamp, invertCoordenates } from '@/helpers'
+import { clamp, invertCoordenates, deepClone } from '@/helpers'
 import { useCanvasStore } from '@/stores/canvas'
-import deepClone from 'deep-clone'
 import { onMounted, onUnmounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import type { Point } from '@/types'
 
+const canvasStore = useCanvasStore()
 const {
-  points,
-  canvasDimensions: cd,
   createPoint,
   deleteFocusedPoints,
   focusPoint,
@@ -14,7 +14,8 @@ const {
   blurAllPoints,
   moveSelectedPoints,
   resize,
-} = useCanvasStore()
+} = canvasStore
+const { points, canvasDimensions: cd } = storeToRefs(canvasStore)
 
 const newPoint = ref<
   | {
@@ -29,7 +30,7 @@ let moveOrigin = {
   y: 0,
 }
 
-const originalPoints = ref(points)
+const originalPoints = ref<Point[]>(deepClone(points.value))
 const isMoving = ref(false)
 const wasMovingPointSelected = ref(false)
 
@@ -46,10 +47,16 @@ function extractCoordenates(event: MouseEvent) {
   }
 
   return {
-    x: clamp(Math.round(((offset.x - cd.offset.x) / cd.width) * 100), 0, 100),
+    x: clamp(
+      Math.round(((offset.x - cd.value.offset.x) / cd.value.width) * 100),
+      0,
+      100
+    ),
     y: Math.round(
       invertCoordenates(
-        (offset.y - cd.height * (cd.maxY - 1 + cd.stepY / 2)) / cd.height
+        (offset.y -
+          cd.value.height * (cd.value.maxY - 1 + cd.value.stepY / 2)) /
+          cd.value.height
       ) * 100
     ),
   }
@@ -89,7 +96,7 @@ document.body.addEventListener('keydown', function (event: KeyboardEvent) {
 function handleLeftClick(event: MouseEvent) {
   moveOrigin = extractCoordenates(event)
 
-  const point = points.find((p) => p.x === moveOrigin.x)
+  const point = points.value.find((p) => p.x === moveOrigin.x)
   wasMovingPointSelected.value = point ? point.isSelected : false
 
   createPoint(moveOrigin)
@@ -99,7 +106,7 @@ function handleLeftClick(event: MouseEvent) {
   }
   focusPoint(moveOrigin)
 
-  originalPoints.value = deepClone(points)
+  originalPoints.value = deepClone(points.value)
   isMoving.value = true
 }
 
@@ -139,7 +146,7 @@ function handleLeftClickUp(event: MouseEvent) {
 
 function handleRightClick(event: MouseEvent) {
   const position = extractCoordenates(event)
-  const point = points.find((p) => p.x === position.x)
+  const point = points.value.find((p) => p.x === position.x)
   if (point) focusPoint(position)
 
   deleteFocusedPoints()

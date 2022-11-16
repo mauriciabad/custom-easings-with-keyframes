@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useCanvasStore } from '@/stores/canvas'
-const { canvasDimensions: cd } = useCanvasStore()
+import { storeToRefs } from 'pinia'
+
+const canvasStore = useCanvasStore()
+const { canvasDimensions: cd } = storeToRefs(canvasStore)
 </script>
 
 <template>

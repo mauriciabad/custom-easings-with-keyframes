@@ -1,4 +1,4 @@
-import { ref, computed, reactive, readonly } from 'vue'
+import { reactive, readonly } from 'vue'
 import { defineStore } from 'pinia'
 import type { Point } from '@/types'
 import { clamp } from '@/helpers'
@@ -47,9 +47,6 @@ export const useCanvasStore = defineStore('canvas', () => {
     },
   })
 
-  const points = computed(() => state.points)
-  const canvasDimensions = computed(() => state.canvasDimensions)
-
   function createPoint({ x, y }: { x: number; y: number }): void {
     if (state.points.find((p) => p.x === x)) return
 
@@ -94,7 +91,7 @@ export const useCanvasStore = defineStore('canvas', () => {
     originalPoints,
   }: {
     moveOffset: { x: number; y: number }
-    originalPoints: Point[]
+    originalPoints: readonly Point[]
   }): void {
     const pointsToOverride: Set<number> = new Set()
 
@@ -129,9 +126,8 @@ export const useCanvasStore = defineStore('canvas', () => {
   }
 
   return {
-    state: readonly(state),
-    points,
-    canvasDimensions,
+    points: readonly(state.points),
+    canvasDimensions: readonly(state.canvasDimensions),
 
     createPoint,
     deleteFocusedPoints,

@@ -3,11 +3,14 @@ import { computed } from 'vue'
 import type { Point } from '@/types'
 import { toCanvasPoint } from '@/helpers'
 import { useCanvasStore } from '@/stores/canvas'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps<{
   points: Point[]
 }>()
-const { canvasDimensions: cd } = useCanvasStore()
+
+const canvasStore = useCanvasStore()
+const { canvasDimensions: cd } = storeToRefs(canvasStore)
 
 const pointsInCanvas = computed(() => {
   const pointsWithStartAndEnd = [...props.points]
@@ -19,7 +22,7 @@ const pointsInCanvas = computed(() => {
     pointsWithStartAndEnd.push({ x: 100, y: 0, isSelected: false })
   }
 
-  return pointsWithStartAndEnd.map((point) => toCanvasPoint(point, cd))
+  return pointsWithStartAndEnd.map((point) => toCanvasPoint(point, cd.value))
 })
 
 const path = computed(() =>

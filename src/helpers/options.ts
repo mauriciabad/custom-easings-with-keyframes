@@ -1,4 +1,4 @@
-import deepClone from 'deep-clone'
+import { deepClone } from '@/helpers'
 
 export enum Property {
   opacity = 'opacity',

@@ -7,8 +7,9 @@ import {
   ValueUnits,
 } from '@/helpers'
 import interpolate from 'color-interpolate'
-import { computed, ref, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { useCanvasStore } from '@/stores/canvas'
+import { storeToRefs } from 'pinia'
 
 const beginColor = '#b721ff'
 const endColor = '#21d4fd'
@@ -48,7 +49,8 @@ function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
   return styledKeyframes
 }
 
-const { points, canvasDimensions: cd } = useCanvasStore()
+const canvasStore = useCanvasStore()
+const { points, canvasDimensions: cd } = storeToRefs(canvasStore)
 
 const previewElement = ref<HTMLDivElement>()
 const animation = ref<Animation>()
@@ -60,7 +62,7 @@ watchEffect(() => {
     const options: Options = {
       property: Property.translateY,
       fromValue: 0,
-      toValue: -1 * cd.height,
+      toValue: -1 * cd.value.height,
       valueUnits: ValueUnits.px,
       duration: 5000,
       easingName: 'animation-easing',
@@ -68,7 +70,10 @@ watchEffect(() => {
       endDelay: 750,
     }
 
-    const keyframes = styleKeyframes(computeKeyframes(points, options), options)
+    const keyframes = styleKeyframes(
+      computeKeyframes(points.value, options),
+      options
+    )
 
     if (animation.value) animation.value.cancel()
     animation.value = previewElement.value.animate(keyframes, {
@@ -79,21 +84,21 @@ watchEffect(() => {
 })
 
 function pointInPath(x: number): number {
-  if (x <= points[0].x) {
-    return points[0].y
+  if (x <= points.value[0].x) {
+    return points.value[0].y
   }
 
-  if (x >= points[points.length - 1].x) {
-    return points[points.length - 1].y
+  if (x >= points.value[points.value.length - 1].x) {
+    return points.value[points.value.length - 1].y
   }
 
-  const sorroundingPoints = getSorroundingPoints(x, points)
+  const sorroundingPoints = getSorroundingPoints(x, points.value)
 
   if (!sorroundingPoints[0]) {
-    return points[0].y
+    return points.value[0].y
   }
   if (!sorroundingPoints[1]) {
-    return points[points.length - 1].y
+    return points.value[points.value.length - 1].y
   }
 
   const p =

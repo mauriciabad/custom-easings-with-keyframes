@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useCanvasStore } from '@/stores/canvas'
+import { storeToRefs } from 'pinia'
 
 defineProps<{ position: number }>()
 
-const { canvasDimensions: cd } = useCanvasStore()
+const canvasStore = useCanvasStore()
+const { canvasDimensions: cd } = storeToRefs(canvasStore)
 </script>
 
 <template>
