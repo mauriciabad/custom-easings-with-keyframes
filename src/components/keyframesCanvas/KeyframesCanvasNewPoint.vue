@@ -3,33 +3,39 @@ import { computed } from 'vue'
 import { getSorroundingPoints, toCanvasPoint } from '@/helpers'
 import { useCanvasStore } from '@/stores/canvas'
 import type { Point } from '@/types'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps<{
   point: { x: number; y: number }
 }>()
 
-const { points, canvasDimensions: cd } = useCanvasStore()
+const canvasStore = useCanvasStore()
+const { points, canvasDimensions: cd } = storeToRefs(canvasStore)
 
 const pointAlreadyExists = computed(
-  () => !points.find((p) => p.x === props.point.x)
+  () => !points.value.find((p) => p.x === props.point.x)
 )
 
 const sorroundingPoints = computed(() => {
-  return getSorroundingPoints(props.point.x, points)
+  return getSorroundingPoints(props.point.x, points.value)
+})
+
+const sorroundingPointsIfExists = computed(() => {
+  return sorroundingPoints.value.filter((p): p is Point => p !== undefined)
 })
 
 const leftPointInCanvas = computed(() => {
   return sorroundingPoints.value[0]
-    ? toCanvasPoint(sorroundingPoints.value[0], cd)
+    ? toCanvasPoint(sorroundingPoints.value[0], cd.value)
     : undefined
 })
 const rightPointInCanvas = computed(() => {
   return sorroundingPoints.value[1]
-    ? toCanvasPoint(sorroundingPoints.value[1], cd)
+    ? toCanvasPoint(sorroundingPoints.value[1], cd.value)
     : undefined
 })
 const centerPointInCanvas = computed(() => {
-  return toCanvasPoint(props.point, cd)
+  return toCanvasPoint(props.point, cd.value)
 })
 </script>
 
@@ -38,10 +44,7 @@ const centerPointInCanvas = computed(() => {
     <defs>
       <keyframes-canvas-points-mask
         id="new-point-mask"
-        :points="[
-          point,
-          ...(sorroundingPoints.filter((p):p is Point => p !== undefined)),
-        ]"
+        :points="[point, ...sorroundingPointsIfExists]"
       />
     </defs>
 
