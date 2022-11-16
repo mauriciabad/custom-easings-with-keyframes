@@ -1,4 +1,4 @@
-import { reactive, readonly } from 'vue'
+import { computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import type { Point } from '@/types'
 import { clamp } from '@/helpers'
@@ -126,8 +126,8 @@ export const useCanvasStore = defineStore('canvas', () => {
   }
 
   return {
-    points: readonly(state.points),
-    canvasDimensions: readonly(state.canvasDimensions),
+    points: computed(() => state.points),
+    canvasDimensions: computed(() => state.canvasDimensions),
 
     createPoint,
     deleteFocusedPoints,
