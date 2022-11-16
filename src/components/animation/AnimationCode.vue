@@ -7,16 +7,16 @@ import {
   round,
 } from '@/helpers'
 import useOptions from '@/modules/options'
-import { key } from '@/store'
 import { computed, ref } from 'vue'
 import { useGtag } from 'vue-gtag-next'
-import { useStore } from 'vuex'
 import Popper from 'vue3-popper'
+import { useCanvasStore } from '@/stores/canvas'
+import { storeToRefs } from 'pinia'
 
 type CodeStyle = 'keyframes' | 'linear'
 
-const store = useStore(key)
-const points = computed(() => store.state.points)
+const canvasStore = useCanvasStore()
+const { points } = storeToRefs(canvasStore)
 const { options } = useOptions()
 const pointsWithDelay = computed(() =>
   computePointsWithDelay(points.value, options)

@@ -6,10 +6,10 @@ import {
   Property,
   ValueUnits,
 } from '@/helpers'
-import { key } from '@/store'
 import interpolate from 'color-interpolate'
-import { computed, ref, watchEffect } from 'vue'
-import { useStore } from 'vuex'
+import { ref, watchEffect } from 'vue'
+import { useCanvasStore } from '@/stores/canvas'
+import { storeToRefs } from 'pinia'
 
 const beginColor = '#b721ff'
 const endColor = '#21d4fd'
@@ -49,9 +49,8 @@ function styleKeyframes(keyframes: Keyframe[], options: Options): Keyframe[] {
   return styledKeyframes
 }
 
-const store = useStore(key)
-const points = computed(() => store.state.points)
-const cd = computed(() => store.state.canvasDimensions)
+const canvasStore = useCanvasStore()
+const { points, canvasDimensions: cd } = storeToRefs(canvasStore)
 
 const previewElement = ref<HTMLDivElement>()
 const animation = ref<Animation>()

@@ -1,13 +1,21 @@
 <script setup lang="ts">
-import { clamp, invertCoordenates } from '@/helpers'
-import { key } from '@/store'
-import deepClone from 'deep-clone'
-import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { useStore } from 'vuex'
+import { clamp, invertCoordenates, deepClone } from '@/helpers'
+import { useCanvasStore } from '@/stores/canvas'
+import { onMounted, onUnmounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import type { Point } from '@/types'
 
-const store = useStore(key)
-const points = computed(() => store.state.points)
-const cd = computed(() => store.state.canvasDimensions)
+const canvasStore = useCanvasStore()
+const {
+  createPoint,
+  deleteFocusedPoints,
+  focusPoint,
+  blurPoint,
+  blurAllPoints,
+  moveSelectedPoints,
+  resize,
+} = canvasStore
+const { points, canvasDimensions: cd } = storeToRefs(canvasStore)
 
 const newPoint = ref<
   | {
@@ -22,7 +30,7 @@ let moveOrigin = {
   y: 0,
 }
 
-const originalPoints = ref(points.value)
+const originalPoints = ref<Point[]>(deepClone(points.value))
 const isMoving = ref(false)
 const wasMovingPointSelected = ref(false)
 
@@ -55,7 +63,7 @@ function extractCoordenates(event: MouseEvent) {
 }
 
 const resizeObserver = new ResizeObserver((entries) => {
-  store.commit('resize', {
+  resize({
     height: entries[0].contentRect.height,
     width: entries[0].contentRect.width,
   })
@@ -77,10 +85,10 @@ document.body.addEventListener('keydown', function (event: KeyboardEvent) {
   switch (event.key) {
     case 'Backspace':
     case 'Delete':
-      store.commit('deleteFocusedPoints')
+      deleteFocusedPoints()
       break
     case 'Escape':
-      store.commit('blurAllPoints')
+      blurAllPoints()
       break
   }
 })
@@ -91,12 +99,12 @@ function handleLeftClick(event: MouseEvent) {
   const point = points.value.find((p) => p.x === moveOrigin.x)
   wasMovingPointSelected.value = point ? point.isSelected : false
 
-  store.commit('createPoint', moveOrigin)
+  createPoint(moveOrigin)
 
   if (!wasMovingPointSelected.value && !event.shiftKey) {
-    store.commit('blurAllPoints', moveOrigin)
+    blurAllPoints()
   }
-  store.commit('focusPoint', moveOrigin)
+  focusPoint(moveOrigin)
 
   originalPoints.value = deepClone(points.value)
   isMoving.value = true
@@ -112,7 +120,7 @@ function handleMouseMove(event: MouseEvent) {
       x: moveEnd.x - moveOrigin.x,
       y: moveEnd.y - moveOrigin.y,
     }
-    store.commit('moveSelectedPoints', {
+    moveSelectedPoints({
       moveOffset,
       originalPoints: originalPoints.value,
     })
@@ -125,12 +133,12 @@ function handleLeftClickUp(event: MouseEvent) {
   const moveEnd = extractCoordenates(event)
   if (moveOrigin.x === moveEnd.x && moveOrigin.y === moveEnd.y) {
     if (wasMovingPointSelected.value) {
-      store.commit('blurPoint', moveOrigin)
+      blurPoint(moveOrigin)
     } else {
       if (!event.shiftKey) {
-        store.commit('blurAllPoints', moveOrigin)
+        blurAllPoints()
       }
-      store.commit('focusPoint', moveOrigin)
+      focusPoint(moveOrigin)
     }
   }
   isMoving.value = false
@@ -139,9 +147,9 @@ function handleLeftClickUp(event: MouseEvent) {
 function handleRightClick(event: MouseEvent) {
   const position = extractCoordenates(event)
   const point = points.value.find((p) => p.x === position.x)
-  if (point) store.commit('focusPoint', position)
+  if (point) focusPoint(position)
 
-  store.commit('deleteFocusedPoints')
+  deleteFocusedPoints()
 }
 
 function handleMouseLeave() {

@@ -1,5 +1,5 @@
 import { invertCoordenates } from '@/helpers'
-import type { CanvasDimensions } from '@/store'
+import type { CanvasDimensions } from '@/stores/canvas'
 
 export function toCanvasPoint(
   point: Readonly<{ x: number; y: number }>,

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { key } from '@/store'
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useCanvasStore } from '@/stores/canvas'
+import { storeToRefs } from 'pinia'
 
 defineProps<{ position: number }>()
 
-const store = useStore(key)
-const cd = computed(() => store.state.canvasDimensions)
+const canvasStore = useCanvasStore()
+const { canvasDimensions: cd } = storeToRefs(canvasStore)
 </script>
 
 <template>

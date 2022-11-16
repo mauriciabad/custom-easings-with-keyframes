@@ -2,14 +2,15 @@
 import { computed } from 'vue'
 import type { Point } from '@/types'
 import { toCanvasPoint } from '@/helpers'
-import { useStore } from 'vuex'
-import { key } from '@/store'
+import { useCanvasStore } from '@/stores/canvas'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps<{
   points: Point[]
 }>()
-const store = useStore(key)
-const cd = computed(() => store.state.canvasDimensions)
+
+const canvasStore = useCanvasStore()
+const { canvasDimensions: cd } = storeToRefs(canvasStore)
 
 const pointsInCanvas = computed(() => {
   const pointsWithStartAndEnd = [...props.points]

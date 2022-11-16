@@ -2,14 +2,13 @@
 import { computed } from 'vue'
 
 import { invertCoordenates } from '@/helpers'
-import { useStore } from 'vuex'
-import { key } from '@/store'
+import { useCanvasStore } from '@/stores/canvas'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps<{ position: number }>()
 
-const store = useStore(key)
-const cd = computed(() => store.state.canvasDimensions)
-
+const canvasStore = useCanvasStore()
+const { canvasDimensions: cd } = storeToRefs(canvasStore)
 const positionInverted = computed(() => invertCoordenates(props.position))
 </script>
 

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useStore } from 'vuex'
-import { key } from '@/store'
 import { toCanvasPoint } from '@/helpers'
+import { useCanvasStore } from '@/stores/canvas'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps<{
   points: { x: number; y: number }[]
 }>()
 
-const store = useStore(key)
-const cd = computed(() => store.state.canvasDimensions)
+const canvasStore = useCanvasStore()
+const { canvasDimensions: cd } = storeToRefs(canvasStore)
 
 const pointsInCanvas = computed(() =>
   props.points.map((point) => toCanvasPoint(point, cd.value))
