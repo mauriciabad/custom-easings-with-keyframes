@@ -6,6 +6,7 @@ jobs:
     uses: mauriciabad/my-actions/.github/workflows/ci-vite.yml@main
     with:
       record-e2e: false
+      lighthouse: true
     secrets:
       CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
       CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
