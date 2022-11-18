@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⚙️ Setup
-        uses: mauriciabad/custom-easings-with-keyframes/.github/actions/setup
+        uses: mauriciabad/my-actions/setup-npm@main
 
       - name: 🧪 Test
         run: npm run test:unit
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⚙️ Setup
-        uses: mauriciabad/custom-easings-with-keyframes/.github/actions/setup
+        uses: mauriciabad/my-actions/setup-npm@main
 
       - name: 🔦 Lint
         run: npm run lint
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⚙️ Setup
-        uses: mauriciabad/custom-easings-with-keyframes/.github/actions/setup
+        uses: mauriciabad/my-actions/setup-npm@main
 
       - name: 🔍 Type check
         run: npm run type-check
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⚙️ Setup
-        uses: mauriciabad/custom-easings-with-keyframes/.github/actions/setup
+        uses: mauriciabad/my-actions/setup-npm@main
 
       - name: ⚙️ Install serve
         run: npm install -g serve
