@@ -16,7 +16,6 @@ jobs:
 
   lint:
     name: Lint
-    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: ⚙️ Setup
@@ -27,7 +26,6 @@ jobs:
 
   type-check:
     name: Type check
-    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: ⚙️ Setup
