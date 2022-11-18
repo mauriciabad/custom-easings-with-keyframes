@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⚙️ Setup
-        uses: ./.github/workflows/setup.yml
+        uses: ./.github/actions/setup
 
       - name: 🧪 Test
         run: npm run test:unit
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⚙️ Setup
-        uses: ./.github/workflows/setup.yml
+        uses: ./.github/actions/setup
 
       - name: 🔦 Lint
         run: npm run lint
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⚙️ Setup
-        uses: ./.github/workflows/setup.yml
+        uses: ./.github/actions/setup
 
       - name: 🔍 Type check
         run: npm run type-check
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⚙️ Setup
-        uses: ./.github/workflows/setup.yml
+        uses: ./.github/actions/setup
 
       - name: ⚙️ Install serve
         run: npm install -g serve
