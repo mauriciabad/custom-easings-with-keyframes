@@ -1,13 +1,14 @@
-name: auto-merge
+# Adds a comment telling dependabot to merge it's PRs after the CI passes if the update has non-breaking changes.
+# Copied from https://github.com/mauriciabad/my-actions/blob/main/.github/workflows/auto-merge-dependabot.yml
 
-on: pull_request_target
-
+name: Auto-merge dependabot PRs
+on: pull_request
 jobs:
   auto-merge-dependabot:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: ahmadnassri/action-dependabot-auto-merge@v2
-        with:
-          target: minor
-          github-token: ${{ secrets.PUSH_TOKEN }}
+    - name: 🤖 Auto-merge dependabot PRs
+      uses: ahmadnassri/action-dependabot-auto-merge@v2
+      with:
+        target: minor
+        github-token: ${{ secrets.PUSH_TOKEN }}
