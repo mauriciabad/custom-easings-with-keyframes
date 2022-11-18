@@ -8,11 +8,8 @@ jobs:
     needs: [lint, type-check]
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v3
-
       - name: ⚙️ Setup
-        uses: ./.github/actions/setup
+        uses: mauriciabad/custom-easings-with-keyframes/.github/actions/setup
 
       - name: 🧪 Test
         run: npm run test:unit
@@ -21,11 +18,8 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v3
-
       - name: ⚙️ Setup
-        uses: ./.github/actions/setup
+        uses: mauriciabad/custom-easings-with-keyframes/.github/actions/setup
 
       - name: 🔦 Lint
         run: npm run lint
@@ -34,11 +28,8 @@ jobs:
     name: Type check
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v3
-
       - name: ⚙️ Setup
-        uses: ./.github/actions/setup
+        uses: mauriciabad/custom-easings-with-keyframes/.github/actions/setup
 
       - name: 🔍 Type check
         run: npm run type-check
@@ -48,11 +39,8 @@ jobs:
     needs: [lint, type-check, unit-tests]
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v3
-
       - name: ⚙️ Setup
-        uses: ./.github/actions/setup
+        uses: mauriciabad/custom-easings-with-keyframes/.github/actions/setup
 
       - name: ⚙️ Install serve
         run: npm install -g serve
