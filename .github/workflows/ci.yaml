@@ -3,33 +3,14 @@ name: CI
 on: push
 
 jobs:
-  setup:
-    name: Setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v3
-
-      - name: ⚙️ Setup Cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
-
-      - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-
-      - name: 🚚 Install dependencies
-        run: npm ci
-
   unit-tests:
     name: Unit tests
     needs: [lint, type-check]
     runs-on: ubuntu-latest
     steps:
+      - name: ⚙️ Setup
+        uses: ./.github/workflows/setup.yml
+
       - name: 🧪 Test
         run: npm run test:unit
 
@@ -38,6 +19,9 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: ⚙️ Setup
+        uses: ./.github/workflows/setup.yml
+
       - name: 🔦 Lint
         run: npm run lint
 
@@ -46,14 +30,20 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: ⚙️ Setup
+        uses: ./.github/workflows/setup.yml
+
       - name: 🔍 Type check
         run: npm run type-check
-  
+
   e2e-tests:
     name: E2E tests
     needs: [lint, type-check, unit-tests]
     runs-on: ubuntu-latest
     steps:
+      - name: ⚙️ Setup
+        uses: ./.github/workflows/setup.yml
+
       - name: ⚙️ Install serve
         run: npm install -g serve
 
