@@ -1,0 +1,4 @@
+ci:
+  preset: lighthouse:all
+  upload:
+    target: temporary-public-storage
