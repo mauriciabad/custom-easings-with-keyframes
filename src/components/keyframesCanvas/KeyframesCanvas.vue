@@ -188,6 +188,7 @@ function handleMouseDown(event: MouseEvent) {
       @mouseup="handleMouseUp($event)"
       @contextmenu="$event.preventDefault()"
       @mouseleave="handleMouseLeave()"
+      @blur="handleMouseLeave()"
     >
       <defs>
         <filter

@@ -34,8 +34,8 @@ const valueUnitsList = computed(() => allowedValueUnits[options.property])
 
 <template>
   <div class="options">
-    <div class="option option--property">
-      <label class="label" for="property">Property</label>
+    <label class="option option--property" for="property">
+      <span class="label">Property</span>
       <div
         class="field-wrapper"
         :class="{ 'field-wrapper--invalid': !validOptions.property }"
@@ -66,10 +66,10 @@ const valueUnitsList = computed(() => allowedValueUnits[options.property])
           </option>
         </select>
       </div>
-    </div>
+    </label>
 
-    <div class="option option--valueUnits">
-      <label class="label" for="valueUnits">Units</label>
+    <label class="option option--valueUnits" for="valueUnits">
+      <span class="label">Units</span>
       <div
         class="field-wrapper"
         :class="{ 'field-wrapper--invalid': !validOptions.valueUnits }"
@@ -98,10 +98,10 @@ const valueUnitsList = computed(() => allowedValueUnits[options.property])
           </option>
         </select>
       </div>
-    </div>
+    </label>
 
-    <div class="option option--fromValue">
-      <label class="label" for="fromValue">Initial value</label>
+    <label class="option option--fromValue" for="fromValue">
+      <span class="label">Initial value</span>
       <div
         class="field-wrapper"
         :class="{ 'field-wrapper--invalid': !validOptions.fromValue }"
@@ -129,10 +129,10 @@ const valueUnitsList = computed(() => allowedValueUnits[options.property])
           :placeholder="String(options.fromValue)"
         />
       </div>
-    </div>
+    </label>
 
-    <div class="option option--toValue">
-      <label class="label" for="toValue">Final value</label>
+    <label class="option option--toValue" for="toValue">
+      <span class="label">Final value</span>
       <div
         class="field-wrapper"
         :class="{ 'field-wrapper--invalid': !validOptions.toValue }"
@@ -161,10 +161,10 @@ const valueUnitsList = computed(() => allowedValueUnits[options.property])
           :placeholder="String(options.toValue)"
         />
       </div>
-    </div>
+    </label>
 
-    <div class="option option--beginingDelay">
-      <label class="label" for="beginingDelay">Begining delay</label>
+    <label class="option option--beginingDelay" for="beginingDelay">
+      <span class="label">Begining delay</span>
       <div
         class="field-wrapper"
         :class="{ 'field-wrapper--invalid': !validOptions.beginingDelay }"
@@ -192,12 +192,10 @@ const valueUnitsList = computed(() => allowedValueUnits[options.property])
           :placeholder="String(options.beginingDelay)"
         />
       </div>
-    </div>
+    </label>
 
-    <div class="option option--duration">
-      <label class="label" for="duration"
-        >Duration <span class="small">(ms)</span></label
-      >
+    <label class="option option--duration" for="duration">
+      <span class="label">Duration <span class="small">(ms)</span></span>
       <div
         class="field-wrapper"
         :class="{ 'field-wrapper--invalid': !validOptions.duration }"
@@ -225,10 +223,10 @@ const valueUnitsList = computed(() => allowedValueUnits[options.property])
           :placeholder="String(options.duration)"
         />
       </div>
-    </div>
+    </label>
 
-    <div class="option option--endDelay">
-      <label class="label" for="endDelay">End delay</label>
+    <label class="option option--endDelay" for="endDelay">
+      <span class="label">End delay</span>
       <div
         class="field-wrapper"
         :class="{ 'field-wrapper--invalid': !validOptions.endDelay }"
@@ -256,7 +254,7 @@ const valueUnitsList = computed(() => allowedValueUnits[options.property])
           :placeholder="String(options.endDelay)"
         />
       </div>
-    </div>
+    </label>
   </div>
 </template>
 

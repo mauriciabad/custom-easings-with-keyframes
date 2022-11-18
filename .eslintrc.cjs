@@ -9,7 +9,9 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript',
     '@vue/eslint-config-prettier',
+    'plugin:vuejs-accessibility/recommended',
   ],
+  plugins: ['vuejs-accessibility'],
   rules: {
     'no-console': 'warn',
     'no-debugger': 'warn',
@@ -21,6 +23,13 @@ module.exports = {
     'prefer-template': 'warn',
     'no-undef': 'off',
     'vue/component-api-style': ['error', ['script-setup']],
+    'vuejs-accessibility/label-has-for': [
+      'error',
+      {
+        controlComponents: ['CelebrationCheckbox'],
+        allowChildren: true,
+      },
+    ],
   },
   overrides: [
     {
