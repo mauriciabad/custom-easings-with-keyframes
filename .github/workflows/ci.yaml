@@ -1,0 +1,60 @@
+name: CI
+
+on: push
+
+jobs:
+  unit-tests:
+    name: Unit tests
+    needs: [lint, type-check]
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⚙️ Setup
+        uses: mauriciabad/my-actions/setup-npm@main
+
+      - name: 🧪 Test
+        run: npm run test:unit
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⚙️ Setup
+        uses: mauriciabad/my-actions/setup-npm@main
+
+      - name: 🔦 Lint
+        run: npm run lint
+
+  type-check:
+    name: Type check
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⚙️ Setup
+        uses: mauriciabad/my-actions/setup-npm@main
+
+      - name: 🔍 Type check
+        run: npm run type-check
+
+  e2e-tests:
+    name: E2E tests
+    needs: [lint, type-check, unit-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⚙️ Setup
+        uses: mauriciabad/my-actions/setup-npm@main
+
+      - name: ⚙️ Install serve
+        run: npm install -g serve
+
+      - name: 🤖 Run the tests
+        uses: cypress-io/github-action@v4
+        with:
+          # record: true
+          browser: chrome
+          build: npm run build
+          start: 'serve dist -l 4173'
+          wait-on: 'http://localhost:4173'
+          wait-on-timeout: 30
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
