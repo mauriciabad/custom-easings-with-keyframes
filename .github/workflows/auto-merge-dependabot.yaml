@@ -7,8 +7,8 @@ jobs:
   auto-merge-dependabot:
     runs-on: ubuntu-latest
     steps:
-    - name: 🤖 Auto-merge dependabot PRs
-      uses: ahmadnassri/action-dependabot-auto-merge@v2
-      with:
-        target: minor
-        github-token: ${{ secrets.PUSH_TOKEN }}
+      - name: 🤖 Auto-merge dependabot PRs
+        uses: ahmadnassri/action-dependabot-auto-merge@v2
+        with:
+          target: minor
+          github-token: ${{ secrets.AUTOMERGE_DEPENDABOT_TOKEN }}
