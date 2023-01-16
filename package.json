@@ -31,7 +31,7 @@
     "cypress": "11.2.0",
     "dedent": "0.7.0",
     "deep-clone": "3.0.3",
-    "eslint": "8.31.0",
+    "eslint": "8.32.0",
     "eslint-plugin-cypress": "2.12.1",
     "eslint-plugin-vue": "9.9.0",
     "eslint-plugin-vuejs-accessibility": "2.0.0",
