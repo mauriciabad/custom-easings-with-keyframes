@@ -15,7 +15,7 @@
   "dependencies": {
     "inter-ui": "3.19.3",
     "pinia": "2.0.29",
-    "vue": "3.2.45",
+    "vue": "3.2.47",
     "vue-router": "4.1.6"
   },
   "devDependencies": {
