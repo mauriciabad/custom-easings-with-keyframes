@@ -16,6 +16,7 @@
 - linear easing by default
 - include fallback switch
 - update libraries and remove auto update 
+- copy animation 
 
 ## Bugs
 
