@@ -11,14 +11,21 @@
 - Add the title Easy Easings .com somewhere
 - Feedback button
 - Show popup warning about unsaved changes before leaving
+- drag in bg to select multiple 
+- format linear easing
+- linear easing by default
+- include fallback switch
+- update libraries and remove auto update 
 
 ## Bugs
 
-- Too slow on some laptops
+- Too slow on some laptops (maybe use canvas)
+- wrong spin sometimes 
 
 ### Marketing
 
 - Nice readme
+- seo for linear
 - share on
   - reddit (help from friend)
   - <https://www.producthunt.com/>
