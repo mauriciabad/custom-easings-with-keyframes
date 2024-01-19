@@ -20,6 +20,7 @@ const localValue = computed({
   <div class="cbx">
     <!-- eslint-disable-next-line vuejs-accessibility/form-control-has-label -->
     <input :id="id" v-model="localValue" type="checkbox" />
+    <div class="animation-helper" />
     <svg width="15" height="14" viewbox="0 0 15 14" fill="none">
       <path d="M2 8.36364L6.23077 12L13 2"></path>
     </svg>
@@ -76,7 +77,7 @@ $primary: #866efb;
     }
 
     &:checked {
-      & + label {
+      & + .animation-helper {
         animation: splash 0.6s ease forwards;
         & + svg {
           path {
@@ -86,7 +87,7 @@ $primary: #866efb;
       }
     }
   }
-  label {
+  .animation-helper {
     width: 24px;
     height: 24px;
     background: none;
