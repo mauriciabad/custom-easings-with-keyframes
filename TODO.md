@@ -13,7 +13,6 @@
 - Show popup warning about unsaved changes before leaving
 - drag in bg to select multiple 
 - format linear easing
-- linear easing by default
 - include fallback switch
 - update libraries and remove auto update 
 - copy animation 
