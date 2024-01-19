@@ -8,6 +8,9 @@ Make non-cubic-bezier easings with keyframes and animations.
 Use it here:
 https://easyeasings.mauri.app/
 
+![preview](https://github.com/mauriciabad/custom-easings-with-keyframes/assets/12821361/c3104760-c7ad-4223-ac05-16ba2451e905)
+
+
 ## Development
 
 ```zsh
