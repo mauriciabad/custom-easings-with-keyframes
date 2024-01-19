@@ -15,7 +15,8 @@
 - format linear easing
 - include fallback switch
 - update libraries
-- copy animation 
+- copy animation
+- linear easing by default
 
 ## Bugs
 
