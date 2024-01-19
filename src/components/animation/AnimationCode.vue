@@ -149,10 +149,10 @@ function toggleSettings() {
             <span>
               Use
               <a
-                href="https://github.com/w3c/csswg-drafts/pull/6533"
+                href="https://developer.mozilla.org/en-US/blog/custom-easing-in-css-with-linear/"
                 target="_blank"
               >
-                CSS linear proposal
+                linear() easing function
               </a>
             </span>
           </label>

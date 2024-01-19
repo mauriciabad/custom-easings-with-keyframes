@@ -6,7 +6,7 @@
 Make non-cubic-bezier easings with keyframes and animations.
 
 Use it here:
-https://easyeasings.com/
+https://easyeasings.mauri.app/
 
 ## Development
 
