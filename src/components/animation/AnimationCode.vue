@@ -28,7 +28,7 @@ const pointsWithDelayGrouped = computed(() =>
 const codeElement = ref<HTMLPreElement | null>(null)
 const code = computed<string>(() => codeElement.value?.textContent ?? '')
 
-const useLinear = persistedRef<boolean>('useLinear', true)
+const useLinear = persistedRef<boolean>('useLinear', false)
 const codeStyle = computed<CodeStyle>(() =>
   useLinear.value ? 'linear' : 'keyframes'
 )
