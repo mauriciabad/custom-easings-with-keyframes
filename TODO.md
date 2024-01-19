@@ -14,7 +14,7 @@
 - drag in bg to select multiple 
 - format linear easing
 - include fallback switch
-- update libraries and remove auto update 
+- update libraries
 - copy animation 
 
 ## Bugs
