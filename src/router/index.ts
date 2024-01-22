@@ -15,7 +15,8 @@ const routes: RouterOptions['routes'] = [
     name: 'Main',
     component: MainView,
     meta: {
-      title: 'Keyframes easings editor | Make non-cubic-bezier easings in CSS',
+      title:
+        'Easy Easings | linear() easing generator & @keyframes editor | Make non-cubic-bezier easings in CSS',
     },
   },
 ]

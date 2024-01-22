@@ -23,10 +23,10 @@ export default defineConfig({
         'img/icons/favicon-16x16.png',
       ],
       manifest: {
-        name: 'Keyframes easings',
-        short_name: 'Keyframes easings',
+        name: 'Easy Easings',
+        short_name: 'Easy Easings',
         description:
-          'Make custom non cubic bezier easing functions using keyframes and animations with this online css code generator developer tool, like elastic and bounce easings',
+          'Make custom non-cubic-bezier easing functions using the linear() easing function or keyframes and animations with this online css code generator developer tool, like elastic and bounce easings',
         icons: [
           {
             src: '/img/icons/android-chrome-192x192.png',

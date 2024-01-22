@@ -78,7 +78,10 @@ function handleBackgroundClick() {
           </h2>
           <p class="popup__text">
             This is an online css code generator that lets you create easings
-            with keyframes animation that can't be done with a cubic-bezier.
+            for animations that can't be done with a cubic-bezier.
+            <br />
+            Use the new linear() easing function or the widely supported
+            keyframes at-rule.
           </p>
           <button class="popup__accept-button" @click="handleAcceptButtonClick">
             Get started
